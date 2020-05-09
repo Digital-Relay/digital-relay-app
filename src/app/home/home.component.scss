@@ -1,0 +1,25 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$primary: mat-palette($mat-indigo);
+
+header {
+  display: block;
+  background: mat-color($primary);
+  color: white;
+  padding: 30px;
+}
+
+img {
+  width: 70%;
+  height: auto;
+}
+
+a.mat-stroked-button:hover {
+  color: unset;
+}
+
+a.mat-stroked-button {
+  border-color: white;
+}
