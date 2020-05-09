@@ -1,0 +1,30 @@
+.filler {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.home-icon {
+  margin-right: 10px;
+  width: 40px;
+  height: auto;
+}
+
+a:hover {
+  color: unset;
+  text-decoration: unset;
+}
+
+mat-divider {
+  height: 75%;
+}
+
+mat-toolbar {
+  padding: 0 1%;
+}
+
+.home-button {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}

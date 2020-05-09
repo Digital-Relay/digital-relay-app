@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <a class="home-button" mat-button routerLink="/">
+    <mat-icon class="home-icon" svgIcon="relay"></mat-icon>
+    <span class="mat-h1">Digital Relay</span>
+  </a>
+  <!--  <mat-divider [vertical]="true"></mat-divider>-->
+  <!--  <a mat-button routerLink="/">Link</a>-->
+  <span class="filler"></span>
+  <mat-menu #appMenu="matMenu">
+    <a mat-menu-item routerLink="/about">O aplikácii...</a>
+  </mat-menu>
+
+  <button [matMenuTriggerFor]="appMenu" mat-icon-button>
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</mat-toolbar>
