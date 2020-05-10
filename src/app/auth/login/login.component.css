@@ -1,0 +1,11 @@
+mat-card {
+  max-width: 400px;
+  flex: auto;
+  padding: 25px;
+  margin-top: 25px;
+}
+
+mat-form-field {
+  margin-top: 15px;
+  display: block;
+}
