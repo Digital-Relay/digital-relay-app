@@ -1,4 +1,9 @@
 <app-navbar class="mat-elevation-z2"></app-navbar>
-<div class="content">
+<div *ngIf="router.url == '/'; else elseBlock" class="container-fluid px-0 content">
   <router-outlet></router-outlet>
 </div>
+<ng-template #elseBlock>
+  <div class="container content">
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>
