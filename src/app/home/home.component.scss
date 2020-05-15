@@ -1,14 +1,12 @@
-@import "~@angular/material/theming";
+@import "src/dxc-light-theme";
 
-@include mat-core();
-
-$primary: mat-palette($mat-indigo);
+$primary: mat-palette($dxc-light-primary);
 
 header {
   display: block;
   background: mat-color($primary);
   color: white;
-  padding: 30px;
+  padding: 25px;
 }
 
 img {
@@ -16,10 +14,18 @@ img {
   height: auto;
 }
 
-a.mat-stroked-button:hover {
-  color: unset;
+a.mat-stroked-button:not([disabled]) {
+  border-color: mat-color($primary, '700-contrast');
 }
 
-a.mat-stroked-button {
-  border-color: white;
+a.mat-stroked-button:hover {
+  background-color: mat-color($md-dxc-primary, A700);
+}
+
+.dxc-logo {
+  width: 300px;
+}
+
+div.unfold {
+  background-image: linear-gradient(mat-color($primary) 50%, rgba(255, 255, 255, 0) 50%);
 }
