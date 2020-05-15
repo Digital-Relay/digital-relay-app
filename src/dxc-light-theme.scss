@@ -1,4 +1,6 @@
 @import '~@angular/material/theming';
+@import "src/app/navbar/navbar.component";
+@import "src/app/home/home.component";
 
 @include mat-core();
 
@@ -110,3 +112,5 @@ $dxc-light-theme: mat-light-theme($dxc-light-primary, $dxc-light-accent, $dxc-li
 
 @include angular-material-theme($dxc-light-theme);
 
+@include navbar-component-theme($dxc-light-theme);
+@include home-component-theme($dxc-light-theme);
