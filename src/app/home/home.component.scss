@@ -6,7 +6,7 @@ header {
   display: block;
   background: mat-color($primary);
   color: white;
-  padding: 30px;
+  padding: 25px;
 }
 
 img {
@@ -20,4 +20,12 @@ a.mat-stroked-button:not([disabled]) {
 
 a.mat-stroked-button:hover {
   background-color: mat-color($md-dxc-primary, A700);
+}
+
+.dxc-logo {
+  width: 300px;
+}
+
+div.unfold {
+  background-image: linear-gradient(mat-color($primary) 50%, rgba(255, 255, 255, 0) 50%);
 }
