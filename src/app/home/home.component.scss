@@ -1,31 +1,36 @@
-@import "src/dxc-light-theme";
+@mixin home-component-theme($theme) {
 
-$primary: mat-palette($dxc-light-primary);
+  $primary: map-get($theme, primary);
 
-header {
-  display: block;
-  background: mat-color($primary);
-  color: white;
-  padding: 25px;
-}
+  app-home {
+    header {
+      background: mat-color($primary);
+      display: block;
+      color: white;
+      padding: 25px;
+    }
 
-img {
-  width: 70%;
-  height: auto;
-}
+    a.mat-stroked-button:not([disabled]) {
+      border-color: mat-color($primary, '700-contrast');
+    }
 
-a.mat-stroked-button:not([disabled]) {
-  border-color: mat-color($primary, '700-contrast');
-}
+    a.mat-stroked-button:hover {
+      background-color: mat-color($primary, A700);
+      color: unset;
+      text-decoration: unset;
+    }
 
-a.mat-stroked-button:hover {
-  background-color: mat-color($md-dxc-primary, A700);
-}
+    div.unfold {
+      background-image: linear-gradient(mat-color($primary) 50%, rgba(255, 255, 255, 0) 50%);
+    }
 
-.dxc-logo {
-  width: 300px;
-}
+    .dxc-logo {
+      width: 300px;
+    }
 
-div.unfold {
-  background-image: linear-gradient(mat-color($primary) 50%, rgba(255, 255, 255, 0) 50%);
+    img {
+      width: 70%;
+      height: auto;
+    }
+  }
 }
