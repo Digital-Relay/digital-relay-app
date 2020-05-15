@@ -1,4 +1,4 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'dxc-light-theme';
 
 html, body {
   height: 100%;
@@ -7,4 +7,8 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+a.mat-button-base:hover {
+  color: unset;
 }

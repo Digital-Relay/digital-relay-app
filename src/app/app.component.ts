@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'digital-relay';
+  title = 'DXC RUN 4U';
 
   constructor(public router: Router) {
   }

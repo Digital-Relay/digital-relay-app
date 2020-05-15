@@ -1,3 +1,7 @@
+@import "src/dxc-light-theme";
+
+$primary: mat-palette($dxc-light-primary);
+
 .filler {
   /* This fills the remaining space, by using flexbox.
      Every toolbar row uses a flexbox row layout. */
@@ -13,6 +17,12 @@
 a:hover {
   color: unset;
   text-decoration: unset;
+  background-color: mat-color($md-dxc-primary, A700);
+  border-radius: 0;
+}
+
+button.mat-icon-button:hover {
+  background-color: mat-color($md-dxc-primary, A700);
 }
 
 mat-divider {

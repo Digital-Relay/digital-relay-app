@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'relay',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/run-circle.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl('assets/run-circle-dxc.svg'));
   }
 
   ngOnInit(): void {
