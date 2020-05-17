@@ -14,10 +14,16 @@ export class LoginComponent implements OnInit {
   }
 
   getErrorMessage() {
+    if (this.emailField.hasError('email')) {
+      return 'Neplatný e-mail.';
+    }
     if (this.emailField.hasError('required') || this.passwordField.hasError('required')) {
       return 'Toto pole je povinné.';
     }
-    return this.emailField.hasError('email') ? 'Neplatný e-mail.' : '';
+    return '';
   }
 
+  onSubmit() {
+
+  }
 }
