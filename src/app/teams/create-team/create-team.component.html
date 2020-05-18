@@ -1,0 +1,32 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2>Vytvorenie tímu</h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="teamForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Názov tímu</mat-label>
+          <input formControlName="teamName" matInput placeholder="Názov tímu" required>
+          <mat-error *ngIf="teamForm.get('teamName').invalid">Toto pole je povinné.</mat-error>
+        </mat-form-field>
+        <div formArrayName="members">
+          <h5>Členovia tímu</h5>
+          <p>Zadajte e-mailové adresy ostatných členov tímu, aby sme im mohli poslať pozvánky.</p>
+          <mat-form-field *ngFor="let member of members.controls; let i=index" appearance="outline">
+            <mat-label>E-mailová adresa {{i + 1}}. člena...</mat-label>
+            <input (input)="manageMembers(i)" [formControlName]="i" matInput placeholder="Pridajte {{i+1}}. člena...">
+            <mat-error *ngIf="members.at(i).invalid">Neplatný e-mail.</mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <a mat-raised-button routerLink="/">Zrušiť</a>
+      <button (click)="onSubmit()" [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
+        Vytvoriť tím
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
