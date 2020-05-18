@@ -1,0 +1,13 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<div [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>E-mailová adresa</mat-label>
+    <input formControlName="email" matInput placeholder="e@mail.com" required type="email">
+    <mat-error *ngIf="form.get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Heslo</mat-label>
+    <input formControlName="password" matInput placeholder="nbusr123" required type="password">
+    <mat-error *ngIf="form.get('password').invalid">{{getErrorMessage('password')}}</mat-error>
+  </mat-form-field>
+</div>

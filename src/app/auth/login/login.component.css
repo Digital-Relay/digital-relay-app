@@ -5,11 +5,6 @@ mat-card {
   margin-top: 25px;
 }
 
-mat-form-field {
-  margin-top: 15px;
-  display: block;
-}
-
 a:hover {
   color: unset;
 }

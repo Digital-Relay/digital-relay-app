@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,23 +7,18 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  emailField = new FormControl('', [Validators.required, Validators.email]);
-  passwordField = new FormControl('', [Validators.required]);
+  loginForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.loginForm = this.fb.group({
+      login: []
+    });
+  }
 
   ngOnInit(): void {
   }
 
-  getErrorMessage() {
-    if (this.emailField.hasError('email')) {
-      return 'Neplatný e-mail.';
-    }
-    if (this.emailField.hasError('required') || this.passwordField.hasError('required')) {
-      return 'Toto pole je povinné.';
-    }
-    return '';
-  }
-
   onSubmit() {
-
+    console.log(this.loginForm.value);
   }
 }
