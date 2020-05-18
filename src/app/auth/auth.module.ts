@@ -15,6 +15,10 @@ import {RegisterFormComponent} from './register-form/register-form.component';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, RegisterFormComponent, LoginFormComponent, RegisterFormComponent],
+  exports: [
+    LoginFormComponent,
+    RegisterFormComponent
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
