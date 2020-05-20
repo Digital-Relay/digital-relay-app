@@ -1,0 +1,11 @@
+p.name {
+  font-weight: bold;
+}
+
+p.members {
+  font-style: italic;
+}
+
+p {
+  margin: 7px 0;
+}

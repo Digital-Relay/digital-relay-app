@@ -12,10 +12,14 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {AuthModule} from '../auth/auth.module';
 import {MatTabsModule} from '@angular/material/tabs';
+import {TeamPageComponent} from './team-page/team-page.component';
+import {MemberComponent} from './member/member.component';
+import {MyTeamsComponent} from './my-teams/my-teams.component';
+import {TeamComponent} from './team/team.component';
 
 
 @NgModule({
-  declarations: [CreateTeamComponent],
+  declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent, MyTeamsComponent, TeamComponent],
   imports: [
     CommonModule,
     TeamsRoutingModule,
