@@ -3,28 +3,13 @@
   <mat-card>
     <mat-card-title>Registrácia</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="formGroup">
-        <mat-form-field appearance="outline">
-          <mat-label>E-mailová adresa</mat-label>
-          <input formControlName="emailField" matInput placeholder="e@mail.com" required type="email">
-          <mat-error *ngIf="formGroup.get('emailField').invalid">{{getErrorMessage('emailField')}}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Heslo</mat-label>
-          <input formControlName="passwordField" matInput placeholder="nbusr123" required type="password">
-          <mat-error *ngIf="formGroup.get('passwordField').invalid">{{getErrorMessage('passwordField')}}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Zopakujte heslo</mat-label>
-          <input formControlName="passwordConfirmField" matInput placeholder="nbusr123" required type="password">
-          <mat-error
-            *ngIf="formGroup.get('passwordConfirmField').invalid">{{getErrorMessage('passwordConfirmField')}}</mat-error>
-        </mat-form-field>
+      <form [formGroup]="registerForm">
+        <app-register-form formControlName="registration"></app-register-form>
       </form>
     </mat-card-content>
     <mat-card-actions align="end">
       <a mat-raised-button routerLink="/">Zrušiť</a>
-      <button (click)="onSubmit()" [disabled]="formGroup.invalid" color="primary" mat-raised-button type="submit">
+      <button (click)="onSubmit()" [disabled]="registerForm.invalid" color="primary" mat-raised-button type="submit">
         Registrovať
       </button>
     </mat-card-actions>

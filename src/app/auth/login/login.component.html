@@ -3,22 +3,13 @@
   <mat-card>
     <mat-card-title>Prihlásenie</mat-card-title>
     <mat-card-content>
-      <form>
-        <mat-form-field appearance="outline">
-          <mat-label>E-mailová adresa</mat-label>
-          <input [formControl]="emailField" matInput placeholder="e@mail.com" required type="email">
-          <mat-error *ngIf="emailField.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Heslo</mat-label>
-          <input [formControl]="passwordField" matInput placeholder="nbusr123" required type="password">
-          <mat-error *ngIf="passwordField.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
+      <form [formGroup]="loginForm">
+        <app-login-form formControlName="login"></app-login-form>
       </form>
     </mat-card-content>
     <mat-card-actions align="end">
       <a mat-raised-button routerLink="/register">Registrácia</a>
-      <button (click)="onSubmit()" [disabled]="emailField.invalid || passwordField.invalid" color="primary"
+      <button (click)="onSubmit()" [disabled]="loginForm.invalid" color="primary"
               mat-raised-button type="submit">Prihlásiť sa
       </button>
     </mat-card-actions>
