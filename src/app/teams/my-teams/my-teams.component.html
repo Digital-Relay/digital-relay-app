@@ -1,0 +1,18 @@
+<div class="mt-4">
+  <h1>Moje tímy</h1>
+  <ng-container *ngIf="teams.length > 0; else empty">
+    <div *ngFor="let team of teams" class="mb-2">
+      <app-team [team]="team"></app-team>
+    </div>
+  </ng-container>
+</div>
+
+
+<ng-template #empty>
+  <div class="empty d-flex flex-column justify-content-center align-items-center">
+    <p>
+      Zatiaľ nepatríte do žiadneho tímu...
+    </p>
+    <a class="mx-2" color="primary" mat-raised-button routerLink="/teams/create">Založiť tím</a>
+  </div>
+</ng-template>

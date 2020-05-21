@@ -1,0 +1,47 @@
+<header class="d-flex flex-column justify-content-center align-items-center">
+  <!--  <div class="row mb-4">-->
+  <!--    <img class="dxc-logo img-fluid" alt="DXC Technology logo" src="assets/dxc_logo_hz_wht_rgb_300.png">-->
+  <!--  </div>-->
+  <div class="row">
+    <div class="col-sm d-flex flex-column align-items-center">
+      <!--suppress HtmlUnknownTarget -->
+      <img alt="DXC RUN 4U logo" src="assets/run-circle-dxc.svg">
+    </div>
+    <div class="col-sm d-flex flex-column justify-content-center align-items-center align-items-sm-start">
+      <div class="row">
+        <h1 class="mat-display-2 my-4">DXC RUN 4U</h1>
+      </div>
+      <div class="row">
+        <h2 class="mat-subheading-2 mb-3">Beháme štafetu pre charitu</h2>
+      </div>
+      <div class="row">
+        <a class="mr-2" color="accent" mat-raised-button routerLink="/login">Prihlásiť sa</a>
+        <a class="mx-2" mat-stroked-button routerLink="/teams/create">Založiť tím</a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="unfold d-flex justify-content-center">
+  <button (click)="scroll(belowFold)" class="unfold d-sm-none" mat-mini-fab>
+    <mat-icon>expand_more</mat-icon>
+  </button>
+</div>
+<div #belowFold class=" mt-2 mt-sm-4 d-flex justify-content-center">
+  <!--suppress HtmlUnknownTarget -->
+  <img alt="DXC Technology logo" class="dxc-logo img-fluid" src="assets/dxc_logo_hz_blk_rgb_300.png">
+</div>
+
+<div class="container mt-4 mat-typography">
+  <h1>
+    DXC RUN 4U – Online štafeta
+  </h1>
+  <p>
+    Bežecké štafety (The Run, Vltava Run, Od Tatier k Dunaju, ...) sú niečo medzi pretekmi, zábavou a skúškou čo
+    dokážeme. Bežia ich (zväčša) 12 členné tímy, každý zabehne (približne) desať kilometrový úsek, odovzdá štafetu
+    ďalšiemu členovi a takto sa to 3 krát zopakuje. Celkovo tím spolu prebehne okolo 350km, vždy jeden beží, ostatní sa
+    presúvajú autom na odovzdávky, jedia, oddychujú, povzbudzujú. Štafeta trvá 24-48 hodín, podľa rýchlosti tímu a beží
+    sa non-stop, deň aj noc, zima, horúčava, dážď. A teraz sa všetko odkladá, ruší, každý behá sám. Skúsme urobiť čo
+    najlepšiu online digitálnu simuláciu tímového zážitku. Vrátane odovzdávania si online štafetového kolíka, behania v
+    noci, spolupratričnosti k tímu.
+  </p>
+</div>

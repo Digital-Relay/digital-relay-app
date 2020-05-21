@@ -1,0 +1,22 @@
+mat-card {
+  flex: auto;
+  padding: 25px;
+  margin-top: 25px;
+}
+
+mat-form-field {
+  display: block;
+  margin: 20px 0;
+}
+
+a:hover {
+  color: unset;
+}
+
+mat-divider {
+  margin-bottom: 30px;
+}
+
+div.hidden-forms {
+  margin-bottom: 10px;
+}

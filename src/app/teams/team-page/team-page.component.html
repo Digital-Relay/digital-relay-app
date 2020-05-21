@@ -1,0 +1,22 @@
+<div class="mt-4">
+  <h1>{{team.name}}</h1>
+  <mat-divider></mat-divider>
+
+  <div class="row mt-2">
+    <div class="col">
+      <p>
+        Toto je stránka vášho tímu.
+      </p>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-2">
+    <div class="col">
+      <h2>Členovia tímu</h2>
+      <div *ngFor="let member of team.members" class="mb-2">
+        <app-member [user]="member"></app-member>
+      </div>
+    </div>
+  </div>
+</div>
+

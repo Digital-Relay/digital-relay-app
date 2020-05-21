@@ -1,0 +1,36 @@
+@mixin home-component-theme($theme) {
+
+  $primary: map-get($theme, primary);
+
+  app-home {
+    header {
+      background: mat-color($primary);
+      display: block;
+      color: white;
+      padding: 25px;
+    }
+
+    a.mat-stroked-button:not([disabled]) {
+      border-color: mat-color($primary, '700-contrast');
+    }
+
+    a.mat-stroked-button:hover {
+      background-color: mat-color($primary, A700);
+      color: unset;
+      text-decoration: unset;
+    }
+
+    div.unfold {
+      background-image: linear-gradient(mat-color($primary) 50%, rgba(255, 255, 255, 0) 50%);
+    }
+
+    .dxc-logo {
+      width: 300px;
+    }
+
+    img {
+      width: 70%;
+      height: auto;
+    }
+  }
+}
