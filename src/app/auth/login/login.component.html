@@ -7,6 +7,7 @@
         <app-login-form formControlName="login"></app-login-form>
       </form>
     </mat-card-content>
+    <p *ngIf="invalidCredentials" class="error">Nesprávne údaje</p>
     <mat-card-actions align="end">
       <a mat-raised-button routerLink="/register">Registrácia</a>
       <button (click)="onSubmit()" [disabled]="loginForm.invalid" color="primary"

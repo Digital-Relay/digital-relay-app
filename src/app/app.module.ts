@@ -13,6 +13,15 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './auth/auth.module';
+import {StoreModule} from '@ngrx/store';
+import {metaReducers, reducers} from './store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {EffectsModule} from '@ngrx/effects';
+import {AppEffects} from './effects/app.effects';
+import {ApiModule} from './api/api.module';
+import {ApiConfiguration} from './api/api-configuration';
+import {AuthEffects} from './effects/auth.effects';
 
 @NgModule({
   declarations: [
@@ -30,9 +39,19 @@ import {AuthModule} from './auth/auth.module';
     MatDividerModule,
     MatMenuModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    ApiModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([AppEffects, AuthEffects])
   ],
-  providers: [],
+  providers: [{provide: ApiConfiguration, useValue: {rootUrl: environment.apiBaseUrl}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
