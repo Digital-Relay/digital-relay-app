@@ -5,6 +5,7 @@ import {DigitalRelayState, selectUser} from '../../store';
 import {login} from '../../store/actions/auth.actions';
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {State} from "../../store/reducers/auth.reducer";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   invalidCredentials = false;
   errorMessage: string | null;
-  state: Observable<any>;
+  state: Observable<State>;
 
   constructor(
     private fb: FormBuilder,

@@ -13,12 +13,13 @@
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Heslo</mat-label>
-    <input formControlName="passwordField" matInput placeholder="nbusr123" required type="password">
+    <input formControlName="passwordField" matInput minlength="8" placeholder="nbusr123" required type="password">
     <mat-error *ngIf="formGroup.get('passwordField').invalid">{{getErrorMessage('passwordField')}}</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Zopakujte heslo</mat-label>
-    <input formControlName="passwordConfirmField" matInput placeholder="nbusr123" required type="password">
+    <input formControlName="passwordConfirmField" matInput minlength="8" placeholder="nbusr123" required
+           type="password">
     <mat-error
       *ngIf="formGroup.get('passwordConfirmField').invalid">{{getErrorMessage('passwordConfirmField')}}</mat-error>
   </mat-form-field>

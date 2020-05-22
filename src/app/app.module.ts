@@ -22,6 +22,7 @@ import {AppEffects} from './effects/app.effects';
 import {ApiModule} from './api/api.module';
 import {ApiConfiguration} from './api/api-configuration';
 import {AuthEffects} from './effects/auth.effects';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {AuthEffects} from './effects/auth.effects';
     HttpClientModule,
     AuthModule,
     ApiModule,
+    MatTooltipModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

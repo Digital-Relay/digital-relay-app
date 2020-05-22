@@ -16,6 +16,8 @@ import {TeamPageComponent} from './team-page/team-page.component';
 import {MemberComponent} from './member/member.component';
 import {MyTeamsComponent} from './my-teams/my-teams.component';
 import {TeamComponent} from './team/team.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import {TeamComponent} from './team/team.component';
     FormsModule,
     MatDividerModule,
     AuthModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule,
+    MatIconModule
   ]
 })
 export class TeamsModule {

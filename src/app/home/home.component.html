@@ -14,8 +14,12 @@
       <div class="row">
         <h2 class="mat-subheading-2 mb-3">Beháme štafetu pre charitu</h2>
       </div>
-      <div class="row">
+      <div *ngIf="!isLoggedIn" class="row">
         <a class="mr-2" color="accent" mat-raised-button routerLink="/login">Prihlásiť sa</a>
+        <a class="mr-2" mat-raised-button routerLink="/register">Zaregistrovať sa</a>
+      </div>
+      <div *ngIf="isLoggedIn" class="row">
+        <a class="mr-2" color="accent" mat-raised-button routerLink="/teams/my">Vitaj {{user.email}}</a>
         <a class="mx-2" mat-stroked-button routerLink="/teams/create">Založiť tím</a>
       </div>
     </div>

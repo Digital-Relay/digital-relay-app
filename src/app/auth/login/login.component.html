@@ -3,17 +3,17 @@
   <mat-card>
     <mat-card-title>Prihlásenie</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="loginForm">
+      <form (submit)="onSubmit()" [formGroup]="loginForm">
         <app-login-form formControlName="login"></app-login-form>
+        <p *ngIf="invalidCredentials" class="error">Nesprávne údaje</p>
+        <mat-card-actions align="end">
+          <a mat-raised-button routerLink="/register">Registrácia</a>
+          <button [disabled]="loginForm.invalid" color="primary"
+                  mat-raised-button type="submit">Prihlásiť sa
+          </button>
+        </mat-card-actions>
       </form>
     </mat-card-content>
-    <p *ngIf="invalidCredentials" class="error">Nesprávne údaje</p>
-    <mat-card-actions align="end">
-      <a mat-raised-button routerLink="/register">Registrácia</a>
-      <button (click)="onSubmit()" [disabled]="loginForm.invalid" color="primary"
-              mat-raised-button type="submit">Prihlásiť sa
-      </button>
-    </mat-card-actions>
     <div *ngIf="errorMessage">
       <div class="alert alert-danger" role="alert">
         {{errorMessage}}

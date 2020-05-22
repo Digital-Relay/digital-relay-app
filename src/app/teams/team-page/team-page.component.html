@@ -18,5 +18,23 @@
       </div>
     </div>
   </div>
+  <div class="row mt-2">
+    <div class="col">
+      <h2>Pridať člena</h2>
+      <form [formGroup]="teamForm" autocomplete="off">
+        <mat-form-field *ngFor="let member of members.controls; let i=index" appearance="outline">
+          <mat-label>E-mailová adresa {{i + 1}}. člena...</mat-label>
+          <label>
+            <input (input)="manageMembers(i)" [formControlName]="i" autocomplete="team-member-email-{{i}}" matInput
+                   placeholder="Pridajte {{i+1}}. člena..." type="email">
+          </label>
+          <mat-error *ngIf="members.at(i).invalid">Neplatný e-mail.</mat-error>
+        </mat-form-field>
+        <button (click)="onSubmit()" [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
+          Pridať členov
+        </button>
+      </form>
+    </div>
+  </div>
 </div>
 

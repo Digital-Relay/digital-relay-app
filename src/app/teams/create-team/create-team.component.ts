@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-team',
@@ -8,11 +9,9 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 })
 export class CreateTeamComponent implements OnInit {
   loggedIn: boolean;
-  activeTab: number;
-
   teamForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.teamForm = this.fb.group({
       teamName: ['', Validators.required],
       members: this.fb.array([
@@ -21,38 +20,13 @@ export class CreateTeamComponent implements OnInit {
     });
   }
 
-  onTabChanged($event) {
-    const tabIndex = $event.index;
-    if (tabIndex === 0) {
-      this.activeTab = 0;
-      this.teamForm.removeControl('register');
-      this.teamForm.addControl('login', new FormControl());
-    } else {
-      this.activeTab = 1;
-      this.teamForm.removeControl('login');
-      this.teamForm.addControl('register', new FormControl());
-    }
-  }
-
-  onLoginChanged($event) {
-    if (!$event.checked) {
-      this.teamForm.addControl('login', new FormControl());
-      this.teamForm.addControl('register', new FormControl());
-    } else {
-      this.teamForm.removeControl('login');
-      this.teamForm.removeControl('register');
-    }
-    console.log(this.teamForm);
-  }
-
   get members() {
     return this.teamForm.get('members') as FormArray;
   }
 
   ngOnInit(): void {
     if (!this.loggedIn) {
-      this.activeTab = 0;
-      this.teamForm.addControl('login', new FormControl());
+      this.router.navigate(['login']);
     }
   }
 
