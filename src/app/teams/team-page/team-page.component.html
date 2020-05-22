@@ -24,7 +24,7 @@
       <form [formGroup]="teamForm" autocomplete="off">
           <label>
             <mat-label>E-mailová adresa nového člena...</mat-label>
-            <input [formControlName]="email" matInput placeholder="e@ma.il" type="email">
+            <input formControlName="email" matInput placeholder="e@ma.il" type="email">
           </label>
         <button (click)="onSubmit()" [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
           Pridať členov
