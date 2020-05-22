@@ -7,8 +7,8 @@ import {MyTeamsComponent} from './my-teams/my-teams.component';
 
 const routes: Routes = [
   {path: 'create', component: CreateTeamComponent},
-  {path: 'team', component: TeamPageComponent},
-  {path: 'my', component: MyTeamsComponent}
+  {path: 'my', component: MyTeamsComponent},
+  {path: ':id', component: TeamPageComponent}
 ];
 
 @NgModule({

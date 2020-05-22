@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {State} from "../../store/reducers/auth.reducer";
+import {Store} from "@ngrx/store";
+import {DigitalRelayState, selectUser} from "../../store";
 
 @Component({
   selector: 'app-team-page',
@@ -26,45 +30,29 @@ export class TeamPageComponent implements OnInit {
     ]
   };
 
-
+  state: Observable<State>
   loggedIn: boolean;
   teamForm: FormGroup;
+  email: String;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private store: Store<DigitalRelayState>) {
     this.teamForm = this.fb.group({
-      teamName: ['', Validators.required],
-      members: this.fb.array([
-        this.fb.control('', Validators.email)
-      ])
+      email: ['', [Validators.required, Validators.email]],
     });
-  }
-
-  get members() {
-    return this.teamForm.get('members') as FormArray;
+    this.state = store.select(selectUser)
   }
 
   ngOnInit(): void {
-    if (!this.loggedIn) {
-      this.router.navigate(['login']);
-    }
-  }
-
-  addMember() {
-    this.members.push(this.fb.control('', Validators.email));
+    this.state.subscribe(status => {
+      this.loggedIn = status.isLoggedIn;
+      if (!this.loggedIn) {
+        this.router.navigate(['login']);
+      }
+    });
   }
 
   onSubmit() {
     console.log(this.teamForm.value);
-  }
-
-  manageMembers(thisIndex) {
-    if ('' !== this.members.at(thisIndex).value &&
-      (thisIndex === this.members.length - 1 || '' !== this.members.at(this.members.length - 1).value)) {
-      this.addMember();
-      this.members.at(this.members.length - 1).setValue('');
-    } else if ('' === this.members.at(thisIndex).value) {
-      this.members.removeAt(thisIndex);
-    }
   }
 
 }

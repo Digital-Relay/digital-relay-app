@@ -16,6 +16,7 @@ export interface RegisterFormValues {
   name: string;
   password: string;
   passwordConfirm: string;
+  tempo: string;
 }
 
 @Component({
@@ -45,7 +46,9 @@ export class RegisterFormComponent implements OnInit, OnDestroy, ControlValueAcc
       emailField: new FormControl('', [Validators.required, Validators.email]),
       nameField: new FormControl('', [Validators.required]),
       passwordField: new FormControl('', [Validators.required]),
-      passwordConfirmField: new FormControl('', [Validators.required])
+      passwordConfirmField: new FormControl('', [Validators.required]),
+      tempoMinutesField: new FormControl('', [Validators.required, Validators.min(0)]),
+      tempoSecondsField: new FormControl('', [Validators.required, Validators.min(0), Validators.max(59)])
     }, {validators: passwordsMatchValidator});
 
     this.subscriptions.push(
