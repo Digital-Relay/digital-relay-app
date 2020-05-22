@@ -19,11 +19,7 @@ export class AuthApiService {
   }
 
   register(email: string, name: string, password: string) {
-    return this.api.postRegister({email, name, password} as RegisterRequest).toPromise().then((response) => {
-      console.log(response.response.user);
-    }).catch((response) => {
-      console.log(response.error.response.errors);
-    });
+    return this.api.postRegister({email, name, password} as RegisterRequest)
   }
 
   // noinspection JSMethodCanBeStatic

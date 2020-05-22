@@ -14,5 +14,10 @@
               mat-raised-button type="submit">Prihlásiť sa
       </button>
     </mat-card-actions>
+    <div *ngIf="errorMessage">
+      <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+    </div>
   </mat-card>
 </div>
