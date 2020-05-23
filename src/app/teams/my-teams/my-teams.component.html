@@ -1,11 +1,13 @@
-<div class="mt-4">
+<div class="mt-4 team-container">
   <h1>Moje tímy</h1>
   <ng-container *ngIf="teams.length > 0; else empty">
     <div *ngFor="let team of teams" class="mb-2">
       <app-team [team]="team"></app-team>
     </div>
-    <a class="md-fab md-fab-bottom-right" color="primary" id="add-button" mat-fab matTooltip="Vytvoriť nový tím"
-       routerLink="/teams/create" style="right: 150px; position: fixed"><i class="material-icons">group_add</i></a>
+    <a class="add-button" color="primary" id="add-button" mat-fab matTooltip="Vytvoriť nový tím"
+       routerLink="/teams/create">
+      <mat-icon>group_add</mat-icon>
+    </a>
   </ng-container>
 </div>
 

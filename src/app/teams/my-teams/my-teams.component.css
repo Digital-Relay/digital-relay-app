@@ -1,3 +1,13 @@
 div.empty {
   height: 80vh;
 }
+
+.team-container {
+  position: relative;
+}
+
+a.add-button {
+  position: fixed;
+  bottom: 40px;
+  right: 30px;
+}
