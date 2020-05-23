@@ -16,7 +16,7 @@
       </div>
       <div *ngIf="!isLoggedIn" class="row">
         <a class="mr-2" color="accent" mat-raised-button routerLink="/login">Prihlásiť sa</a>
-        <a class="mr-2" mat-raised-button routerLink="/register">Zaregistrovať sa</a>
+        <a class="mr-2" mat-stroked-button routerLink="/register">Zaregistrovať sa</a>
       </div>
       <div *ngIf="isLoggedIn" class="row">
         <a class="mr-2" color="accent" mat-raised-button routerLink="/teams/my">Vitaj {{user.email}}</a>
