@@ -1,0 +1,32 @@
+<div class="members">
+  <div class="row m-1 mt-2">
+    <div class="col">
+      <h2>Členovia tímu</h2>
+      <div *ngFor="let member of team.members" class="mb-2">
+        <app-member [user]="member"></app-member>
+      </div>
+    </div>
+  </div>
+
+  <div class="row m-1 mt-2">
+    <div class="col">
+      <h2>Pridať člena</h2>
+      <form [formGroup]="teamForm">
+        <div class="email-wrapper">
+          <mat-form-field appearance="outline" class="d-block">
+            <mat-label>E-mailová adresa nového člena...</mat-label>
+            <label class="d-none" for="email">Email</label>
+            <input formControlName="email" id="email" matInput placeholder="e@ma.il" type="email">
+            <mat-error *ngIf="teamForm.get('email').invalid">{{getErrorMessage('email')}}</mat-error>
+            <mat-hint>Na zadanú adresu pošleme pozvánku</mat-hint>
+          </mat-form-field>
+          <div class="d-flex flex-row-reverse flex-sm-row">
+            <button (click)="onSubmit()" [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
+              Pridať člena
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

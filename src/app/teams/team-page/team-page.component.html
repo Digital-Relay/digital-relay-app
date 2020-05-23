@@ -1,4 +1,5 @@
-<div class="mt-4">
+<!--suppress HtmlFormInputWithoutLabel -->
+<div class="my-4">
   <h1>{{team.name}}</h1>
   <mat-divider></mat-divider>
 
@@ -10,27 +11,13 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-  <div class="row mt-2">
-    <div class="col">
-      <h2>Členovia tímu</h2>
-      <div *ngFor="let member of team.members" class="mb-2">
-        <app-member [user]="member"></app-member>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col">
-      <h2>Pridať člena</h2>
-      <form [formGroup]="teamForm" autocomplete="off">
-          <label>
-            <mat-label>E-mailová adresa nového člena...</mat-label>
-            <input formControlName="email" matInput placeholder="e@ma.il" type="email">
-          </label>
-        <button (click)="onSubmit()" [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
-          Pridať členov
-        </button>
-      </form>
-    </div>
-  </div>
+  <mat-tab-group>
+    <mat-tab label="Úseky">
+      <app-stages></app-stages>
+    </mat-tab>
+    <mat-tab label="Správa tímu">
+      <app-member-list [team]="team"></app-member-list>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 

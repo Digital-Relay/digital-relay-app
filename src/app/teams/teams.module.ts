@@ -16,12 +16,15 @@ import {TeamPageComponent} from './team-page/team-page.component';
 import {MemberComponent} from './member/member.component';
 import {MyTeamsComponent} from './my-teams/my-teams.component';
 import {TeamComponent} from './team/team.component';
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {MemberListComponent} from './member-list/member-list.component';
+import {StagesComponent} from './stages/stages.component';
 
 
 @NgModule({
-  declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent, MyTeamsComponent, TeamComponent],
+  declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent,
+    MyTeamsComponent, TeamComponent, MemberListComponent, StagesComponent],
   imports: [
     CommonModule,
     TeamsRoutingModule,

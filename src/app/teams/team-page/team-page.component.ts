@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {State} from '../../store/reducers/auth.reducer';
-import {Store} from '@ngrx/store';
-import {DigitalRelayState, selectUser} from '../../store';
 
 @Component({
   selector: 'app-team-page',
@@ -31,22 +27,11 @@ export class TeamPageComponent implements OnInit {
   };
 
   state: Observable<State>;
-  loggedIn: boolean;
-  teamForm: FormGroup;
-  email: string;
 
-  constructor(private fb: FormBuilder, private router: Router, private store: Store<DigitalRelayState>) {
-    this.teamForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-    });
-    this.state = store.select(selectUser);
+  constructor() {
   }
 
   ngOnInit(): void {
-  }
-
-  onSubmit() {
-    console.log(this.teamForm.value);
   }
 
 }
