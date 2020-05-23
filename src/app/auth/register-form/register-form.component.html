@@ -24,19 +24,25 @@
       *ngIf="formGroup.get('passwordConfirmField').invalid">{{getErrorMessage('passwordConfirmField')}}</mat-error>
   </mat-form-field>
   <mat-label>Tempo</mat-label>
-  <mat-form-field appearance="outline">
-    <mat-label>Min</mat-label>
-    <input formControlName="tempoMinutesField" matInput min="0" placeholder="5" required step="1" type="number"
-           value="5">
-    <mat-error
-      *ngIf="formGroup.get('tempoMinutesField').invalid">{{getErrorMessage('tempoMinutesField')}}</mat-error>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Sec</mat-label>
-    <input formControlName="tempoSecondsField" matInput max="59" min="0" placeholder="5" required step="1" type="number"
-           value="0">
-    <mat-error
-      *ngIf="formGroup.get('tempoSecondsField').invalid">{{getErrorMessage('tempoSecondsField')}}</mat-error>
-  </mat-form-field>
+  <div class="d-flex align-items-center tempo-container">
+    <mat-form-field appearance="outline" class="tempo-field">
+      <mat-label>Min</mat-label>
+      <input formControlName="tempoMinutesField" matInput min="0" placeholder="5" required step="1" type="number"
+             value="5">
+      <mat-error
+        *ngIf="formGroup.get('tempoMinutesField').invalid">{{getErrorMessage('tempoMinutesField')}}</mat-error>
+    </mat-form-field>
+    <p>:</p>
+    <mat-form-field appearance="outline" class="tempo-field">
+      <mat-label>Sec</mat-label>
+      <input formControlName="tempoSecondsField" matInput max="59" min="0" placeholder="5" required step="1"
+             type="number"
+             value="0">
+      <mat-error
+        *ngIf="formGroup.get('tempoSecondsField').invalid">{{getErrorMessage('tempoSecondsField')}}</mat-error>
+    </mat-form-field>
+    <p>/km</p>
+  </div>
+
 
 </div>
