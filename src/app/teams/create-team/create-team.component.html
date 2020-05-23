@@ -1,26 +1,20 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <div>
-<!--  <mat-slide-toggle [(ngModel)]="loggedIn" (change)="onLoginChanged($event)">Logged in</mat-slide-toggle>-->
   <mat-card>
     <mat-card-header>
       <mat-card-title><h2>Vytvorenie tímu</h2></mat-card-title>
-      <mat-card-subtitle *ngIf="!loggedIn; else elseBlock">Na vytvorenie tímu sa musíte prihlásiť alebo zaregistrovať.
-      </mat-card-subtitle>
-      <ng-template #elseBlock>
-        <mat-card-subtitle>Zadajte informácie o svojom tíme.</mat-card-subtitle>
-      </ng-template>
+      <mat-card-subtitle>Zadajte informácie o svojom novom tíme.</mat-card-subtitle>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
       <form [formGroup]="teamForm" autocomplete="off">
-        <h5 *ngIf="!loggedIn">Informácie o tíme</h5>
         <mat-form-field appearance="outline">
           <mat-label>Názov tímu</mat-label>
           <input formControlName="teamName" matInput placeholder="Názov tímu" required>
           <mat-error *ngIf="teamForm.get('teamName').invalid">Toto pole je povinné.</mat-error>
         </mat-form-field>
         <div formArrayName="members">
-          <h5>Členovia tímu</h5>
+          <h3>Členovia tímu</h3>
           <p>Zadajte e-mailové adresy ostatných členov tímu, aby sme im mohli poslať pozvánky.</p>
           <mat-form-field *ngFor="let member of members.controls; let i=index" appearance="outline">
             <mat-label>E-mailová adresa {{i + 1}}. člena...</mat-label>

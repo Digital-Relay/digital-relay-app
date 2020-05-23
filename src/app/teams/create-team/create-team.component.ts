@@ -1,10 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {State} from '../../store/reducers/auth.reducer';
-import {Store} from '@ngrx/store';
-import {DigitalRelayState, selectUser} from '../../store';
 
 @Component({
   selector: 'app-create-team',
@@ -12,18 +7,15 @@ import {DigitalRelayState, selectUser} from '../../store';
   styleUrls: ['./create-team.component.css']
 })
 export class CreateTeamComponent implements OnInit {
-  loggedIn: boolean;
   teamForm: FormGroup;
-  state: Observable<State>;
 
-  constructor(private fb: FormBuilder, private router: Router, private store: Store<DigitalRelayState>) {
+  constructor(private fb: FormBuilder) {
     this.teamForm = this.fb.group({
       teamName: ['', Validators.required],
       members: this.fb.array([
         this.fb.control('', Validators.email)
       ])
     });
-    this.state = store.select(selectUser);
   }
 
   get members() {
