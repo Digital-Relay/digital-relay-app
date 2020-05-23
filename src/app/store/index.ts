@@ -17,9 +17,11 @@ export const reducers: ActionReducerMap<DigitalRelayState> = {
   teamModel: fromTeamModel.reducer
 };
 
-
 export const metaReducers: MetaReducer<DigitalRelayState>[] = !environment.production ? [] : [];
 
 export const selectUser = (state: DigitalRelayState) => state.auth;
 export const selectLoginStatus = (state: DigitalRelayState) => state.auth.isLoggedIn;
 export const selectTeamsList = (state: DigitalRelayState) => state.teamModel;
+
+
+export const initialTestState = {auth: {isLoggedIn: false}};

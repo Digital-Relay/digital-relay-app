@@ -3,6 +3,8 @@ import {provideMockActions} from '@ngrx/effects/testing';
 import {Observable} from 'rxjs';
 
 import {AppEffects} from './app.effects';
+import {AuthService} from '../api/services/auth.service';
+import {TeamsService} from '../api/services/teams.service';
 
 describe('AppEffects', () => {
   // tslint:disable-next-line:prefer-const
@@ -13,7 +15,9 @@ describe('AppEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         AppEffects,
-        provideMockActions(() => actions$)
+        provideMockActions(() => actions$),
+        {provide: AuthService, useValue: null},
+        {provide: TeamsService, useValue: null}
       ]
     });
 
