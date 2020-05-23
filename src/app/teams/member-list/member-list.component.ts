@@ -6,6 +6,7 @@ import {DigitalRelayState, selectUser} from '../../store';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Observable} from 'rxjs';
 import {State} from '../../store/reducers/auth.reducer';
+import {maxLengths} from '../../globals';
 
 @Component({
   selector: 'app-member-list',
@@ -20,7 +21,7 @@ export class MemberListComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private router: Router, private store: Store<DigitalRelayState>, private snackBar: MatSnackBar) {
     this.teamForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(maxLengths.email)]],
     });
     this.state = store.select(selectUser);
   }
@@ -34,6 +35,9 @@ export class MemberListComponent implements OnInit {
     }
     if (this.teamForm.get(field).hasError('required')) {
       return 'Toto pole je povinné.';
+    }
+    if (this.teamForm.get(field).hasError('maxlength')) {
+      return 'Zadaná hodnota je príliš dlhá.';
     }
     return '';
   }

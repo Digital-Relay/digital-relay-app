@@ -10,6 +10,7 @@ import {
   Validators
 } from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {maxLengths, passwordMinLength} from '../../globals';
 
 export interface RegisterFormValues {
   email: string;
@@ -43,10 +44,11 @@ export class RegisterFormComponent implements OnInit, OnDestroy, ControlValueAcc
 
   constructor() {
     this.formGroup = new FormGroup({
-      emailField: new FormControl('', [Validators.required, Validators.email]),
-      nameField: new FormControl('', [Validators.required]),
-      passwordField: new FormControl('', [Validators.required]),
-      passwordConfirmField: new FormControl('', [Validators.required]),
+      emailField: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(maxLengths.email)]),
+      nameField: new FormControl('', [Validators.required, Validators.maxLength(maxLengths.name)]),
+      passwordField: new FormControl('', [Validators.required, Validators.maxLength(maxLengths.password),
+        Validators.minLength(passwordMinLength)]),
+      passwordConfirmField: new FormControl('', [Validators.required, Validators.maxLength(maxLengths.password)]),
       tempoMinutesField: new FormControl('', [Validators.required, Validators.min(0)]),
       tempoSecondsField: new FormControl('', [Validators.required, Validators.min(0), Validators.max(59)])
     }, {validators: passwordsMatchValidator});
@@ -82,6 +84,18 @@ export class RegisterFormComponent implements OnInit, OnDestroy, ControlValueAcc
     }
     if (this.formGroup.get(field).hasError('required')) {
       return 'Toto pole je povinné.';
+    }
+    if (this.formGroup.get(field).hasError('maxlength')) {
+      return 'Zadaná hodnota je príliš dlhá.';
+    }
+    if (this.formGroup.get(field).hasError('minlength')) {
+      return `Heslo musí mať aspoň ${passwordMinLength} znakov.`;
+    }
+    if (this.formGroup.get(field).hasError('min')) {
+      return 'Príliš nízka hodnota.';
+    }
+    if (this.formGroup.get(field).hasError('max')) {
+      return 'Príliš vysoká hodnota.';
     }
   }
 

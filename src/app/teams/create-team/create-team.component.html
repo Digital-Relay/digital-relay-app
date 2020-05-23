@@ -11,7 +11,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Názov tímu</mat-label>
           <input formControlName="teamName" matInput placeholder="Názov tímu" required>
-          <mat-error *ngIf="teamForm.get('teamName').invalid">Toto pole je povinné.</mat-error>
+          <mat-error *ngIf="teamForm.get('teamName').invalid">{{getErrorMessage('teamName')}}</mat-error>
         </mat-form-field>
         <div formArrayName="members">
           <h3>Členovia tímu</h3>
