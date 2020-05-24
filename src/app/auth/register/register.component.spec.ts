@@ -4,6 +4,7 @@ import {RegisterComponent} from './register.component';
 import {FormBuilder} from '@angular/forms';
 import {provideMockStore} from '@ngrx/store/testing';
 import {initialTestState} from '../../store';
+import {AuthApiService} from '../auth-api.service';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -13,7 +14,8 @@ describe('RegisterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],
       providers: [FormBuilder,
-        provideMockStore({initialState: initialTestState})
+        provideMockStore({initialState: initialTestState}),
+        {provide: AuthApiService, useValue: null}
       ]
     })
       .compileComponents();
