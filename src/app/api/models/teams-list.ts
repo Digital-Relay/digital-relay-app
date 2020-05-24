@@ -1,6 +1,6 @@
 /* tslint:disable */
-import {TeamModel} from './team-model';
+import {Team} from './team';
 
 export interface TeamsList {
-  teams?: Array<TeamModel>;
+  teams?: Array<Team>;
 }

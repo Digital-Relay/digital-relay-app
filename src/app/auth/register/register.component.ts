@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AuthApiService} from '../auth-api.service';
-import {login} from '../../store/actions/auth.actions';
-import {Store} from '@ngrx/store';
-import {DigitalRelayState} from '../../store';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +15,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authApiService: AuthApiService,
-    private store: Store<DigitalRelayState>) {
+    private snackBar: MatSnackBar) {
     this.registerForm = this.formBuilder.group({
       registration: []
     });
@@ -31,8 +29,10 @@ export class RegisterComponent implements OnInit {
     const email = this.registerForm.value.registration.emailField;
     const name = this.registerForm.value.registration.nameField;
     const password = this.registerForm.value.registration.passwordField;
-    this.authApiService.register(email, name, password).toPromise().then(() => {
-      this.store.dispatch(login({email: email, password: password}));
+    const minutes: number = this.registerForm.value.registration.tempoMinutesField;
+    const seconds: number = this.registerForm.value.registration.tempoSecondsField;
+    this.authApiService.register(email, name, password, minutes * 60 + seconds).toPromise().then(() => {
+      this.snackBar.open('Registrácia prebehla úspešne. Poslali sme vám potvrdzovací e-mail s ďalším postupom.', 'OK');
     }).catch((error) => {
       this.errorMessage = error.error.response.errors[Object.keys(error.error.response.errors)[0]][0];
     });

@@ -23,7 +23,6 @@ class ParameterCodec implements HttpParameterCodec {
     return decodeURIComponent(value);
   }
 }
-
 const PARAMETER_CODEC = new ParameterCodec();
 
 /**

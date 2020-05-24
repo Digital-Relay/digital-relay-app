@@ -18,8 +18,8 @@ export class AuthApiService {
     });
   }
 
-  register(email: string, name: string, password: string) {
-    return this.api.postRegister({email, name, password} as RegisterRequest);
+  register(email: string, name: string, password: string, tempo: number) {
+    return this.api.postRegister({email, name, password, tempo} as RegisterRequest);
   }
 
   // noinspection JSMethodCanBeStatic

@@ -1,6 +1,7 @@
 /* tslint:disable */
-export interface UserModel {
+export interface User {
   email: string;
   id?: string;
   name: string;
+  tempo: number;
 }

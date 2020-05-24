@@ -33,6 +33,6 @@ export class ApiModule {
           useValue: {rootUrl: customParams.rootUrl}
         }
       ]
-    };
+    }
   }
 }

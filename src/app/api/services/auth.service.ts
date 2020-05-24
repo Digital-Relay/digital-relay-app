@@ -7,8 +7,10 @@ import {StrictHttpResponse as __StrictHttpResponse} from '../strict-http-respons
 import {Observable as __Observable} from 'rxjs';
 import {filter as __filter, map as __map} from 'rxjs/operators';
 
+import {User} from '../models/user';
 import {JWTResponse} from '../models/jwtresponse';
 import {LoginRequest} from '../models/login-request';
+import {JWTRefreshResponse} from '../models/jwtrefresh-response';
 import {RegistrationResponse} from '../models/registration-response';
 import {RegisterRequest} from '../models/register-request';
 
@@ -19,8 +21,10 @@ import {RegisterRequest} from '../models/register-request';
   providedIn: 'root',
 })
 class AuthService extends __BaseService {
+  static readonly getLoginPath = '/auth';
   static readonly postLoginPath = '/auth';
   static readonly getHelloWorldPath = '/auth/hello';
+  static readonly getTokenRefreshPath = '/auth/refresh_token';
   static readonly postRegisterPath = '/auth/register';
 
   constructor(
@@ -31,7 +35,46 @@ class AuthService extends __BaseService {
   }
 
   /**
-   * Log in as an existing user
+   * Retrieve current user's info
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   * @return OK
+   */
+  getLoginResponse(Authorization: string): __Observable<__StrictHttpResponse<User>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/auth`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<User>;
+      })
+    );
+  }
+
+  /**
+   * Retrieve current user's info
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   * @return OK
+   */
+  getLogin(Authorization: string): __Observable<User> {
+    return this.getLoginResponse(Authorization).pipe(
+      __map(_r => _r.body as User)
+    );
+  }
+
+  /**
+   * Login as existing user
    * @param payload undefined
    * @return Login successful
    */
@@ -59,7 +102,7 @@ class AuthService extends __BaseService {
   }
 
   /**
-   * Log in as an existing user
+   * Login as existing user
    * @param payload undefined
    * @return Login successful
    */
@@ -76,9 +119,7 @@ class AuthService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (Authorization != null) {
-      __headers = __headers.set('Authorization', Authorization.toString());
-    }
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/auth/hello`,
@@ -103,6 +144,45 @@ class AuthService extends __BaseService {
   getHelloWorld(Authorization: string): __Observable<null> {
     return this.getHelloWorldResponse(Authorization).pipe(
       __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * Get a new access token
+   * @param Authorization JWT refresh token, format: JWT <refresh_token>
+   * @return Token refresh successful
+   */
+  getTokenRefreshResponse(Authorization: string): __Observable<__StrictHttpResponse<JWTRefreshResponse>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/auth/refresh_token`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<JWTRefreshResponse>;
+      })
+    );
+  }
+
+  /**
+   * Get a new access token
+   * @param Authorization JWT refresh token, format: JWT <refresh_token>
+   * @return Token refresh successful
+   */
+  getTokenRefresh(Authorization: string): __Observable<JWTRefreshResponse> {
+    return this.getTokenRefreshResponse(Authorization).pipe(
+      __map(_r => _r.body as JWTRefreshResponse)
     );
   }
 
@@ -133,7 +213,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * Register a new user
    * @param payload undefined
@@ -149,4 +228,4 @@ class AuthService extends __BaseService {
 module AuthService {
 }
 
-export {AuthService};
+export {AuthService}

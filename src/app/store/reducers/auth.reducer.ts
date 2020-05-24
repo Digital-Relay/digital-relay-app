@@ -19,7 +19,7 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   on(AuthActions.loginSuccess, (state, action) => ({...state, isLoggedIn: true, token: action.access_token})),
-  on(AuthActions.loginFailure, ((state, action) => ({...state, errorMessage: action.description})))
+  on(AuthActions.loginFailure, ((state, action) => ({...state, errorMessage: action.msg})))
 );
 
 
