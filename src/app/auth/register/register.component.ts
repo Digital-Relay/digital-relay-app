@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AuthApiService} from '../auth-api.service';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,12 +11,13 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  errorMessage: String | null;
+  errorMessage: string | null;
 
   constructor(
     private formBuilder: FormBuilder,
     private authApiService: AuthApiService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private router: Router) {
     this.registerForm = this.formBuilder.group({
       registration: []
     });
@@ -32,7 +34,9 @@ export class RegisterComponent implements OnInit {
     const minutes: number = this.registerForm.value.registration.tempoMinutesField;
     const seconds: number = this.registerForm.value.registration.tempoSecondsField;
     this.authApiService.register(email, name, password, minutes * 60 + seconds).toPromise().then(() => {
-      this.snackBar.open('Registrácia prebehla úspešne. Poslali sme vám potvrdzovací e-mail s ďalším postupom.', 'OK');
+      this.errorMessage = null;
+      const snackBarRef = this.snackBar.open('Registrácia prebehla úspešne. Poslali sme vám potvrdzovací e-mail s ďalším postupom.', 'OK');
+      snackBarRef.onAction().subscribe(() => this.router.navigate(['/']));
     }).catch((error) => {
       this.errorMessage = error.error.response.errors[Object.keys(error.error.response.errors)[0]][0];
     });
