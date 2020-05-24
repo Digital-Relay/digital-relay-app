@@ -6,3 +6,4 @@ export const maxLengths = {
 };
 
 export const passwordMinLength = 8;
+export const nrOfStages = 20;

@@ -19,12 +19,15 @@ import {TeamComponent} from './team/team.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
 import {MemberListComponent} from './member-list/member-list.component';
-import {StagesComponent} from './stages/stages.component';
+import {StageListComponent} from './stage-list/stage-list.component';
+import {StageComponent} from './stage/stage.component';
+import {MatOptionModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
   declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent,
-    MyTeamsComponent, TeamComponent, MemberListComponent, StagesComponent],
+    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent, StageComponent],
   imports: [
     CommonModule,
     TeamsRoutingModule,
@@ -39,7 +42,9 @@ import {StagesComponent} from './stages/stages.component';
     AuthModule,
     MatTabsModule,
     MatTooltipModule,
-    MatIconModule
+    MatIconModule,
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class TeamsModule {
