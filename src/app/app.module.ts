@@ -23,12 +23,15 @@ import {ApiModule} from './api/api.module';
 import {ApiConfiguration} from './api/api-configuration';
 import {AuthEffects} from './effects/auth.effects';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatButtonModule,
     MatDividerModule,
     MatMenuModule,
+    MatDialogModule,
     HttpClientModule,
     AuthModule,
     ApiModule,

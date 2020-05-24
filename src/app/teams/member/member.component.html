@@ -1,15 +1,16 @@
 <mat-card>
-  <div class="row d-flex align-items-center">
+  <div class="row">
     <div class="col">
-      <p class="name">{{user.name !== null ? user.name : 'Neznámy používateľ'}}</p>
+      <p class="name">{{getName()}}</p>
     </div>
     <div class="col">
       <p class="email">{{user.email}}</p>
     </div>
-    <div class="col">
-      <button mat-button>
+    <div class="col-sm-1 d-flex justify-content-end">
+
+
+      <button (click)="confirmDialog()" color="warn" mat-mini-fab matTooltip="Vyhodiť z tímu">
         <mat-icon>delete</mat-icon>
-        Vyhodiť z tímu
       </button>
     </div>
   </div>
