@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   invalidCredentials = false;
   errorMessage: string | null;
   state: Observable<State>;
+  inProgress: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +40,7 @@ export class LoginComponent implements OnInit {
     });
     this.state.subscribe((state) => {
       this.errorMessage = state.errorMessage;
+      this.inProgress = false;
       if (state.isLoggedIn) {
         this.router.navigate(['teams', 'my']);
       }
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.inProgress = true;
     this.store.dispatch(login({
       email: this.loginForm.value.login.email,
       password: this.loginForm.value.login.password

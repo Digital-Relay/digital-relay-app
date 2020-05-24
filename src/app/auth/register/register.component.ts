@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errorMessage: string | null;
+  inProgress: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    this.inProgress = true;
     console.log(this.registerForm.value);
     const email = this.registerForm.value.registration.emailField;
     const name = this.registerForm.value.registration.nameField;
@@ -35,9 +37,11 @@ export class RegisterComponent implements OnInit {
     const seconds: number = this.registerForm.value.registration.tempoSecondsField;
     this.authApiService.register(email, name, password, minutes * 60 + seconds).toPromise().then(() => {
       this.errorMessage = null;
+      this.inProgress = false;
       const snackBarRef = this.snackBar.open('Registrácia prebehla úspešne. Poslali sme vám potvrdzovací e-mail s ďalším postupom.', 'OK');
       snackBarRef.onAction().subscribe(() => this.router.navigate(['/']));
     }).catch((error) => {
+      this.inProgress = false;
       this.errorMessage = error.error.response.errors[Object.keys(error.error.response.errors)[0]][0];
     });
   }

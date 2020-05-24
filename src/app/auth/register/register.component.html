@@ -18,5 +18,8 @@
         {{errorMessage}}
       </div>
     </div>
+    <div *ngIf="inProgress">
+      <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
+    </div>
   </mat-card>
 </div>
