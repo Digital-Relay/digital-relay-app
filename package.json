@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
-    "start-open": "ng serve --host 0.0.0.0",
+    "start-open": "ng serve --proxy-config proxy.config.json --host 0.0.0.0",
+    "generate-api-client-local": "node_modules/.bin/ng-swagger-gen -i http://localhost:8000/api/swagger.json",
     "build": "ng build",
     "build-prod": "ng build --prod",
     "test": "ng test",

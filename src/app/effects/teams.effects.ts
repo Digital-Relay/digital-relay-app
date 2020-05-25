@@ -1,26 +1,27 @@
-import {Injectable} from "@angular/core";
-import {Actions, createEffect, Effect, ofType} from "@ngrx/effects";
-import {Observable, of} from "rxjs";
-import {catchError, map, switchMap} from "rxjs/operators";
-import {TeamsService} from "../api/services";
-import {State} from "../store/reducers/auth.reducer";
-import {Store} from "@ngrx/store";
-import {DigitalRelayState, selectUser} from "../store";
-import {TeamsList} from "../api/models/teams-list";
-import {loadFailure, loadSuccess} from "../store/actions/teams.actions";
-import {loadTeamModels, upsertTeamModel} from "../store/team-model/team-model.actions";
-import {TeamModel} from "../store/team-model/team-model.model";
+import {Injectable} from '@angular/core';
+import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
+import {Observable, of} from 'rxjs';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {TeamsService} from '../api/services';
+import {State} from '../store/reducers/auth.reducer';
+import {Store} from '@ngrx/store';
+import {DigitalRelayState, selectUser} from '../store';
+import {TeamsList} from '../api/models/teams-list';
+import {loadFailure, loadSuccess} from '../store/actions/teams.actions';
+import {loadTeamModels, upsertTeamModel} from '../store/team-model/team-model.actions';
+import {TeamModel} from '../store/team-model/team-model.model';
+import {Team} from '../api/models/team';
 import PostTeamsParams = TeamsService.PostTeamsParams;
 
 @Injectable()
 export class TeamsEffects {
 
-  state: Observable<State>
+  state: Observable<State>;
   // noinspection JSUnusedLocalSymbols
   loadSuccess$ = createEffect(() => this.actions$.pipe(
     ofType('[Load] Load success'),
     map((teams: TeamsList) => {
-      return loadTeamModels({teamModels: teams.teams.map(team => team as TeamModel)})
+      return loadTeamModels({teamModels: teams.teams.map(team => team as TeamModel)});
     })
   ), {dispatch: false});
   loadFailure$ = createEffect(() => this.actions$.pipe(
@@ -37,7 +38,7 @@ export class TeamsEffects {
         }),
         catchError((error) => {
           return of(loadFailure(error.error));
-        }))
+        }));
     }));
   @Effect()
   create: Observable<any> = this.actions$.pipe(
@@ -45,10 +46,10 @@ export class TeamsEffects {
     map(value => value as TeamModel),
     switchMap((action) => {
       return this.teamsService.postTeams({
-        team: {
+        payload: {
           members: action.members,
-          name: action.name as String
-        },
+          name: action.name as string
+        } as Team,
         Authorization: this.token
       } as unknown as PostTeamsParams).pipe(
         map((teams) => {
@@ -56,7 +57,7 @@ export class TeamsEffects {
         }),
         catchError((error) => {
           return of(loadFailure(error.error));
-        }))
+        }));
     }));
 
   constructor(
@@ -64,7 +65,7 @@ export class TeamsEffects {
     private teamsService: TeamsService,
     store: Store<DigitalRelayState>
   ) {
-    this.state = store.select(selectUser)
-    this.state.subscribe(state => this.token = state.token)
+    this.state = store.select(selectUser);
+    this.state.subscribe(state => this.token = state.token);
   }
 }
