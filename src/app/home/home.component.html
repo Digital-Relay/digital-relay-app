@@ -19,7 +19,7 @@
         <a class="mr-2" mat-stroked-button routerLink="/register">Zaregistrovať sa</a>
       </div>
       <div *ngIf="isLoggedIn" class="row">
-        <a class="mr-2" color="accent" mat-raised-button routerLink="/teams/my">Vitaj {{user.email}}</a>
+        <a class="mr-2" color="accent" mat-raised-button routerLink="/teams/my">Vitaj {{user.name}}</a>
         <a class="mx-2" mat-stroked-button routerLink="/teams/create">Založiť tím</a>
       </div>
     </div>
