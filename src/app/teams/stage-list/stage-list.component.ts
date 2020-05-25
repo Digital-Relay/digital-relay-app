@@ -32,4 +32,8 @@ export class StageListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  updateStage($event: { name: string | null; email: string }, i: number) {
+    console.log(`Stage ${i} changed: `);
+    console.log($event);
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-stage',
@@ -6,6 +6,9 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./stage.component.scss']
 })
 export class StageComponent implements OnInit {
+  @Output()
+  public stageChange = new EventEmitter<{ name: string | null, email: string }>();
+
   @Input()
   members: [{ name: string | null, email: string }];
   @Input()
@@ -22,4 +25,7 @@ export class StageComponent implements OnInit {
     this.name = `Úsek ${this.index + 1}`;
   }
 
+  onValueChange($value) {
+    this.stageChange.emit($value);
+  }
 }
