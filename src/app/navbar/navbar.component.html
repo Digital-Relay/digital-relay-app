@@ -1,12 +1,19 @@
 <mat-toolbar color="primary">
-  <a class="home-button" mat-button routerLink="/">
+  <a class="toolbar-button" mat-button routerLink="/">
     <mat-icon class="home-icon" svgIcon="relay"></mat-icon>
     <span class="mat-h2">DXC RUN 4U</span>
   </a>
   <!--  <mat-divider [vertical]="true"></mat-divider>-->
   <!--  <a mat-button routerLink="/">Link</a>-->
   <span class="filler"></span>
+  <div *ngIf="isLoggedIn" class="toolbar-button">
+    <a class="toolbar-button d-none d-sm-flex" mat-button routerLink="/teams/my">{{user.name}}</a>
+    <a class="toolbar-button d-sm-none" mat-icon-button routerLink="/teams/my">
+      <mat-icon>account_circle</mat-icon>
+    </a>
+  </div>
   <mat-menu #appMenu="matMenu">
+    <button (click)="logout()" *ngIf="isLoggedIn" mat-menu-item>Odhlásiť</button>
     <a mat-menu-item routerLink="/about">O aplikácii...</a>
   </mat-menu>
 
