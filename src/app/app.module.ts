@@ -25,6 +25,7 @@ import {AuthEffects} from './effects/auth.effects';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {TeamsEffects} from "./effects/teams.effects";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import {MatDialogModule} from '@angular/material/dialog';
       }
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects, AuthEffects])
+    EffectsModule.forRoot([AppEffects, AuthEffects, TeamsEffects])
   ],
   providers: [{provide: ApiConfiguration, useValue: {rootUrl: environment.apiBaseUrl}}],
   bootstrap: [AppComponent]

@@ -14,7 +14,7 @@ import {AuthModule} from '../auth/auth.module';
 import {MatTabsModule} from '@angular/material/tabs';
 import {TeamPageComponent} from './team-page/team-page.component';
 import {MemberComponent} from './member/member.component';
-import {MyTeamsComponent} from './my-teams/my-teams.component';
+import {MapToArray, MyTeamsComponent} from './my-teams/my-teams.component';
 import {TeamComponent} from './team/team.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatIconModule} from '@angular/material/icon';
@@ -23,11 +23,12 @@ import {StageListComponent} from './stage-list/stage-list.component';
 import {StageComponent} from './stage/stage.component';
 import {MatOptionModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
   declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent,
-    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent, StageComponent],
+    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent, StageComponent, MapToArray],
   imports: [
     CommonModule,
     TeamsRoutingModule,
@@ -44,7 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatTooltipModule,
     MatIconModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ]
 })
 export class TeamsModule {

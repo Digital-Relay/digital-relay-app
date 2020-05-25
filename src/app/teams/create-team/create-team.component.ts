@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {maxLengths} from '../../globals';
+import {DigitalRelayState} from "../../store";
+import {Store} from "@ngrx/store";
+import {create} from "../../store/actions/teams.actions";
+import {TeamModel} from "../../store/team-model/team-model.model";
 
 @Component({
   selector: 'app-create-team',
@@ -10,7 +14,7 @@ import {maxLengths} from '../../globals';
 export class CreateTeamComponent implements OnInit {
   teamForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<DigitalRelayState>) {
     this.teamForm = this.fb.group({
       teamName: ['', Validators.required, Validators.maxLength(maxLengths.teamName)],
       members: this.fb.array([
@@ -31,7 +35,10 @@ export class CreateTeamComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.teamForm.value);
+    this.store.dispatch(create({
+      members: this.teamForm.value.members.filter(value => value != ""),
+      name: this.teamForm.value.teamName
+    } as TeamModel))
   }
 
   manageMembers(thisIndex) {
