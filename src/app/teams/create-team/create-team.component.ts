@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {maxLengths} from '../../globals';
-import {DigitalRelayState} from '../../store';
+import {DigitalRelayState, selectTeamsList} from '../../store';
 import {Store} from '@ngrx/store';
 import {create} from '../../store/actions/teams.actions';
 import {TeamModel} from '../../store/team-model/team-model.model';
@@ -13,6 +13,8 @@ import {TeamModel} from '../../store/team-model/team-model.model';
 })
 export class CreateTeamComponent implements OnInit {
   teamForm: FormGroup;
+  errorMessage = "";
+  state = null;
 
   constructor(private fb: FormBuilder, private store: Store<DigitalRelayState>) {
     this.teamForm = this.fb.group({
@@ -21,6 +23,7 @@ export class CreateTeamComponent implements OnInit {
         this.fb.control('', [Validators.email, Validators.maxLength(maxLengths.email)])
       ])
     });
+    this.state = store.select(selectTeamsList);
   }
 
   get members() {
@@ -28,6 +31,9 @@ export class CreateTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.state.subscribe((state) => {
+      this.errorMessage = state.errorMessage
+    })
   }
 
   addMember() {

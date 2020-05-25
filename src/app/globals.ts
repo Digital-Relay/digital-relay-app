@@ -7,3 +7,4 @@ export const maxLengths = {
 
 export const passwordMinLength = 8;
 export const nrOfStages = 20;
+export const refreshTokenLocalStorage = "refreshToken";

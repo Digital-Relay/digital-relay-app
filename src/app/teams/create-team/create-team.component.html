@@ -31,5 +31,10 @@
         </mat-card-actions>
       </form>
     </mat-card-content>
+    <div *ngIf="errorMessage">
+      <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+    </div>
   </mat-card>
 </div>

@@ -7,13 +7,15 @@ export interface State {
   user: UserModel | null;
   errorMessage: string | null;
   token: string | null;
+  expiresAt: number | null;
 }
 
 export const initialState: State = {
   isLoggedIn: false,
   user: null,
   errorMessage: null,
-  token: null
+  token: null,
+  expiresAt: null
 };
 
 export const reducer = createReducer(
@@ -22,9 +24,11 @@ export const reducer = createReducer(
     ...state,
     isLoggedIn: true,
     token: "JWT " + action.access_token,
+    expiresAt: action.expires_at,
     user: action.user as UserModel
   })),
-  on(AuthActions.loginFailure, ((state, action) => ({...state, errorMessage: action.msg})))
+  on(AuthActions.loginFailure, ((state, action) => ({...state, errorMessage: action.msg}))),
+  on(AuthActions.logout, (() => ({...initialState})))
 );
 
 

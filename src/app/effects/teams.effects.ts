@@ -11,6 +11,7 @@ import {loadFailure, loadSuccess} from '../store/actions/teams.actions';
 import {loadTeamModels, upsertTeamModel} from '../store/team-model/team-model.actions';
 import {TeamModel} from '../store/team-model/team-model.model';
 import {Team} from '../api/models/team';
+import {Router} from "@angular/router";
 import PostTeamsParams = TeamsService.PostTeamsParams;
 
 @Injectable()
@@ -28,6 +29,7 @@ export class TeamsEffects {
     ofType('[Load] Load failure')
   ), {dispatch: false});
   private token: string;
+
   @Effect()
   load: Observable<any> = this.actions$.pipe(
     ofType('[Load] Load teams'),
@@ -40,6 +42,7 @@ export class TeamsEffects {
           return of(loadFailure(error.error));
         }));
     }));
+
   @Effect()
   create: Observable<any> = this.actions$.pipe(
     ofType('[Create] Create new team'),
@@ -53,6 +56,7 @@ export class TeamsEffects {
         Authorization: this.token
       } as unknown as PostTeamsParams).pipe(
         map((teams) => {
+          this.router.navigate(["teams", teams.id])
           return upsertTeamModel({teamModel: (teams as TeamModel)});
         }),
         catchError((error) => {
@@ -63,7 +67,8 @@ export class TeamsEffects {
   constructor(
     private actions$: Actions,
     private teamsService: TeamsService,
-    store: Store<DigitalRelayState>
+    store: Store<DigitalRelayState>,
+    private router: Router
   ) {
     this.state = store.select(selectUser);
     this.state.subscribe(state => this.token = state.token);

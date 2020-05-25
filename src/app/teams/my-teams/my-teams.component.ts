@@ -37,7 +37,7 @@ export class MapToArray implements PipeTransform {
   transform(value): any {
     let arr = [];
     for (let key in value) {
-      arr.push(value);
+      arr.push(value[key]);
     }
     return arr;
   }

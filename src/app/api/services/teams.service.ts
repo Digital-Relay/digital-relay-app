@@ -20,6 +20,7 @@ class TeamsService extends __BaseService {
   static readonly getTeamsPath = '/teams';
   static readonly postTeamsPath = '/teams';
   static readonly getTeamResourcePath = '/teams/{team_id}';
+  static readonly postTeamResourcePath = '/teams/{team_id}';
   static readonly getTeamMembersPath = '/teams/{team_id}/users';
 
   constructor(
@@ -56,7 +57,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve all teams that the current user belongs to
    * @param Authorization JWT auth token, format: JWT <access_token>
@@ -101,7 +101,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Create a new team
    * @param params The `TeamsService.PostTeamsParams` containing the following parameters:
@@ -158,6 +157,61 @@ class TeamsService extends __BaseService {
   }
 
   /**
+   * Update team information
+   * @param params The `TeamsService.PostTeamResourceParams` containing the following parameters:
+   *
+   * - `team_id`:
+   *
+   * - `payload`:
+   *
+   * - `Authorization`: JWT auth token, format: JWT <access_token>
+   *
+   * @return Team update successful
+   */
+  postTeamResourceResponse(params: TeamsService.PostTeamResourceParams): __Observable<__StrictHttpResponse<Team>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+
+    __body = params.payload;
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/teams/${encodeURIComponent(params.teamId)}`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Team>;
+      })
+    );
+  }
+
+  /**
+   * Update team information
+   * @param params The `TeamsService.PostTeamResourceParams` containing the following parameters:
+   *
+   * - `team_id`:
+   *
+   * - `payload`:
+   *
+   * - `Authorization`: JWT auth token, format: JWT <access_token>
+   *
+   * @return Team update successful
+   */
+  postTeamResource(params: TeamsService.PostTeamResourceParams): __Observable<Team> {
+    return this.postTeamResourceResponse(params).pipe(
+      __map(_r => _r.body as Team)
+    );
+  }
+
+  /**
    * Retrieve team members as user objects
    * @param team_id undefined
    * @return OK
@@ -184,7 +238,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve team members as user objects
    * @param team_id undefined
@@ -203,6 +256,19 @@ module TeamsService {
    * Parameters for postTeams
    */
   export interface PostTeamsParams {
+    payload: Team;
+
+    /**
+     * JWT auth token, format: JWT <access_token>
+     */
+    Authorization: string;
+  }
+
+  /**
+   * Parameters for postTeamResource
+   */
+  export interface PostTeamResourceParams {
+    teamId: string;
     payload: Team;
 
     /**

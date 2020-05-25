@@ -7,6 +7,5 @@ export {RegistrationResponse} from './models/registration-response';
 export {ResponseMetadata} from './models/response-metadata';
 export {RegistrationResponseBody} from './models/registration-response-body';
 export {RegistrationErrorKeys} from './models/registration-error-keys';
-export {JWTRefreshResponse} from './models/jwtrefresh-response';
 export {Team} from './models/team';
 export {TeamsList} from './models/teams-list';

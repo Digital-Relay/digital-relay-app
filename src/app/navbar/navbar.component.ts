@@ -6,6 +6,7 @@ import {Store} from '@ngrx/store';
 import {DigitalRelayState, selectUser} from '../store';
 import {State} from '../store/reducers/auth.reducer';
 import {UserModel} from '../store/user-model/user-model.model';
+import {logout} from "../store/actions/auth.actions";
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,7 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean;
   user: UserModel;
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, store: Store<DigitalRelayState>) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private store: Store<DigitalRelayState>) {
     this.state = store.select(selectUser);
     iconRegistry.addSvgIcon(
       'relay',
@@ -32,6 +33,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    console.log('I want out!!!');
+    this.store.dispatch(logout({}))
   }
 }

@@ -12,6 +12,16 @@ export const loginSuccess = createAction(
   props<JWTResponse>()
 );
 
+export const renewLogin = createAction(
+  '[Login] Renew login',
+  props<any>()
+);
+
+export const logout = createAction(
+  '[Logout]',
+  props<any>()
+);
+
 export const loginFailure = createAction(
   '[Login] Login failure',
   props<ErrorResponse>()

@@ -51,8 +51,8 @@ export const reducer = createReducer(
   on(TeamModelActions.clearTeamModels,
     state => adapter.removeAll(state)
   ),
-  on(load, ((state) => ({...state, loading: true}))),
-  on(loadSuccess, ((state) => ({...state, loading: false}))),
+  on(load, ((state) => ({...state, loading: true, errorMessage: ""}))),
+  on(loadSuccess, ((state) => ({...state, loading: false, errorMessage: ""}))),
   on(loadFailure, ((state, action) => ({...state, loading: false, errorMessage: action.msg}))),
 );
 

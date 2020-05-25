@@ -10,7 +10,6 @@ import {filter as __filter, map as __map} from 'rxjs/operators';
 import {User} from '../models/user';
 import {JWTResponse} from '../models/jwtresponse';
 import {LoginRequest} from '../models/login-request';
-import {JWTRefreshResponse} from '../models/jwtrefresh-response';
 import {RegistrationResponse} from '../models/registration-response';
 import {RegisterRequest} from '../models/register-request';
 
@@ -61,7 +60,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve current user's info
    * @param Authorization JWT auth token, format: JWT <access_token>
@@ -100,7 +98,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * Login as existing user
    * @param payload undefined
@@ -137,7 +134,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * @param Authorization JWT auth token, format: JWT <access_token>
    */
@@ -152,7 +148,7 @@ class AuthService extends __BaseService {
    * @param Authorization JWT refresh token, format: JWT <refresh_token>
    * @return Token refresh successful
    */
-  getTokenRefreshResponse(Authorization: string): __Observable<__StrictHttpResponse<JWTRefreshResponse>> {
+  getTokenRefreshResponse(Authorization: string): __Observable<__StrictHttpResponse<JWTResponse>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -170,7 +166,7 @@ class AuthService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<JWTRefreshResponse>;
+        return _r as __StrictHttpResponse<JWTResponse>;
       })
     );
   }
@@ -180,9 +176,9 @@ class AuthService extends __BaseService {
    * @param Authorization JWT refresh token, format: JWT <refresh_token>
    * @return Token refresh successful
    */
-  getTokenRefresh(Authorization: string): __Observable<JWTRefreshResponse> {
+  getTokenRefresh(Authorization: string): __Observable<JWTResponse> {
     return this.getTokenRefreshResponse(Authorization).pipe(
-      __map(_r => _r.body as JWTRefreshResponse)
+      __map(_r => _r.body as JWTResponse)
     );
   }
 

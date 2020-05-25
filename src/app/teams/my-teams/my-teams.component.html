@@ -3,7 +3,7 @@
   <div *ngIf="loading" class="empty d-flex flex-column justify-content-center align-items-center">
     <mat-spinner></mat-spinner>
   </div>
-  <ng-container *ngIf="(teams | mapToArray) > 0; else empty">
+  <ng-container *ngIf="(teams | mapToArray).length > 0; else empty">
     <div *ngFor="let team of teams | mapToArray" class="mb-2">
       <app-team [team]="team"></app-team>
     </div>
