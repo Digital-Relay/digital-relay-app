@@ -13,7 +13,10 @@
     </a>
   </div>
   <mat-menu #appMenu="matMenu">
-    <button (click)="logout()" *ngIf="isLoggedIn" mat-menu-item>Odhlásiť</button>
+    <div *ngIf="isLoggedIn">
+      <a mat-menu-item routerLink="/edit-profile">Upraviť profil</a>
+      <button (click)="logout()" mat-menu-item>Odhlásiť</button>
+    </div>
     <a mat-menu-item routerLink="/about">O aplikácii...</a>
   </mat-menu>
 

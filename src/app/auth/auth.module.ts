@@ -13,10 +13,12 @@ import {LoginFormComponent} from './login-form/login-form.component';
 import {RegisterFormComponent} from './register-form/register-form.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, RegisterFormComponent, LoginFormComponent, RegisterFormComponent],
+  declarations: [LoginComponent, RegisterComponent, RegisterFormComponent, LoginFormComponent, RegisterFormComponent, EditProfileComponent],
   exports: [
     LoginFormComponent,
     RegisterFormComponent
@@ -31,7 +33,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDividerModule
   ]
 })
 export class AuthModule {
