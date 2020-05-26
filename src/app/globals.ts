@@ -1,3 +1,5 @@
+import {AbstractControl} from '@angular/forms';
+
 export const maxLengths = {
   email: 255,
   password: 128,
@@ -9,7 +11,7 @@ export const passwordMinLength = 8;
 export const nrOfStages = 20;
 export const refreshTokenLocalStorage = 'refreshToken';
 
-export function errorMessages(field): string {
+export function errorMessages(field: AbstractControl): string {
   if (field.hasError('email')) {
     return 'Neplatný e-mail.';
   }
@@ -31,4 +33,5 @@ export function errorMessages(field): string {
   if (field.hasError('max')) {
     return 'Príliš vysoká hodnota.';
   }
+  return '';
 }

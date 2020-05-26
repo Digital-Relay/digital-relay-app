@@ -10,7 +10,7 @@ import {
   Validators
 } from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {maxLengths, passwordMinLength} from '../../globals';
+import {errorMessages, maxLengths, passwordMinLength} from '../../globals';
 
 export interface RegisterFormValues {
   email: string;
@@ -76,27 +76,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   getErrorMessage(field: string) {
-    if (this.formGroup.get(field).hasError('email')) {
-      return 'Neplatný e-mail.';
-    }
-    if (this.formGroup.get(field).hasError('passwordsDontMatch')) {
-      return 'Heslá sa nezhodujú.';
-    }
-    if (this.formGroup.get(field).hasError('required')) {
-      return 'Toto pole je povinné.';
-    }
-    if (this.formGroup.get(field).hasError('maxlength')) {
-      return 'Zadaná hodnota je príliš dlhá.';
-    }
-    if (this.formGroup.get(field).hasError('minlength')) {
-      return `Heslo musí mať aspoň ${passwordMinLength} znakov.`;
-    }
-    if (this.formGroup.get(field).hasError('min')) {
-      return 'Príliš nízka hodnota.';
-    }
-    if (this.formGroup.get(field).hasError('max')) {
-      return 'Príliš vysoká hodnota.';
-    }
+    return errorMessages(this.formGroup.get(field));
   }
 
   ngOnDestroy() {

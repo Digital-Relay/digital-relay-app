@@ -6,7 +6,7 @@ import {DigitalRelayState, selectUser} from '../../store';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Observable} from 'rxjs';
 import {State} from '../../store/reducers/auth.reducer';
-import {maxLengths} from '../../globals';
+import {errorMessages, maxLengths} from '../../globals';
 
 @Component({
   selector: 'app-member-list',
@@ -30,16 +30,7 @@ export class MemberListComponent implements OnInit {
   }
 
   getErrorMessage(field: string) {
-    if (this.teamForm.get(field).hasError('email')) {
-      return 'Neplatný e-mail.';
-    }
-    if (this.teamForm.get(field).hasError('required')) {
-      return 'Toto pole je povinné.';
-    }
-    if (this.teamForm.get(field).hasError('maxlength')) {
-      return 'Zadaná hodnota je príliš dlhá.';
-    }
-    return '';
+    return errorMessages(this.teamForm.get(field));
   }
 
   onSubmit() {

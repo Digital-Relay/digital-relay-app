@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {maxLengths} from '../../globals';
+import {errorMessages, maxLengths} from '../../globals';
 import {DigitalRelayState, selectTeamsList} from '../../store';
 import {Store} from '@ngrx/store';
 import {create} from '../../store/actions/teams.actions';
@@ -13,7 +13,7 @@ import {TeamModel} from '../../store/team-model/team-model.model';
 })
 export class CreateTeamComponent implements OnInit {
   teamForm: FormGroup;
-  errorMessage = "";
+  errorMessage = '';
   state = null;
 
   constructor(private fb: FormBuilder, private store: Store<DigitalRelayState>) {
@@ -32,8 +32,8 @@ export class CreateTeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.state.subscribe((state) => {
-      this.errorMessage = state.errorMessage
-    })
+      this.errorMessage = state.errorMessage;
+    });
   }
 
   addMember() {
@@ -58,15 +58,7 @@ export class CreateTeamComponent implements OnInit {
   }
 
   getErrorMessage(field: string) {
-    if (this.teamForm.get(field).hasError('email')) {
-      return 'Neplatný e-mail.';
-    }
-    if (this.teamForm.get(field).hasError('required')) {
-      return 'Toto pole je povinné.';
-    }
-    if (this.teamForm.get(field).hasError('maxlength')) {
-      return 'Zadaná hodnota je príliš dlhá.';
-    }
+    return errorMessages(this.teamForm.get(field));
   }
 }
 
