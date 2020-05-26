@@ -25,14 +25,16 @@ import {AuthEffects} from './effects/auth.effects';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
-import {TeamsEffects} from "./effects/teams.effects";
+import {TeamsEffects} from './effects/teams.effects';
+import {AboutComponent} from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
