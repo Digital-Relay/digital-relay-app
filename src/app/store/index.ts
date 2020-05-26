@@ -24,4 +24,7 @@ export const selectLoginStatus = (state: DigitalRelayState) => state.auth.isLogg
 export const selectTeamsList = (state: DigitalRelayState) => state.teamModel;
 
 
-export const initialTestState = {auth: {isLoggedIn: false}};
+export const initialTestState = {
+  auth: {isLoggedIn: false},
+  teamModel: fromTeamModel.initialState
+};

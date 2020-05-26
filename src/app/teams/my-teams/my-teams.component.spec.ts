@@ -1,6 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MyTeamsComponent} from './my-teams.component';
+import {MapToArray, MyTeamsComponent} from './my-teams.component';
+import {provideMockStore} from '@ngrx/store/testing';
+import {initialTestState} from '../../store';
 
 describe('MyTeamsComponent', () => {
   let component: MyTeamsComponent;
@@ -8,7 +10,10 @@ describe('MyTeamsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MyTeamsComponent]
+      declarations: [MyTeamsComponent, MapToArray],
+      providers: [
+        provideMockStore({initialState: initialTestState})
+      ]
     })
       .compileComponents();
   }));

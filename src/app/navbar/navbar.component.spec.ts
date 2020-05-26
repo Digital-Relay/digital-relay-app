@@ -7,6 +7,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {HttpClientModule} from '@angular/common/http';
+import {provideMockStore} from '@ngrx/store/testing';
+import {initialTestState} from '../store';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -22,7 +24,10 @@ describe('NavbarComponent', () => {
         MatDividerModule,
         HttpClientModule
       ],
-      declarations: [NavbarComponent]
+      declarations: [NavbarComponent],
+      providers: [
+        provideMockStore({initialState: initialTestState})
+      ]
     })
       .compileComponents();
   }));
