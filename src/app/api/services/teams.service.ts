@@ -223,8 +223,10 @@ class TeamsService extends __BaseService {
    * - `payload`:
    *
    * - `Authorization`: JWT auth token, format: JWT <access_token>
+   *
+   * @return OK
    */
-  postStagesResponse(params: TeamsService.PostStagesParams): __Observable<__StrictHttpResponse<null>> {
+  postStagesResponse(params: TeamsService.PostStagesParams): __Observable<__StrictHttpResponse<Team>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -246,7 +248,7 @@ class TeamsService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<null>;
+        return _r as __StrictHttpResponse<Team>;
       })
     );
   }
@@ -260,26 +262,36 @@ class TeamsService extends __BaseService {
    * - `payload`:
    *
    * - `Authorization`: JWT auth token, format: JWT <access_token>
+   *
+   * @return OK
    */
-  postStages(params: TeamsService.PostStagesParams): __Observable<null> {
+  postStages(params: TeamsService.PostStagesParams): __Observable<Team> {
     return this.postStagesResponse(params).pipe(
-      __map(_r => _r.body as null)
+      __map(_r => _r.body as Team)
     );
   }
 
   /**
    * Retrieve team members as user objects
-   * @param team_id undefined
+   * @param params The `TeamsService.GetTeamMembersParams` containing the following parameters:
+   *
+   * - `team_id`:
+   *
+   * - `Authorization`: JWT auth token, format: JWT <access_token>
+   *
    * @return OK
    */
-  getTeamMembersResponse(teamId: string): __Observable<__StrictHttpResponse<UserList>> {
+  getTeamMembersResponse(params: TeamsService.GetTeamMembersParams): __Observable<__StrictHttpResponse<UserList>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (params.Authorization != null) {
+      __headers = __headers.set('Authorization', params.Authorization.toString());
+    }
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/teams/${encodeURIComponent(teamId)}/users`,
+      this.rootUrl + `/teams/${encodeURIComponent(params.teamId)}/users`,
       __body,
       {
         headers: __headers,
@@ -297,11 +309,16 @@ class TeamsService extends __BaseService {
 
   /**
    * Retrieve team members as user objects
-   * @param team_id undefined
+   * @param params The `TeamsService.GetTeamMembersParams` containing the following parameters:
+   *
+   * - `team_id`:
+   *
+   * - `Authorization`: JWT auth token, format: JWT <access_token>
+   *
    * @return OK
    */
-  getTeamMembers(teamId: string): __Observable<UserList> {
-    return this.getTeamMembersResponse(teamId).pipe(
+  getTeamMembers(params: TeamsService.GetTeamMembersParams): __Observable<UserList> {
+    return this.getTeamMembersResponse(params).pipe(
       __map(_r => _r.body as UserList)
     );
   }
@@ -346,7 +363,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Add users to team
    *
@@ -401,6 +417,18 @@ module TeamsService {
   export interface PostStagesParams {
     teamId: string;
     payload: EditStagesRequest;
+
+    /**
+     * JWT auth token, format: JWT <access_token>
+     */
+    Authorization: string;
+  }
+
+  /**
+   * Parameters for getTeamMembers
+   */
+  export interface GetTeamMembersParams {
+    teamId: string;
 
     /**
      * JWT auth token, format: JWT <access_token>

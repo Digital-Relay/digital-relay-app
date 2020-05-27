@@ -55,7 +55,6 @@ class UsersService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve current user's info
    * @param Authorization JWT auth token, format: JWT <access_token>
@@ -102,7 +101,6 @@ class UsersService extends __BaseService {
       })
     );
   }
-
   /**
    * Update current user's info
    * @param params The `UsersService.PostUserResourceParams` containing the following parameters:

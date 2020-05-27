@@ -33,7 +33,7 @@ export class UsersEffects {
     ofType('[Users] Load users'),
     map(value => value as { teamId: string }),
     switchMap((team) => {
-      return this.teamsService.getTeamMembers(team.teamId).pipe(
+      return this.teamsService.getTeamMembers({teamId: team.teamId, Authorization: this.token}).pipe(
         map((users) => {
           return loadSuccess(users as UserList);
         }),
