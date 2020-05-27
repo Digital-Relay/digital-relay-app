@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ConfirmDialogComponent, ConfirmDialogModel} from 'src/app/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {DigitalRelayState, selectUsersList} from '../../store';
+import {DigitalRelayState, selectCurrentEmail, selectUsersList} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {UserModel} from '../../store/user-model/user-model.model';
 import {map} from 'rxjs/operators';
 import {adapter} from '../../store/user-model/user-model.reducer';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-member',
@@ -19,8 +20,10 @@ export class MemberComponent implements OnInit {
   email: any;
   user: UserModel;
   userName: string;
+  currentEmail$: Observable<string>;
 
   constructor(private dialog: MatDialog, private store: Store<DigitalRelayState>) {
+    this.currentEmail$ = this.store.pipe(select(selectCurrentEmail));
   }
 
   confirmDialog(): void {
@@ -53,5 +56,10 @@ export class MemberComponent implements OnInit {
         this.user = {name: this.email, email: this.email, id: '', tempo: 0};
       }
     });
+
+  }
+
+  getTempoString() {
+    return `Tempo: ${Math.floor(this.user.tempo / 60)}:${this.user.tempo % 60}/km`;
   }
 }

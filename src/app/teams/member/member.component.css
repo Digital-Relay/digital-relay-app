@@ -4,6 +4,8 @@ p.name {
 
 p.email {
   font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 p {
