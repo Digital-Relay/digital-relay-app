@@ -20,6 +20,10 @@ export class TeamPageComponent implements OnInit {
 
   constructor(private store: Store<DigitalRelayState>, private readonly route: ActivatedRoute, private router: Router
   ) {
+  }
+
+  public ngOnInit() {
+
     this.route.paramMap.pipe(
       map(_ => _.get('id')),
       switchMap((id) => {
@@ -35,10 +39,6 @@ export class TeamPageComponent implements OnInit {
       this.team = team;
       this.store.dispatch(load({teamId: team.id}));
     });
-  }
-
-  public ngOnInit() {
-
   }
 
   onMemberAdded($event) {
