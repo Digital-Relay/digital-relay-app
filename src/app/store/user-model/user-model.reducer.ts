@@ -9,7 +9,14 @@ export interface State extends EntityState<UserModel> {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<UserModel> = createEntityAdapter<UserModel>();
+export const adapter: EntityAdapter<UserModel> = createEntityAdapter<UserModel>({
+  selectId: (user) => {
+    if (user.id) {
+      return user.id;
+    }
+    return `unknwn_${user.email}`;
+  }
+});
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
