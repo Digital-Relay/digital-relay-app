@@ -5,12 +5,13 @@ import {AuthService} from '../api/services/auth.service';
 import {LoginRequest} from '../api/models/login-request';
 import {catchError, filter, map, switchMap} from 'rxjs/operators';
 import {loginFailure, loginSuccess, renewLogin} from '../store/actions/auth.actions';
-import {JWTResponse} from "../api/models/jwtresponse";
-import {Observable, of} from "rxjs";
-import {DigitalRelayState} from "../store";
-import {Store} from "@ngrx/store";
-import {refreshTokenLocalStorage} from "../globals";
-import {Router} from "@angular/router";
+import {JWTResponse} from '../api/models/jwtresponse';
+import {Observable, of} from 'rxjs';
+import {DigitalRelayState} from '../store';
+import {Store} from '@ngrx/store';
+import {refreshTokenLocalStorage} from '../globals';
+import {Router} from '@angular/router';
+import {clearTeamModels} from '../store/team-model/team-model.actions';
 
 
 @Injectable()
@@ -28,7 +29,7 @@ export class AuthEffects {
         }),
         catchError((error) => {
           return of(loginFailure(error.error));
-        }))
+        }));
     }));
 
   @Effect()
@@ -43,7 +44,7 @@ export class AuthEffects {
         map((user: JWTResponse) => loginSuccess(user)),
         catchError((error) => {
           return of(loginFailure(error.error));
-        }))
+        }));
     }));
 
 
@@ -53,14 +54,14 @@ export class AuthEffects {
     map(value => value as JWTResponse),
     map((action, num) => {
       if (action.refresh_token != null) {
-        localStorage.setItem(refreshTokenLocalStorage, "JWT " + action.refresh_token)
+        localStorage.setItem(refreshTokenLocalStorage, 'JWT ' + action.refresh_token);
       }
       if (this.intervalId != null) {
-        clearInterval(this.intervalId)
+        clearInterval(this.intervalId);
       }
       setInterval(() => {
-        this.store.dispatch(renewLogin({}))
-      }, action.expires_at * 1000 - Date.now())
+        this.store.dispatch(renewLogin({}));
+      }, action.expires_at * 1000 - Date.now());
     })
   ), {dispatch: false});
 
@@ -72,9 +73,10 @@ export class AuthEffects {
     ofType('[Logout]'),
     map(() => {
       localStorage.removeItem(refreshTokenLocalStorage);
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
+      return clearTeamModels();
     })
-  ), {dispatch: false})
+  ));
 
   constructor(
     private actions$: Actions,
