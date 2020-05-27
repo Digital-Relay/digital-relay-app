@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ConfirmDialogComponent, ConfirmDialogModel} from 'src/app/confirm-dialog/confirm-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {DigitalRelayState, selectUsersList} from '../../store';
@@ -13,6 +13,8 @@ import {adapter} from '../../store/user-model/user-model.reducer';
   styleUrls: ['./member.component.css']
 })
 export class MemberComponent implements OnInit {
+  @Output()
+  public delete = new EventEmitter<{ email: string }>();
   @Input()
   email: any;
   user: UserModel;
@@ -31,7 +33,9 @@ export class MemberComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      if (dialogResult) {
+        this.delete.emit({email: this.user.email});
+      }
     });
   }
 

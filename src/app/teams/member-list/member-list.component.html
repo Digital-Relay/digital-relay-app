@@ -3,7 +3,7 @@
     <div class="col">
       <h2>Členovia tímu</h2>
       <div *ngFor="let member of team.members" class="mb-2">
-        <app-member [email]="member"></app-member>
+        <app-member (delete)="onMemberDelete($event)" [email]="member"></app-member>
       </div>
     </div>
   </div>

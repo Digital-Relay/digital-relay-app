@@ -42,4 +42,9 @@ export class TeamPageComponent implements OnInit {
     this.store.dispatch(uploadTeamModel({teamModel: team as TeamModel}));
   }
 
+  onMemberRemoved($event: { email: string }) {
+    const team = {...this.team, members: this.team.members.filter((value) => (value != $event.email))};
+    delete team.stages;
+    this.store.dispatch(uploadTeamModel({teamModel: team as TeamModel}));
+  }
 }

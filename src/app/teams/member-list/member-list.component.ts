@@ -16,6 +16,8 @@ import {errorMessages, maxLengths} from '../../globals';
 export class MemberListComponent implements OnInit {
   @Output()
   memberAdded = new EventEmitter<{ email: string }>();
+  @Output()
+  memberRemoved = new EventEmitter<{ email: string }>();
   @Input()
   team: any;
   teamForm: FormGroup;
@@ -41,4 +43,7 @@ export class MemberListComponent implements OnInit {
     this.teamForm.reset();
   }
 
+  onMemberDelete($event: { email: string }) {
+    this.memberRemoved.emit($event);
+  }
 }
