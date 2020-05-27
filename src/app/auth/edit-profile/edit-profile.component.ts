@@ -1,38 +1,54 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserModel} from '../../store/user-model/user-model.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {errorMessages, maxLengths} from '../../globals';
+import {select, Store} from '@ngrx/store';
+import {DigitalRelayState, selectUser} from '../../store';
+import {Observable} from 'rxjs';
+import {uploadProfile} from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, OnDestroy {
   public form: FormGroup;
-  public user: UserModel = {
-    id: '5ec966e29f49583e027519cb',
-    email: 'm.pilnan@gmail.com',
-    name: 'Matúš Pilňan',
-    tempo: 65
-  };
+  public user$: Observable<UserModel>;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<DigitalRelayState>) {
     this.form = fb.group({
-      name: [this.user.name, [Validators.required, Validators.maxLength(maxLengths.name)]],
-      tempoMinutes: [Math.floor(this.user.tempo / 60), [Validators.required, Validators.min(0)]],
-      tempoSeconds: [this.user.tempo % 60, [Validators.required, Validators.min(0), Validators.max(59)]]
+      name: ['', [Validators.required, Validators.maxLength(maxLengths.name)]],
+      tempoMinutes: ['', [Validators.required, Validators.min(0)]],
+      tempoSeconds: ['', [Validators.required, Validators.min(0), Validators.max(59)]]
     });
+
   }
 
   ngOnInit(): void {
+    this.user$ = this.store.pipe(
+      select(selectUser),
+      select(auth => {
+        this.form.get('name').setValue(auth.user.name);
+        this.form.get('tempoMinutes').setValue(Math.floor(auth.user.tempo / 60));
+        this.form.get('tempoSeconds').setValue(auth.user.tempo % 60);
+        return auth.user;
+      })
+    );
   }
 
   onSubmit() {
-    console.log('edit');
+    const tempo = this.form.value.tempoMinutes * 60 + this.form.value.tempoSeconds;
+    // console.log('edit');
+    // console.log(tempo);
+    // console.log(this.form.value);
+    this.store.dispatch(uploadProfile({user: {name: this.form.value.name, tempo} as UserModel}));
   }
 
   getErrorMessage(field: string) {
     return errorMessages(this.form.get(field));
+  }
+
+  ngOnDestroy(): void {
   }
 }
