@@ -33,5 +33,8 @@ export function errorMessages(field: AbstractControl): string {
   if (field.hasError('max')) {
     return 'Príliš vysoká hodnota.';
   }
+  if (field.hasError('alreadyIsMember')) {
+    return 'Tento používateľ už je členom tohoto tímu.';
+  }
   return '';
 }
