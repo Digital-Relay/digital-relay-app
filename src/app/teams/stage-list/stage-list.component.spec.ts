@@ -1,6 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {StageListComponent} from './stage-list.component';
+import {provideMockStore} from '@ngrx/store/testing';
+import {initialTestState} from '../../store';
 
 describe('StageListComponent', () => {
   let component: StageListComponent;
@@ -8,7 +10,10 @@ describe('StageListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [StageListComponent]
+      declarations: [StageListComponent],
+      providers: [
+        provideMockStore({initialState: initialTestState})
+      ]
     })
       .compileComponents();
   }));
