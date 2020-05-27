@@ -1,11 +1,14 @@
+p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 p.name {
   font-weight: bold;
 }
 
 p.email {
   font-style: italic;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 p {
