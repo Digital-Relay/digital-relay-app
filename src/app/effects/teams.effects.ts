@@ -11,7 +11,7 @@ import {loadFailure, loadSuccess} from '../store/actions/teams.actions';
 import {loadTeamModels, upsertTeamModel} from '../store/team-model/team-model.actions';
 import {TeamModel} from '../store/team-model/team-model.model';
 import {Team} from '../api/models/team';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 import PostTeamsParams = TeamsService.PostTeamsParams;
 
 @Injectable()
@@ -22,9 +22,10 @@ export class TeamsEffects {
   loadSuccess$ = createEffect(() => this.actions$.pipe(
     ofType('[Load] Load success'),
     map((teams: TeamsList) => {
-      return loadTeamModels({teamModels: teams.teams.map(team => team as TeamModel)});
+      return loadTeamModels({teamModels: teams.teams as TeamModel[]});
     })
-  ), {dispatch: false});
+  ));
+
   loadFailure$ = createEffect(() => this.actions$.pipe(
     ofType('[Load] Load failure')
   ), {dispatch: false});
@@ -56,7 +57,7 @@ export class TeamsEffects {
         Authorization: this.token
       } as unknown as PostTeamsParams).pipe(
         map((teams) => {
-          this.router.navigate(["teams", teams.id])
+          this.router.navigate(['teams', teams.id]);
           return upsertTeamModel({teamModel: (teams as TeamModel)});
         }),
         catchError((error) => {
