@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DigitalRelayState, selectTeamsList} from '../../store';
 import {select, Store} from '@ngrx/store';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 import {adapter} from '../../store/team-model/team-model.reducer';
 import {Team} from '../../api/models/team';
@@ -18,11 +18,8 @@ export class TeamPageComponent implements OnInit {
 
   team: Team = null;
 
-  constructor(private store: Store<DigitalRelayState>, private readonly route: ActivatedRoute,
+  constructor(private store: Store<DigitalRelayState>, private readonly route: ActivatedRoute, private router: Router
   ) {
-  }
-
-  public ngOnInit() {
     this.route.paramMap.pipe(
       map(_ => _.get('id')),
       switchMap((id) => {
@@ -32,9 +29,16 @@ export class TeamPageComponent implements OnInit {
           select(entities => entities[id])
         );
       })).subscribe(team => {
+      if (!team) {
+        this.router.navigate(['teams', 'my']);
+      }
       this.team = team;
       this.store.dispatch(load({teamId: team.id}));
     });
+  }
+
+  public ngOnInit() {
+
   }
 
   onMemberAdded($event) {
