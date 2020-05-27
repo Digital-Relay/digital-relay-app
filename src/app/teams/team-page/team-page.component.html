@@ -16,7 +16,7 @@
       <app-stage-list [team]="team"></app-stage-list>
     </mat-tab>
     <mat-tab label="Správa tímu">
-      <app-member-list [team]="team"></app-member-list>
+      <app-member-list (memberAdded)="onMemberAdded($event)" [team]="team"></app-member-list>
     </mat-tab>
   </mat-tab-group>
 </div>

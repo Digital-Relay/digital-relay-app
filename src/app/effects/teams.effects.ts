@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, Effect, ofType} from '@ngrx/effects';
 import {Observable, of} from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {catchError, map, mergeMap, switchMap} from 'rxjs/operators';
 import {TeamsService} from '../api/services';
 import {State} from '../store/reducers/auth.reducer';
 import {Store} from '@ngrx/store';
@@ -82,6 +82,16 @@ export class TeamsEffects {
           return upsertTeamModel({teamModel: (teams as TeamModel)});
         }));
     }));
+
+  uploadTeamModel$ = createEffect(() => this.actions$.pipe(
+    ofType('[TeamModel] Upload TeamModel'),
+    mergeMap((action: any) => this.teamsService.postTeamResource({
+      payload: action.teamModel,
+      teamId: action.teamModel.id,
+      Authorization: this.token
+    })),
+    map(teamModel => upsertTeamModel({teamModel: teamModel as TeamModel}))
+  ));
 
   constructor(
     private actions$: Actions,

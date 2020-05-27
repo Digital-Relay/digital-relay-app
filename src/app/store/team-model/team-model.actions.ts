@@ -51,3 +51,8 @@ export const deleteTeamModels = createAction(
 export const clearTeamModels = createAction(
   '[TeamModel/API] Clear TeamModels'
 );
+
+export const uploadTeamModel = createAction(
+  '[TeamModel] Upload TeamModel',
+  props<{ teamModel: TeamModel }>()
+);

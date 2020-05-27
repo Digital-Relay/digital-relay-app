@@ -39,9 +39,6 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const tempo = this.form.value.tempoMinutes * 60 + this.form.value.tempoSeconds;
-    // console.log('edit');
-    // console.log(tempo);
-    // console.log(this.form.value);
     this.store.dispatch(uploadProfile({user: {name: this.form.value.name, tempo} as UserModel}));
   }
 

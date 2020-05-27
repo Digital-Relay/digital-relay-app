@@ -6,6 +6,8 @@ import {map, switchMap} from 'rxjs/operators';
 import {adapter} from '../../store/team-model/team-model.reducer';
 import {Team} from '../../api/models/team';
 import {load} from '../../store/actions/users.actions';
+import {uploadTeamModel} from '../../store/team-model/team-model.actions';
+import {TeamModel} from '../../store/team-model/team-model.model';
 
 @Component({
   selector: 'app-team-page',
@@ -33,6 +35,11 @@ export class TeamPageComponent implements OnInit {
       this.team = team;
       this.store.dispatch(load({teamId: team.id}));
     });
+  }
+
+  onMemberAdded($event) {
+    const team = {...this.team, members: [...this.team.members, $event.email]};
+    this.store.dispatch(uploadTeamModel({teamModel: team as TeamModel}));
   }
 
 }

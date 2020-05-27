@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.errorMessage = state.errorMessage;
       this.inProgress = false;
       if (state.isLoggedIn) {
-        console.log('hej');
         this.router.navigate(['teams', 'my']);
       }
     });

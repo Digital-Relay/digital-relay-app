@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
@@ -14,6 +14,8 @@ import {errorMessages, maxLengths} from '../../globals';
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
+  @Output()
+  memberAdded = new EventEmitter<{ email: string }>();
   @Input()
   team: any;
   teamForm: FormGroup;
@@ -34,9 +36,7 @@ export class MemberListComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.teamForm.value);
-
-    // po uspesnom odoslani poziadavky
+    this.memberAdded.emit(this.teamForm.value);
     this.snackBar.open('Pozvánka bola odoslaná', 'OK', {duration: 3000});
     this.teamForm.reset();
   }
