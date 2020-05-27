@@ -1,6 +1,7 @@
 import {createAction, props} from '@ngrx/store';
 import {JWTResponse} from '../../api/models/jwtresponse';
 import {ErrorResponse} from '../../api/models/error-response';
+import {UserModel} from '../user-model/user-model.model';
 
 export const login = createAction(
   '[Login] Login request',
@@ -25,4 +26,14 @@ export const logout = createAction(
 export const loginFailure = createAction(
   '[Login] Login failure',
   props<ErrorResponse>()
+);
+
+export const uploadProfile = createAction(
+  '[Profile] Upload',
+  props<{ user: UserModel }>()
+);
+
+export const editProfile = createAction(
+  '[Profile] Edit',
+  props<{ user: UserModel }>()
 );

@@ -5,6 +5,7 @@ import {ApiConfiguration, ApiConfigurationInterface} from './api-configuration';
 
 import {AuthService} from './services/auth.service';
 import {TeamsService} from './services/teams.service';
+import {UsersService} from './services/users.service';
 
 /**
  * Provider for all Api services, plus ApiConfiguration
@@ -20,7 +21,8 @@ import {TeamsService} from './services/teams.service';
   providers: [
     ApiConfiguration,
     AuthService,
-    TeamsService
+    TeamsService,
+    UsersService
   ],
 })
 export class ApiModule {

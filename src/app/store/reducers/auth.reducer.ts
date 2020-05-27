@@ -23,10 +23,11 @@ export const reducer = createReducer(
   on(AuthActions.loginSuccess, (state, action) => ({
     ...state,
     isLoggedIn: true,
-    token: "JWT " + action.access_token,
+    token: 'JWT ' + action.access_token,
     expiresAt: action.expires_at,
     user: action.user as UserModel
   })),
+  on(AuthActions.editProfile, ((state, action) => ({...state, user: {...state.user, ...action.user}}))),
   on(AuthActions.loginFailure, ((state, action) => ({...state, errorMessage: action.msg}))),
   on(AuthActions.logout, (() => ({...initialState})))
 );
