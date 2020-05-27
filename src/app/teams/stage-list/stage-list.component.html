@@ -1,3 +1,7 @@
 <div *ngFor="let s of stages; let i=index" class="mt-2">
-  <app-stage (stageChange)="updateStage($event, i)" [index]="i" [members]="members"></app-stage>
+  <app-stage (stageChange)="updateStage($event, i)" [index]="i" [team]="team"></app-stage>
 </div>
+<a mat-raised-button routerLink="/teams/my">Zrušiť</a>
+<button (click)="submit()"
+        color="primary" mat-raised-button>Uložiť
+</button>

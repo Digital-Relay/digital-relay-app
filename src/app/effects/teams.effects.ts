@@ -12,6 +12,7 @@ import {loadTeamModels, upsertTeamModel} from '../store/team-model/team-model.ac
 import {TeamModel} from '../store/team-model/team-model.model';
 import {Team} from '../api/models/team';
 import {Router} from '@angular/router';
+import {Stage} from '../api/models';
 import PostTeamsParams = TeamsService.PostTeamsParams;
 
 @Injectable()
@@ -20,20 +21,20 @@ export class TeamsEffects {
   state: Observable<State>;
   // noinspection JSUnusedLocalSymbols
   loadSuccess$ = createEffect(() => this.actions$.pipe(
-    ofType('[Load] Load success'),
+    ofType('[Teams] Load success'),
     map((teams: TeamsList) => {
       return loadTeamModels({teamModels: teams.teams as TeamModel[]});
     })
   ));
 
   loadFailure$ = createEffect(() => this.actions$.pipe(
-    ofType('[Load] Load failure')
+    ofType('[Teams] Load failure')
   ), {dispatch: false});
   private token: string;
 
   @Effect()
   load: Observable<any> = this.actions$.pipe(
-    ofType('[Load] Load teams'),
+    ofType('[Teams] Load teams'),
     switchMap(() => {
       return this.teamsService.getTeams(this.token).pipe(
         map((teams) => {
@@ -46,7 +47,7 @@ export class TeamsEffects {
 
   @Effect()
   create: Observable<any> = this.actions$.pipe(
-    ofType('[Create] Create new team'),
+    ofType('[Teams] Create new team'),
     map(value => value as TeamModel),
     switchMap((action) => {
       return this.teamsService.postTeams({
@@ -62,6 +63,23 @@ export class TeamsEffects {
         }),
         catchError((error) => {
           return of(loadFailure(error.error));
+        }));
+    }));
+
+  @Effect()
+  update: Observable<any> = this.actions$.pipe(
+    ofType('[Teams] Update team stages'),
+    map(value => value as { teamId: string, stages: Stage[] }),
+    switchMap((action) => {
+      return this.teamsService.postStages({
+        teamId: action.teamId,
+        payload: {
+          stages: action.stages
+        },
+        Authorization: this.token
+      }).pipe(
+        map((teams) => {
+          return upsertTeamModel({teamModel: (teams as TeamModel)});
         }));
     }));
 

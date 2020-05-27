@@ -15,8 +15,8 @@
     <div class="col-sm">
       <mat-form-field appearance="outline" class="d-block">
         <mat-label>Bežec</mat-label>
-        <mat-select (valueChange)="onValueChange($event)">
-          <mat-option *ngFor="let m of members" [value]="m">{{m.name ? m.name : m.email}}</mat-option>
+        <mat-select (valueChange)="onValueChange($event)" [(value)]="selectedUserValue">
+          <mat-option *ngFor="let u of users" [value]="u.email">{{u.name ? u.name : u.email}}</mat-option>
         </mat-select>
         <mat-hint>Priraďte bežca na tento úsek</mat-hint>
       </mat-form-field>

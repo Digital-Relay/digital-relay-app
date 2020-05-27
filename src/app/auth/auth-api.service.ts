@@ -14,7 +14,6 @@ export class AuthApiService {
   login(email: string, password: string) {
     return this.api.postLogin({email, password} as LoginRequest).toPromise().then((jwt) => {
       this.storeToken(jwt.access_token);
-      console.log(jwt);
     });
   }
 

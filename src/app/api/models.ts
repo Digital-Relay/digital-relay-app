@@ -1,7 +1,7 @@
 export {LoginRequest} from './models/login-request';
 export {ErrorResponse} from './models/error-response';
-export {User} from './models/user';
 export {JWTResponse} from './models/jwtresponse';
+export {User} from './models/user';
 export {RegisterRequest} from './models/register-request';
 export {RegistrationResponse} from './models/registration-response';
 export {ResponseMetadata} from './models/response-metadata';
@@ -9,3 +9,7 @@ export {RegistrationResponseBody} from './models/registration-response-body';
 export {RegistrationErrorKeys} from './models/registration-error-keys';
 export {Team} from './models/team';
 export {TeamsList} from './models/teams-list';
+export {AddMembersRequest} from './models/add-members-request';
+export {UserList} from './models/user-list';
+export {EditStagesRequest} from './models/edit-stages-request';
+export {Stage} from './models/stage';

@@ -29,7 +29,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.inProgress = true;
-    console.log(this.registerForm.value);
     const email = this.registerForm.value.registration.emailField;
     const name = this.registerForm.value.registration.nameField;
     const password = this.registerForm.value.registration.passwordField;
