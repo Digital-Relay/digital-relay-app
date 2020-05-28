@@ -2,3 +2,11 @@ mat-form-field {
   margin-top: 15px;
   display: block;
 }
+
+.tempo-field {
+  max-width: 10ch;
+}
+
+.tempo-container p {
+  margin: 0 5px;
+}

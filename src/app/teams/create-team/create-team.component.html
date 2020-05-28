@@ -1,39 +1,20 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <div>
-<!--  <mat-slide-toggle [(ngModel)]="loggedIn" (change)="onLoginChanged($event)">Logged in</mat-slide-toggle>-->
   <mat-card>
     <mat-card-header>
       <mat-card-title><h2>Vytvorenie tímu</h2></mat-card-title>
-      <mat-card-subtitle *ngIf="!loggedIn; else elseBlock">Na vytvorenie tímu sa musíte prihlásiť alebo zaregistrovať.
-      </mat-card-subtitle>
-      <ng-template #elseBlock>
-        <mat-card-subtitle>Zadajte informácie o svojom tíme.</mat-card-subtitle>
-      </ng-template>
+      <mat-card-subtitle>Zadajte informácie o svojom novom tíme.</mat-card-subtitle>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <form [formGroup]="teamForm" autocomplete="off">
-        <div *ngIf="!loggedIn" class="hidden-forms">
-          <!--suppress AngularUndefinedBinding -->
-          <mat-tab-group (selectedTabChange)="onTabChanged($event);" [dynamicHeight]="true">
-            <mat-tab label="Prihlásenie">
-              <app-login-form *ngIf="activeTab===0; else loginPlaceholder" formControlName="login"></app-login-form>
-            </mat-tab>
-            <mat-tab label="Registrácia">
-              <app-register-form *ngIf="activeTab===1; else registerPlaceholder"
-                                 formControlName="register"></app-register-form>
-            </mat-tab>
-          </mat-tab-group>
-          <mat-divider></mat-divider>
-        </div>
-        <h5 *ngIf="!loggedIn">Informácie o tíme</h5>
+      <form (submit)="onSubmit()" [formGroup]="teamForm" autocomplete="off">
         <mat-form-field appearance="outline">
           <mat-label>Názov tímu</mat-label>
           <input formControlName="teamName" matInput placeholder="Názov tímu" required>
-          <mat-error *ngIf="teamForm.get('teamName').invalid">Toto pole je povinné.</mat-error>
+          <mat-error *ngIf="teamForm.get('teamName').invalid">{{getErrorMessage('teamName')}}</mat-error>
         </mat-form-field>
         <div formArrayName="members">
-          <h5>Členovia tímu</h5>
+          <h3>Členovia tímu</h3>
           <p>Zadajte e-mailové adresy ostatných členov tímu, aby sme im mohli poslať pozvánky.</p>
           <mat-form-field *ngFor="let member of members.controls; let i=index" appearance="outline">
             <mat-label>E-mailová adresa {{i + 1}}. člena...</mat-label>
@@ -42,21 +23,18 @@
             <mat-error *ngIf="members.at(i).invalid">Neplatný e-mail.</mat-error>
           </mat-form-field>
         </div>
+        <mat-card-actions align="end">
+          <a mat-raised-button routerLink="/">Zrušiť</a>
+          <button [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
+            Vytvoriť tím
+          </button>
+        </mat-card-actions>
       </form>
     </mat-card-content>
-    <mat-card-actions align="end">
-      <a mat-raised-button routerLink="/">Zrušiť</a>
-      <button (click)="onSubmit()" [disabled]="teamForm.invalid" color="primary" mat-raised-button type="submit">
-        Vytvoriť tím
-      </button>
-    </mat-card-actions>
+    <div *ngIf="errorMessage">
+      <div class="alert alert-danger" role="alert">
+        {{errorMessage}}
+      </div>
+    </div>
   </mat-card>
 </div>
-
-<ng-template #loginPlaceholder>
-  <app-login-form></app-login-form>
-</ng-template>
-
-<ng-template #registerPlaceholder>
-  <app-register-form></app-register-form>
-</ng-template>

@@ -20,3 +20,8 @@ mat-divider {
 div.hidden-forms {
   margin-bottom: 10px;
 }
+
+.md-fab-bottom-right {
+  position: fixed !important;
+  left: 150px; /* Add this and change value to set the margin you want */
+}

@@ -1,6 +1,7 @@
 import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {errorMessages} from '../../globals';
 
 export interface LoginFormValues {
   email: string;
@@ -57,13 +58,7 @@ export class LoginFormComponent implements OnInit, ControlValueAccessor, OnDestr
   }
 
   getErrorMessage(field: string) {
-    if (this.form.get(field).hasError('email')) {
-      return 'Neplatný e-mail.';
-    }
-    if (this.form.get(field).hasError('required') || this.form.get(field).hasError('required')) {
-      return 'Toto pole je povinné.';
-    }
-    return '';
+    return errorMessages(this.form.get(field));
   }
 
   ngOnDestroy() {

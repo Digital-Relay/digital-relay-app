@@ -8,6 +8,8 @@ app-navbar {
 
 div.content {
   padding-top: 64px;
+  padding-bottom: 10px;
+  margin-bottom: 40px;
 
   @media(max-width: 599px) {
     padding-top: 56px;

@@ -1,5 +1,5 @@
 <app-navbar class="mat-elevation-z2"></app-navbar>
-<div *ngIf="router.url == '/'; else elseBlock" class="container-fluid px-0 content">
+<div *ngIf="router.url.split('?')[0] == '/'; else elseBlock" class="container-fluid px-0 content">
   <router-outlet></router-outlet>
 </div>
 <ng-template #elseBlock>

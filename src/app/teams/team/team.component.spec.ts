@@ -1,6 +1,8 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TeamComponent} from './team.component';
+import {provideMockStore} from '@ngrx/store/testing';
+import {initialTestState} from '../../store';
 
 describe('TeamComponent', () => {
   let component: TeamComponent;
@@ -8,7 +10,10 @@ describe('TeamComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TeamComponent]
+      declarations: [TeamComponent],
+      providers: [
+        provideMockStore({initialState: initialTestState})
+      ]
     })
       .compileComponents();
   }));

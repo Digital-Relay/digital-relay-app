@@ -13,12 +13,29 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthModule} from './auth/auth.module';
+import {StoreModule} from '@ngrx/store';
+import {metaReducers, reducers} from './store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import {EffectsModule} from '@ngrx/effects';
+import {AppEffects} from './effects/app.effects';
+import {ApiModule} from './api/api.module';
+import {ApiConfiguration} from './api/api-configuration';
+import {AuthEffects} from './effects/auth.effects';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {TeamsEffects} from './effects/teams.effects';
+import {AboutComponent} from './about/about.component';
+import {UsersEffects} from './effects/users.effects';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    ConfirmDialogComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -29,10 +46,22 @@ import {AuthModule} from './auth/auth.module';
     MatButtonModule,
     MatDividerModule,
     MatMenuModule,
+    MatDialogModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    ApiModule,
+    MatTooltipModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([AppEffects, AuthEffects, TeamsEffects, UsersEffects])
   ],
-  providers: [],
+  providers: [{provide: ApiConfiguration, useValue: {rootUrl: environment.apiBaseUrl}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

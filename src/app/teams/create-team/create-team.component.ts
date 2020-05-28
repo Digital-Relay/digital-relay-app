@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {errorMessages, maxLengths} from '../../globals';
+import {DigitalRelayState, selectTeamsList} from '../../store';
+import {Store} from '@ngrx/store';
+import {create} from '../../store/actions/teams.actions';
+import {TeamModel} from '../../store/team-model/team-model.model';
 
 @Component({
   selector: 'app-create-team',
@@ -7,42 +12,18 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
   styleUrls: ['./create-team.component.css']
 })
 export class CreateTeamComponent implements OnInit {
-  loggedIn: boolean;
-  activeTab: number;
-
   teamForm: FormGroup;
+  errorMessage = '';
+  state = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<DigitalRelayState>) {
     this.teamForm = this.fb.group({
-      teamName: ['', Validators.required],
+      teamName: ['', [Validators.required, Validators.maxLength(maxLengths.teamName)]],
       members: this.fb.array([
-        this.fb.control('', Validators.email)
+        this.fb.control('', [Validators.email, Validators.maxLength(maxLengths.email)])
       ])
     });
-  }
-
-  onTabChanged($event) {
-    const tabIndex = $event.index;
-    if (tabIndex === 0) {
-      this.activeTab = 0;
-      this.teamForm.removeControl('register');
-      this.teamForm.addControl('login', new FormControl());
-    } else {
-      this.activeTab = 1;
-      this.teamForm.removeControl('login');
-      this.teamForm.addControl('register', new FormControl());
-    }
-  }
-
-  onLoginChanged($event) {
-    if (!$event.checked) {
-      this.teamForm.addControl('login', new FormControl());
-      this.teamForm.addControl('register', new FormControl());
-    } else {
-      this.teamForm.removeControl('login');
-      this.teamForm.removeControl('register');
-    }
-    console.log(this.teamForm);
+    this.state = store.select(selectTeamsList);
   }
 
   get members() {
@@ -50,18 +31,20 @@ export class CreateTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.loggedIn) {
-      this.activeTab = 0;
-      this.teamForm.addControl('login', new FormControl());
-    }
+    this.state.subscribe((state) => {
+      this.errorMessage = state.errorMessage;
+    });
   }
 
   addMember() {
-    this.members.push(this.fb.control('', Validators.email));
+    this.members.push(this.fb.control('', [Validators.email, Validators.maxLength(maxLengths.email)]));
   }
 
   onSubmit() {
-    console.log(this.teamForm.value);
+    this.store.dispatch(create({
+      members: this.teamForm.value.members.filter(value => value != ''),
+      name: this.teamForm.value.teamName
+    } as TeamModel));
   }
 
   manageMembers(thisIndex) {
@@ -72,6 +55,10 @@ export class CreateTeamComponent implements OnInit {
     } else if ('' === this.members.at(thisIndex).value) {
       this.members.removeAt(thisIndex);
     }
+  }
+
+  getErrorMessage(field: string) {
+    return errorMessages(this.teamForm.get(field));
   }
 }
 

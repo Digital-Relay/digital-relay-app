@@ -2,6 +2,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RegisterComponent} from './register.component';
 import {FormBuilder} from '@angular/forms';
+import {provideMockStore} from '@ngrx/store/testing';
+import {initialTestState} from '../../store';
+import {AuthApiService} from '../auth-api.service';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -9,8 +14,12 @@ describe('RegisterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MatSnackBarModule, RouterTestingModule],
       declarations: [RegisterComponent],
-      providers: [FormBuilder]
+      providers: [FormBuilder,
+        provideMockStore({initialState: initialTestState}),
+        {provide: AuthApiService, useValue: null}
+      ]
     })
       .compileComponents();
   }));

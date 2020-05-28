@@ -1,10 +1,22 @@
 <mat-card>
-  <div class="row d-flex align-items-center">
+  <div class="row row-cols-2 row-cols-sm-4">
     <div class="col">
-      <p class="name">{{user.name !== null ? user.name : 'Neznámy používateľ'}}</p>
+      <p class="name">{{userName}}</p>
     </div>
+
     <div class="col">
       <p class="email">{{user.email}}</p>
+    </div>
+    <div class="col">
+      <p class="tempo">{{getTempoString()}}</p>
+    </div>
+    <div class="col-sm-1 d-flex justify-content-end">
+
+
+      <button (click)="confirmDialog()" [disabled]="(currentEmail$ | async) == user.email" color="warn" mat-mini-fab
+              matTooltip="Vyhodiť z tímu">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
   </div>
 </mat-card>
