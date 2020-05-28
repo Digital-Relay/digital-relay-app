@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://digitalrelay-dev.azurewebsites.net/api'
+  apiBaseUrl: 'http://http://dxcrun-dev-api.azurewebsites.net/api'
 };
