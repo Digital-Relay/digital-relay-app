@@ -351,7 +351,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Add users to team
    *
