@@ -1,0 +1,15 @@
+@mixin stage-component-theme($theme) {
+
+  $primary: map-get($theme, primary);
+
+  app-stage {
+    .stage-length {
+      color: mat-color($primary, A700);
+      font-style: italic;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+}

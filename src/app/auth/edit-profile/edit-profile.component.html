@@ -1,0 +1,49 @@
+<mat-card *ngIf="user$ | async as user">
+  <mat-card-header>
+    <mat-card-title>
+      Úprava profilu: {{user.name}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      Tu môžete upraviť svoje informácie.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <form (submit)="onSubmit()" [formGroup]="form">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>
+          <label for="name">Meno</label>
+        </mat-label>
+        <input formControlName="name" id="name" matInput placeholder="{{user.name}}">
+        <mat-hint>Meno, ktoré budú vidieť ostatní používatelia.</mat-hint>
+        <mat-error *ngIf="form.get('name').invalid">{{getErrorMessage('name')}}</mat-error>
+      </mat-form-field>
+      <mat-label>Tempo</mat-label>
+      <div class="d-flex align-items-center tempo-container">
+        <mat-form-field appearance="outline" class="tempo-field">
+          <mat-label><label for="tmin">Min</label></mat-label>
+          <input formControlName="tempoMinutes" id="tmin" matInput min="0" placeholder="5" required step="1"
+                 type="number"
+                 value="5">
+          <mat-error
+            *ngIf="form.get('tempoMinutes').invalid">{{getErrorMessage('tempoMinutes')}}</mat-error>
+        </mat-form-field>
+        <p>:</p>
+        <mat-form-field appearance="outline" class="tempo-field">
+          <mat-label><label for="tsec">Sec</label></mat-label>
+          <input formControlName="tempoSeconds" id="tsec" matInput max="59" min="0" placeholder="5" required step="1"
+                 type="number">
+          <mat-error
+            *ngIf="form.get('tempoSeconds').invalid">{{getErrorMessage('tempoSeconds')}}</mat-error>
+        </mat-form-field>
+        <p>/km</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <a mat-raised-button routerLink="/teams/my">Zrušiť</a>
+      <button [disabled]="form.invalid" color="primary"
+              mat-raised-button type="submit">Uložiť
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

@@ -1,6 +1,9 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {MemberComponent} from './member.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {provideMockStore} from '@ngrx/store/testing';
+import {initialTestState} from '../../store';
 
 describe('MemberComponent', () => {
   let component: MemberComponent;
@@ -8,7 +11,11 @@ describe('MemberComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MemberComponent]
+      imports: [MatDialogModule],
+      declarations: [MemberComponent],
+      providers: [
+        provideMockStore({initialState: initialTestState})
+      ]
     })
       .compileComponents();
   }));
@@ -18,7 +25,8 @@ describe('MemberComponent', () => {
     component = fixture.componentInstance;
     component.user = {
       name: 'Test Testerson',
-      email: 'test@test.ts'
+      email: 'test@test.ts',
+      tempo: 200
     };
     fixture.detectChanges();
   });

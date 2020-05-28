@@ -10,12 +10,14 @@ import {
   Validators
 } from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {errorMessages, maxLengths, passwordMinLength} from '../../globals';
 
 export interface RegisterFormValues {
   email: string;
   name: string;
   password: string;
   passwordConfirm: string;
+  tempo: string;
 }
 
 @Component({
@@ -42,10 +44,13 @@ export class RegisterFormComponent implements OnInit, OnDestroy, ControlValueAcc
 
   constructor() {
     this.formGroup = new FormGroup({
-      emailField: new FormControl('', [Validators.required, Validators.email]),
-      nameField: new FormControl('', [Validators.required]),
-      passwordField: new FormControl('', [Validators.required]),
-      passwordConfirmField: new FormControl('', [Validators.required])
+      emailField: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(maxLengths.email)]),
+      nameField: new FormControl('', [Validators.required, Validators.maxLength(maxLengths.name)]),
+      passwordField: new FormControl('', [Validators.required, Validators.maxLength(maxLengths.password),
+        Validators.minLength(passwordMinLength)]),
+      passwordConfirmField: new FormControl('', [Validators.required, Validators.maxLength(maxLengths.password)]),
+      tempoMinutesField: new FormControl('', [Validators.required, Validators.min(0)]),
+      tempoSecondsField: new FormControl('', [Validators.required, Validators.min(0), Validators.max(59)])
     }, {validators: passwordsMatchValidator});
 
     this.subscriptions.push(
@@ -71,15 +76,7 @@ export class RegisterFormComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   getErrorMessage(field: string) {
-    if (this.formGroup.get(field).hasError('email')) {
-      return 'Neplatný e-mail.';
-    }
-    if (this.formGroup.get(field).hasError('passwordsDontMatch')) {
-      return 'Heslá sa nezhodujú.';
-    }
-    if (this.formGroup.get(field).hasError('required')) {
-      return 'Toto pole je povinné.';
-    }
+    return errorMessages(this.formGroup.get(field));
   }
 
   ngOnDestroy() {

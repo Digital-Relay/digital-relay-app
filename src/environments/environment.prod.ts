@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiBaseUrl: 'http://http://dxcrun-dev-api.azurewebsites.net/api'
 };
