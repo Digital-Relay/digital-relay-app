@@ -3,8 +3,13 @@ import {ErrorResponse} from '../../api/models/error-response';
 import {Stage, TeamsList} from '../../api/models';
 import {TeamModel} from '../team-model/team-model.model';
 
-export const load = createAction(
-  '[Teams] Load teams',
+export const loadAll = createAction(
+  '[Teams] Load all teams',
+  props<any>()
+);
+
+export const loadMy = createAction(
+  '[Teams] Load my teams',
   props<any>()
 );
 

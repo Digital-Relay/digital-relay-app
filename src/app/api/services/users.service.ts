@@ -16,54 +16,14 @@ import {User} from '../models/user';
   providedIn: 'root',
 })
 class UsersService extends __BaseService {
-  static readonly getUserResourcePath = '/users';
   static readonly postUserResourcePath = '/users';
+  static readonly getUserResourcePath = '/users';
 
   constructor(
     config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
-  }
-
-  /**
-   * Retrieve current user's info
-   * @param Authorization JWT auth token, format: JWT <access_token>
-   * @return OK
-   */
-  getUserResourceResponse(Authorization: string): __Observable<__StrictHttpResponse<User>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-    if (Authorization != null) {
-      __headers = __headers.set('Authorization', Authorization.toString());
-    }
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/users`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<User>;
-      })
-    );
-  }
-  /**
-   * Retrieve current user's info
-   * @param Authorization JWT auth token, format: JWT <access_token>
-   * @return OK
-   */
-  getUserResource(Authorization: string): __Observable<User> {
-    return this.getUserResourceResponse(Authorization).pipe(
-      __map(_r => _r.body as User)
-    );
   }
 
   /**
@@ -101,6 +61,7 @@ class UsersService extends __BaseService {
       })
     );
   }
+
   /**
    * Update current user's info
    * @param params The `UsersService.PostUserResourceParams` containing the following parameters:
@@ -113,6 +74,47 @@ class UsersService extends __BaseService {
    */
   postUserResource(params: UsersService.PostUserResourceParams): __Observable<User> {
     return this.postUserResourceResponse(params).pipe(
+      __map(_r => _r.body as User)
+    );
+  }
+
+  /**
+   * Retrieve current user's info
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   * @return OK
+   */
+  getUserResourceResponse(Authorization: string): __Observable<__StrictHttpResponse<User>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (Authorization != null) {
+      __headers = __headers.set('Authorization', Authorization.toString());
+    }
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/users`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<User>;
+      })
+    );
+  }
+
+  /**
+   * Retrieve current user's info
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   * @return OK
+   */
+  getUserResource(Authorization: string): __Observable<User> {
+    return this.getUserResourceResponse(Authorization).pipe(
       __map(_r => _r.body as User)
     );
   }
