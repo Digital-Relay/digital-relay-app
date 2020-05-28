@@ -5,6 +5,8 @@ import {FormBuilder} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {provideMockStore} from '@ngrx/store/testing';
 import {initialTestState} from '../../store';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {of} from 'rxjs';
 
 describe('TeamPageComponent', () => {
   let component: TeamPageComponent;
@@ -15,7 +17,13 @@ describe('TeamPageComponent', () => {
       imports: [RouterTestingModule],
       declarations: [TeamPageComponent],
       providers: [FormBuilder,
-        provideMockStore({initialState: initialTestState})
+        provideMockStore({initialState: initialTestState}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({id: '5ec5914ced59b339a6be6c50', get: (k) => '5ec5914ced59b339a6be6c50'} as unknown as ParamMap),
+          }
+        }
       ]
     })
       .compileComponents();
