@@ -21,9 +21,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MemberListComponent} from './member-list/member-list.component';
 import {StageListComponent} from './stage-list/stage-list.component';
 import {StageComponent} from './stage/stage.component';
-import {MatOptionModule} from '@angular/material/core';
+import {MatOptionModule, MatRippleModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -46,7 +46,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatIconModule,
     MatOptionModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRippleModule
   ]
 })
 export class TeamsModule {
