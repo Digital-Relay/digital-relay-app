@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {maxLengths} from '../../globals';
+import {errorMessages, maxLengths} from '../../globals';
 
 @Component({
   selector: 'app-edit-team',
@@ -25,6 +25,10 @@ export class EditTeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.setValue({name: this.name, donation: this.donation});
+  }
+
+  getErrorMessage(field: string) {
+    return errorMessages(this.form.get(field));
   }
 
   onSubmit() {
