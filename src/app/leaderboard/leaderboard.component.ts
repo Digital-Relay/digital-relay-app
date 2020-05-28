@@ -28,6 +28,7 @@ export class LeaderboardComponent implements OnInit {
       select(selectTeamsList),
       select(adapter.getSelectors().selectAll)
     );
+    this.sortData({active: 'donation', direction: 'desc'});
   }
 
   sortData($event: Sort) {

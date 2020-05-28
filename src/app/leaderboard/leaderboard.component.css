@@ -1,3 +1,17 @@
 table {
   width: 100%;
 }
+
+th {
+  font-weight: bold;
+}
+
+.mat-column-donation {
+  font-weight: bold;
+}
+
+.mat-column-donation,
+.mat-column-members {
+  max-width: 64px;
+}
+
