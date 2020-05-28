@@ -1,10 +1,12 @@
 ### STAGE 1: Build ###
 FROM node:alpine AS build
+### buildType: prod or staging - difference: API URL
+ARG buildType=prod
 WORKDIR /digital-relay
 COPY package.json ./
 RUN npm install
 COPY . .
-RUN npm run build-prod
+RUN npm run build-$buildType
 
 ### STAGE 2: Run ###
 FROM nginx:alpine
