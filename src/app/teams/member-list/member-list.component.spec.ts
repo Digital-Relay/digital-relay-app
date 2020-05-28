@@ -29,6 +29,7 @@ describe('MemberListComponent', () => {
     component.team = {
       id: '5ec45033adc29e0dc932218e',
       name: 'Test team',
+      donation: 70,
       members: [
         'matt@nobien.net',
         'aaaa@bbb.ccc'
