@@ -51,4 +51,9 @@ export class TeamPageComponent implements OnInit {
     delete team.stages;
     this.store.dispatch(uploadTeamModel({teamModel: team as TeamModel}));
   }
+
+  onTeamEdited($event: { name: string; donation: number }) {
+    const team = {...this.team, name: $event.name, donation: $event.donation};
+    this.store.dispatch(uploadTeamModel({teamModel: team as TeamModel}));
+  }
 }

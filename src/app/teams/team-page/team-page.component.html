@@ -16,6 +16,7 @@
       <app-stage-list [team]="team"></app-stage-list>
     </mat-tab>
     <mat-tab label="Správa tímu">
+      <app-edit-team (teamEdited)="onTeamEdited($event)" [donation]="team.donation" [name]="team.name"></app-edit-team>
       <app-member-list (memberAdded)="onMemberAdded($event)" (memberRemoved)="onMemberRemoved($event)"
                        [team]="team"></app-member-list>
     </mat-tab>
