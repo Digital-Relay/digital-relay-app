@@ -1,0 +1,25 @@
+<!--suppress AngularUndefinedBinding -->
+<table (matSortChange)="sortData($event)" [dataSource]="teams$" class="mat-elevation-z8" mat-table matSort>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Názov tímu</th>
+    <td *matCellDef="let team" mat-cell> {{team.name}} </td>
+  </ng-container>
+
+  <!-- Members Column -->
+  <ng-container matColumnDef="members">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Počet členov</th>
+    <td *matCellDef="let team" mat-cell> {{team.members.length}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="donation">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header> Príspevok</th>
+    <td *matCellDef="let team" mat-cell> 0EUR</td>
+  </ng-container>
+
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>
