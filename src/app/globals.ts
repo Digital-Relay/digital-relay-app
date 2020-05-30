@@ -11,6 +11,11 @@ export const passwordMinLength = 8;
 export const nrOfStages = 20;
 export const refreshTokenLocalStorage = 'refreshToken';
 
+export function tempoString(tempo: number) {
+  const seconds: string = `${tempo % 60}`.padStart(2, '0');
+  return `Tempo: ${Math.floor(tempo / 60)}:${seconds}/km`;
+}
+
 export function errorMessages(field: AbstractControl): string {
   if (field.hasError('email')) {
     return 'Neplatný e-mail.';

@@ -1,0 +1,23 @@
+<div class="row m-1 mt-2">
+  <div class="col">
+    <h2>Tímové informácie</h2>
+    <form (submit)="onSubmit()" [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label><label for="name">Názov tímu</label></mat-label>
+        <input formControlName="name" id="name" matInput type="text">
+        <mat-error *ngIf="form.get('name').invalid">{{getErrorMessage('name')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label><label for="donation">Príspevok (€)</label></mat-label>
+        <input formControlName="donation" id="donation" matInput min="0" step="0.01" type="number">
+        <mat-error *ngIf="form.get('donation').invalid">{{getErrorMessage('donation')}}</mat-error>
+        <mat-hint>Suma, ktorou tím prispel na ľubovoľnú charitu a bude zobrazená v prehľade tímov.</mat-hint>
+      </mat-form-field>
+      <div class="mt-3 d-flex flex-row-reverse flex-sm-row">
+        <button [disabled]="form.invalid" color="primary" mat-raised-button type="submit">
+          Uložiť
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

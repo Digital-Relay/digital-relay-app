@@ -24,11 +24,12 @@ import {StageComponent} from './stage/stage.component';
 import {MatOptionModule, MatRippleModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {EditTeamComponent} from './edit-team/edit-team.component';
 
 
 @NgModule({
   declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent,
-    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent, StageComponent, MapToArray],
+    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent, StageComponent, MapToArray, EditTeamComponent],
   imports: [
     CommonModule,
     TeamsRoutingModule,
