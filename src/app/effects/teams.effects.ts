@@ -33,10 +33,23 @@ export class TeamsEffects {
   private token: string;
 
   @Effect()
-  load: Observable<any> = this.actions$.pipe(
-    ofType('[Teams] Load teams'),
+  loadMy: Observable<any> = this.actions$.pipe(
+    ofType('[Teams] Load my teams'),
     switchMap(() => {
       return this.teamsService.getTeams(this.token).pipe(
+        map((teams) => {
+          return loadSuccess(teams as TeamsList);
+        }),
+        catchError((error) => {
+          return of(loadFailure(error.error));
+        }));
+    }));
+
+  @Effect()
+  loadAll: Observable<any> = this.actions$.pipe(
+    ofType('[Teams] Load all teams'),
+    switchMap(() => {
+      return this.teamsService.getAllTeams().pipe(
         map((teams) => {
           return loadSuccess(teams as TeamsList);
         }),

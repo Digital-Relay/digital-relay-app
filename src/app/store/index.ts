@@ -1,9 +1,11 @@
-import {ActionReducerMap, MetaReducer} from '@ngrx/store';
+import {ActionReducerMap, createSelector, MetaReducer} from '@ngrx/store';
 import {environment} from '../../environments/environment';
 import * as fromAuth from './reducers/auth.reducer';
 import {routerReducer, RouterReducerState, SerializedRouterStateSnapshot} from '@ngrx/router-store';
 import * as fromTeamModel from './team-model/team-model.reducer';
 import * as fromUserModel from './user-model/user-model.reducer';
+import {UserModel} from './user-model/user-model.model';
+import {TeamModel} from './team-model/team-model.model';
 
 
 export interface DigitalRelayState {
@@ -23,10 +25,32 @@ export const reducers: ActionReducerMap<DigitalRelayState> = {
 export const metaReducers: MetaReducer<DigitalRelayState>[] = !environment.production ? [] : [];
 
 export const selectUser = (state: DigitalRelayState) => state.auth;
+export const selectCurrentUser = (state: DigitalRelayState) => state.auth.user;
 export const selectCurrentEmail = (state: DigitalRelayState) => state.auth.user.email;
 export const selectLoginStatus = (state: DigitalRelayState) => state.auth.isLoggedIn;
 export const selectTeamsList = (state: DigitalRelayState) => state.teamModel;
 export const selectUsersList = (state: DigitalRelayState) => state.users;
+
+export const selectMyTeams = createSelector(
+  selectCurrentUser,
+  selectTeamsList,
+  (selectedUser: UserModel, allTeams: fromTeamModel.State) => {
+    const filtered: TeamModel[] = [];
+    for (const key in allTeams.entities) {
+      if (selectedUser && allTeams) {
+        // noinspection JSUnfilteredForInLoop
+        if (allTeams.entities[key].members.includes(selectedUser.email)) {
+          // noinspection JSUnfilteredForInLoop
+          filtered.push(allTeams.entities[key]);
+        }
+      } else {
+        // noinspection JSUnfilteredForInLoop
+        filtered.push(allTeams.entities[key]);
+      }
+    }
+    return filtered;
+  }
+);
 
 
 export const initialTestState = {

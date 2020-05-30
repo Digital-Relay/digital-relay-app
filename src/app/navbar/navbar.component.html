@@ -17,6 +17,7 @@
       <a mat-menu-item routerLink="/edit-profile">Upraviť profil</a>
       <button (click)="logout()" mat-menu-item>Odhlásiť</button>
     </div>
+    <a [routerLink]="['']" fragment="leaderboard" mat-menu-item>Prehľad tímov</a>
     <a mat-menu-item routerLink="/about">O aplikácii...</a>
   </mat-menu>
 
