@@ -1,17 +1,17 @@
 /* tslint:disable */
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
-import {BaseService as __BaseService} from '../base-service';
-import {ApiConfiguration as __Configuration} from '../api-configuration';
-import {StrictHttpResponse as __StrictHttpResponse} from '../strict-http-response';
-import {Observable as __Observable} from 'rxjs';
-import {filter as __filter, map as __map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
+import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import {Team} from '../models/team';
-import {TeamsList} from '../models/teams-list';
-import {EditStagesRequest} from '../models/edit-stages-request';
-import {UserList} from '../models/user-list';
-import {AddMembersRequest} from '../models/add-members-request';
+import { Team } from '../models/team';
+import { TeamsList } from '../models/teams-list';
+import { EditStagesRequest } from '../models/edit-stages-request';
+import { UserList } from '../models/user-list';
+import { AddMembersRequest } from '../models/add-members-request';
 
 /**
  * Team management endpoints
@@ -94,9 +94,7 @@ class TeamsService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (Authorization != null) {
-      __headers = __headers.set('Authorization', Authorization.toString());
-    }
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/teams`,
@@ -114,7 +112,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve all teams that the current user belongs to
    * @param Authorization JWT auth token, format: JWT <access_token>
@@ -151,7 +148,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve all teams public information (no stages info)
    * @return OK
@@ -243,7 +239,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve team information
    * @param team_id undefined
@@ -273,9 +268,7 @@ class TeamsService extends __BaseService {
     let __body: any = null;
 
     __body = params.payload;
-    if (params.Authorization != null) {
-      __headers = __headers.set('Authorization', params.Authorization.toString());
-    }
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/teams/${encodeURIComponent(params.teamId)}/stages`,
@@ -331,9 +324,7 @@ class TeamsService extends __BaseService {
     let __body: any = null;
 
     __body = params.payload;
-    if (params.Authorization != null) {
-      __headers = __headers.set('Authorization', params.Authorization.toString());
-    }
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/teams/${encodeURIComponent(params.teamId)}/users`,
@@ -386,9 +377,7 @@ class TeamsService extends __BaseService {
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (params.Authorization != null) {
-      __headers = __headers.set('Authorization', params.Authorization.toString());
-    }
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/teams/${encodeURIComponent(params.teamId)}/users`,
@@ -406,7 +395,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve team members as user objects
    * @param params The `TeamsService.GetTeamMembersParams` containing the following parameters:
@@ -490,4 +478,4 @@ module TeamsService {
   }
 }
 
-export {TeamsService};
+export { TeamsService }

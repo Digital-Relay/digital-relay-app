@@ -1,16 +1,16 @@
 /* tslint:disable */
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
-import {BaseService as __BaseService} from '../base-service';
-import {ApiConfiguration as __Configuration} from '../api-configuration';
-import {StrictHttpResponse as __StrictHttpResponse} from '../strict-http-response';
-import {Observable as __Observable} from 'rxjs';
-import {filter as __filter, map as __map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
+import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import {JWTResponse} from '../models/jwtresponse';
-import {LoginRequest} from '../models/login-request';
-import {RegistrationResponse} from '../models/registration-response';
-import {RegisterRequest} from '../models/register-request';
+import { JWTResponse } from '../models/jwtresponse';
+import { LoginRequest } from '../models/login-request';
+import { RegistrationResponse } from '../models/registration-response';
+import { RegisterRequest } from '../models/register-request';
 
 /**
  * Security endpoints
@@ -183,4 +183,4 @@ class AuthService extends __BaseService {
 module AuthService {
 }
 
-export {AuthService};
+export { AuthService }

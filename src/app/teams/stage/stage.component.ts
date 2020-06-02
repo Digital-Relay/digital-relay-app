@@ -5,6 +5,8 @@ import {adapter} from '../../store/user-model/user-model.reducer';
 import {map} from 'rxjs/operators';
 import {UserModel} from '../../store/user-model/user-model.model';
 import {Team} from '../../api/models/team';
+import {StageModel} from '../../store/stage-model/stage-model.model';
+import {hoursMinutesSecondsString, tempoString} from '../../globals';
 
 @Component({
   selector: 'app-stage',
@@ -13,20 +15,23 @@ import {Team} from '../../api/models/team';
 })
 export class StageComponent implements OnInit {
   @Output()
-  public stageChange = new EventEmitter<{ name: string | null, email: string }>();
+  public stageChange = new EventEmitter<StageModel>();
 
   @Input()
   team: Team;
   @Input()
   index: number;
   @Input()
-  length: number;
+  stage: StageModel;
+  @Input()
+  estimatedStart: number;
   name: string;
-  users;
+  users: UserModel[];
   selectedUserValue: string;
+  selectedUser: UserModel;
+  estimatedTempo: number;
 
   constructor(private store: Store<DigitalRelayState>) {
-    this.length = 5;
   }
 
   ngOnInit(): void {
@@ -34,9 +39,10 @@ export class StageComponent implements OnInit {
     this.store.pipe(
       select(selectUsersList),
       select(adapter.getSelectors().selectAll),
-      map((u: UserModel[]) => u.filter(userModel => userModel.email === this.team.stages[this.index]))
+      map((u: UserModel[]) => u.filter(userModel => userModel.email === this.stage.email))
     ).subscribe(user => {
       if (user.length > 0) {
+        this.estimatedTempo = user[0].tempo;
         this.selectedUserValue = user[0].email;
       } else {
         this.selectedUserValue = '';
@@ -49,9 +55,19 @@ export class StageComponent implements OnInit {
     ).subscribe(users => {
       this.users = users;
     });
+
   }
 
-  onValueChange($value) {
-    this.stageChange.emit($value);
+  onUserChange($value) {
+    this.selectedUser = this.users.find((user) => user.email === $value);
+    this.estimatedTempo = this.selectedUser.tempo;
+    this.stageChange.emit({...this.stage, email: $value, estimated_time: this.estimatedTempo * this.stage.length});
+  }
+
+  getTimeString(time: number, mode: 'hms' | 'tempo') {
+    if (mode === 'hms') {
+      return hoursMinutesSecondsString(time);
+    }
+    return tempoString(time);
   }
 }

@@ -1,13 +1,13 @@
 /* tslint:disable */
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
-import {BaseService as __BaseService} from '../base-service';
-import {ApiConfiguration as __Configuration} from '../api-configuration';
-import {StrictHttpResponse as __StrictHttpResponse} from '../strict-http-response';
-import {Observable as __Observable} from 'rxjs';
-import {filter as __filter, map as __map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { BaseService as __BaseService } from '../base-service';
+import { ApiConfiguration as __Configuration } from '../api-configuration';
+import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
+import { Observable as __Observable } from 'rxjs';
+import { map as __map, filter as __filter } from 'rxjs/operators';
 
-import {User} from '../models/user';
+import { User } from '../models/user';
 
 /**
  * User management endpoints
@@ -41,9 +41,7 @@ class UsersService extends __BaseService {
     let __headers = new HttpHeaders();
     let __body: any = null;
     __body = params.payload;
-    if (params.Authorization != null) {
-      __headers = __headers.set('Authorization', params.Authorization.toString());
-    }
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/users`,
@@ -61,7 +59,6 @@ class UsersService extends __BaseService {
       })
     );
   }
-
   /**
    * Update current user's info
    * @param params The `UsersService.PostUserResourceParams` containing the following parameters:
@@ -87,9 +84,7 @@ class UsersService extends __BaseService {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    if (Authorization != null) {
-      __headers = __headers.set('Authorization', Authorization.toString());
-    }
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/users`,
@@ -107,7 +102,6 @@ class UsersService extends __BaseService {
       })
     );
   }
-
   /**
    * Retrieve current user's info
    * @param Authorization JWT auth token, format: JWT <access_token>
@@ -135,4 +129,4 @@ module UsersService {
   }
 }
 
-export {UsersService};
+export { UsersService }

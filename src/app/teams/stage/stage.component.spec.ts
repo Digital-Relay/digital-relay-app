@@ -21,6 +21,14 @@ describe('StageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StageComponent);
     component = fixture.componentInstance;
+    component.stage = {
+      index: 0,
+      email: 'm.pilnan@gmail.com',
+      estimated_time: 3350,
+      real_time: null,
+      length: 5,
+      id: '5ed69b543f3226cf76327fbd'
+    };
     fixture.detectChanges();
   });
 

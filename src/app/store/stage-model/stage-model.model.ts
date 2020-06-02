@@ -1,8 +1,7 @@
-/* tslint:disable */
-export interface Stage {
+export interface StageModel {
+  id?: string;
   email: string;
   estimated_time?: number;
-  id?: string;
   index: number;
   length?: number;
   real_time?: number;

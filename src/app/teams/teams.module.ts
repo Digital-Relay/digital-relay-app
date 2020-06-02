@@ -25,6 +25,7 @@ import {MatOptionModule, MatRippleModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {EditTeamComponent} from './edit-team/edit-team.component';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {EditTeamComponent} from './edit-team/edit-team.component';
     MatOptionModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    MatRippleModule
+    MatRippleModule,
+    MatTableModule
   ]
 })
 export class TeamsModule {

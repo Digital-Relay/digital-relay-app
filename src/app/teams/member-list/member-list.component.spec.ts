@@ -30,10 +30,12 @@ describe('MemberListComponent', () => {
       id: '5ec45033adc29e0dc932218e',
       name: 'Test team',
       donation: 70,
+      start: 0,
       members: [
         'matt@nobien.net',
         'aaaa@bbb.ccc'
-      ]
+      ],
+      stages: []
     };
     fixture.detectChanges();
   });
