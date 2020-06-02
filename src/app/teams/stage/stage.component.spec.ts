@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {StageComponent} from './stage.component';
 import {provideMockStore} from '@ngrx/store/testing';
 import {initialTestState} from '../../store';
+import {MatDialogModule} from '@angular/material/dialog';
 
 describe('StageComponent', () => {
   let component: StageComponent;
@@ -10,6 +11,7 @@ describe('StageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MatDialogModule],
       declarations: [StageComponent],
       providers: [
         provideMockStore({initialState: initialTestState})

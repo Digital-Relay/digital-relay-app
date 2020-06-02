@@ -26,11 +26,14 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {EditTeamComponent} from './edit-team/edit-team.component';
 import {MatTableModule} from '@angular/material/table';
+import {TempoDialogComponent} from './tempo-dialog/tempo-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 @NgModule({
   declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent,
-    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent, StageComponent, MapToArray, EditTeamComponent],
+    MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent,
+    StageComponent, MapToArray, EditTeamComponent, TempoDialogComponent],
   imports: [
     CommonModule,
     TeamsRoutingModule,
@@ -50,7 +53,8 @@ import {MatTableModule} from '@angular/material/table';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatRippleModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ]
 })
 export class TeamsModule {

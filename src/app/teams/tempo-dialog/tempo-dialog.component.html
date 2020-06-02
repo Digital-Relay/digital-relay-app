@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>
+  {{title}}
+</h1>
+
+<div mat-dialog-content>
+  <p>{{message}}</p>
+</div>
+<form [formGroup]="form">
+  <div class="d-flex flex-row align-items-center tempo-container">
+
+    <mat-form-field appearance="outline" class="tempo-field">
+      <mat-label><label for="tmin">Min</label></mat-label>
+      <input formControlName="tempoMinutes" id="tmin" matInput min="0" placeholder="5" required step="1"
+             type="number"
+             value="5">
+      <mat-error
+        *ngIf="form.get('tempoMinutes').invalid">{{getErrorMessage('tempoMinutes')}}</mat-error>
+    </mat-form-field>
+    <p>:</p>
+    <mat-form-field appearance="outline" class="tempo-field">
+      <mat-label><label for="tsec">Sec</label></mat-label>
+      <input formControlName="tempoSeconds" id="tsec" matInput max="59" min="0" placeholder="5" required step="1"
+             type="number">
+      <mat-error
+        *ngIf="form.get('tempoSeconds').invalid">{{getErrorMessage('tempoSeconds')}}</mat-error>
+    </mat-form-field>
+    <p>/km</p>
+
+  </div>
+</form>
+
+<!--suppress HtmlDeprecatedAttribute -->
+<mat-dialog-actions align="end">
+  <button (click)="onDismiss()" mat-stroked-button>Zrušiť</button>
+  <button (click)="onConfirm()" [disabled]="form.invalid" color="primary" mat-raised-button>OK</button>
+</mat-dialog-actions>

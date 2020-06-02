@@ -6,7 +6,9 @@ import {map} from 'rxjs/operators';
 import {UserModel} from '../../store/user-model/user-model.model';
 import {Team} from '../../api/models/team';
 import {StageModel} from '../../store/stage-model/stage-model.model';
-import {hoursMinutesSecondsString, tempoString} from '../../globals';
+import {hoursMinutesSecondsString, hoursMinutesString, tempoString} from '../../globals';
+import {MatDialog} from '@angular/material/dialog';
+import {TempoDialogComponent, TempoDialogModel} from '../tempo-dialog/tempo-dialog.component';
 
 @Component({
   selector: 'app-stage',
@@ -31,18 +33,18 @@ export class StageComponent implements OnInit {
   selectedUser: UserModel;
   estimatedTempo: number;
 
-  constructor(private store: Store<DigitalRelayState>) {
+  constructor(private store: Store<DigitalRelayState>, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.name = `Úsek ${this.index + 1}`;
+    this.estimatedTempo = Math.floor(this.stage.estimated_time / this.stage.length);
     this.store.pipe(
       select(selectUsersList),
       select(adapter.getSelectors().selectAll),
       map((u: UserModel[]) => u.filter(userModel => userModel.email === this.stage.email))
     ).subscribe(user => {
       if (user.length > 0) {
-        this.estimatedTempo = user[0].tempo;
         this.selectedUserValue = user[0].email;
       } else {
         this.selectedUserValue = '';
@@ -64,9 +66,29 @@ export class StageComponent implements OnInit {
     this.stageChange.emit({...this.stage, email: $value, estimated_time: this.estimatedTempo * this.stage.length});
   }
 
-  getTimeString(time: number, mode: 'hms' | 'tempo') {
+  tempoDialog(): void {
+    const message = `Tu môžete upraviť predpokladané tempo pre ${this.name}.`;
+
+    const dialogData = new TempoDialogModel('Úprava tempa', message, this.estimatedTempo);
+
+    const dialogRef = this.dialog.open(TempoDialogComponent, {
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this.estimatedTempo = dialogResult.tempo;
+        this.stageChange.emit({...this.stage, estimated_time: this.estimatedTempo * this.stage.length});
+      }
+    });
+  }
+
+  getTimeString(time: number, mode: 'hms' | 'tempo' | 'hm') {
     if (mode === 'hms') {
       return hoursMinutesSecondsString(time);
+    }
+    if (mode === 'hm') {
+      return hoursMinutesString(time);
     }
     return tempoString(time);
   }
