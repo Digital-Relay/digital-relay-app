@@ -1,56 +1,75 @@
-<mat-card class="mb-1">
+<!--<div class="row d-sm-none">-->
+<mat-expansion-panel class="d-sm-none">
+  <mat-expansion-panel-header>
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+  </mat-expansion-panel-header>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</mat-expansion-panel>
+<!--</div>-->
+
+<mat-card class="mb-1 d-none d-sm-flex">
   <div class="row">
-    <div class="col-sm-2">
-      <div class="row row-cols-2 row-cols-sm-1">
-        <div class="col-8">
-          <h2 class="m-0 m-sm-2">{{name}} - {{getTimeString(estimatedStart, 'hm')}}</h2>
-        </div>
-        <div class="col-4 d-flex align-items-center justify-content-end justify-content-sm-start stage-length">
-          <mat-icon>outlined_flag</mat-icon>
-          <p>{{stage.length}} km</p>
-        </div>
-      </div>
-    </div>
-    <mat-divider vertical></mat-divider>
-    <div class="col-sm order-2">
-      <mat-form-field appearance="outline">
-        <mat-label>Bežec</mat-label>
-        <mat-select (valueChange)="onUserChange($event)" [(value)]="selectedUserValue">
-          <mat-option *ngFor="let u of users" [value]="u.email">{{u.name ? u.name : u.email}}</mat-option>
-        </mat-select>
-        <mat-hint>Priraďte bežca na tento úsek</mat-hint>
-      </mat-form-field>
-      <button (click)="tempoDialog()" class="ml-2 ml-sm-0" mat-stroked-button>Tempo...</button>
-    </div>
-    <mat-divider vertical></mat-divider>
-    <div class="col-sm my-2 my-sm-0 order-1 order-sm-3">
-      <table>
-        <tr>
-          <th></th>
-          <th>Predp.</th>
-          <th>Skut.</th>
-        </tr>
-        <tr>
-          <td>Štart</td>
-          <td>{{getTimeString(estimatedStart, 'hms')}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Tempo</td>
-          <td>{{getTimeString(estimatedTempo, 'tempo')}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Trvanie</td>
-          <td>{{getTimeString(stage.estimated_time, 'hms')}}</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Cieľ</td>
-          <td>{{getTimeString(estimatedStart + stage.estimated_time, 'hms')}}</td>
-          <td></td>
-        </tr>
-      </table>
-    </div>
+    <ng-container *ngTemplateOutlet="header"></ng-container>
+    <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
 </mat-card>
+
+
+<ng-template #header>
+  <div class="col-sm-2">
+    <div class="row row-cols-2 row-cols-sm-1">
+      <div class="col-8">
+        <h2 class="m-0 m-sm-2">{{name}} - {{getTimeString(estimatedStart, 'hm')}}</h2>
+      </div>
+      <div class="col-4 d-flex align-items-center justify-content-end justify-content-sm-start stage-length">
+        <mat-icon>outlined_flag</mat-icon>
+        <p>{{stage.length}} km</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #content>
+  <mat-divider vertical></mat-divider>
+  <div class="col-sm order-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Bežec</mat-label>
+      <mat-select (valueChange)="onUserChange($event)" [(value)]="selectedUserValue">
+        <mat-option *ngFor="let u of users" [value]="u.email">{{u.name ? u.name : u.email}}</mat-option>
+      </mat-select>
+      <mat-hint>Priraďte bežca na tento úsek</mat-hint>
+    </mat-form-field>
+    <button (click)="tempoDialog()" class="ml-2 ml-sm-0" mat-stroked-button>Tempo...</button>
+  </div>
+  <mat-divider vertical></mat-divider>
+  <div class="col-sm my-2 my-sm-0 order-1 order-sm-3">
+    <table>
+      <tr>
+        <th></th>
+        <th>Predp.</th>
+        <th>Skut.</th>
+      </tr>
+      <tr>
+        <td>Štart</td>
+        <td>{{getTimeString(estimatedStart, 'hms')}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Tempo</td>
+        <td>{{getTimeString(estimatedTempo, 'tempo')}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Trvanie</td>
+        <td>{{getTimeString(stage.estimated_time, 'hms')}}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Cieľ</td>
+        <td>{{getTimeString(estimatedStart + stage.estimated_time, 'hms')}}</td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</ng-template>
