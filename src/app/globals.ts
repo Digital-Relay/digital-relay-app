@@ -26,7 +26,10 @@ export function hoursMinutesSecondsString(duration: number) {
   const hours = Math.floor(duration / (60 * 60));
   const minutes = Math.floor((duration % (60 * 60)) / 60);
   const seconds = duration % 60;
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  if (!hours) {
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+  return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 export function errorMessages(field: AbstractControl): string {
