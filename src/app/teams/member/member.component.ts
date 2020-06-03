@@ -7,6 +7,7 @@ import {UserModel} from '../../store/user-model/user-model.model';
 import {map} from 'rxjs/operators';
 import {adapter} from '../../store/user-model/user-model.reducer';
 import {Observable} from 'rxjs';
+import {tempoString} from '../../globals';
 
 @Component({
   selector: 'app-member',
@@ -60,6 +61,6 @@ export class MemberComponent implements OnInit {
   }
 
   getTempoString() {
-    return `Tempo: ${Math.floor(this.user.tempo / 60)}:${this.user.tempo % 60}/km`;
+    return 'Tempo: ' + tempoString(this.user.tempo);
   }
 }

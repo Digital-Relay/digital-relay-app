@@ -1,10 +1,10 @@
 import {Component, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {DigitalRelayState, selectTeamsList} from '../../store';
+import {DigitalRelayState, selectMyTeams, selectTeamsList} from '../../store';
 import {Observable} from 'rxjs';
-import {adapter, State} from '../../store/team-model/team-model.reducer';
+import {State} from '../../store/team-model/team-model.reducer';
 import {TeamModel} from '../../store/team-model/team-model.model';
-import {load} from '../../store/actions/teams.actions';
+import {loadMy} from '../../store/actions/teams.actions';
 
 @Component({
   selector: 'app-my-teams',
@@ -19,8 +19,7 @@ export class MyTeamsComponent implements OnInit {
 
   constructor(private store: Store<DigitalRelayState>) {
     this.teams = store.pipe(
-      select(selectTeamsList),
-      select(adapter.getSelectors().selectAll)
+      select(selectMyTeams)
     );
   }
 
@@ -30,7 +29,7 @@ export class MyTeamsComponent implements OnInit {
       this.loading = state.loading;
       this.errorMessage = state.errorMessage;
     });
-    this.store.dispatch(load({}));
+    this.store.dispatch(loadMy({}));
   }
 }
 
@@ -38,7 +37,9 @@ export class MyTeamsComponent implements OnInit {
 export class MapToArray implements PipeTransform {
   transform(value): any {
     const arr = [];
+    // tslint:disable-next-line:forin
     for (const key in value) {
+      // noinspection JSUnfilteredForInLoop
       arr.push(value[key]);
     }
     return arr;

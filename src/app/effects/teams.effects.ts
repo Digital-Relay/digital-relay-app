@@ -13,6 +13,7 @@ import {TeamModel} from '../store/team-model/team-model.model';
 import {Team} from '../api/models/team';
 import {Router} from '@angular/router';
 import {Stage} from '../api/models';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import PostTeamsParams = TeamsService.PostTeamsParams;
 
 @Injectable()
@@ -33,10 +34,23 @@ export class TeamsEffects {
   private token: string;
 
   @Effect()
-  load: Observable<any> = this.actions$.pipe(
-    ofType('[Teams] Load teams'),
+  loadMy: Observable<any> = this.actions$.pipe(
+    ofType('[Teams] Load my teams'),
     switchMap(() => {
       return this.teamsService.getTeams(this.token).pipe(
+        map((teams) => {
+          return loadSuccess(teams as TeamsList);
+        }),
+        catchError((error) => {
+          return of(loadFailure(error.error));
+        }));
+    }));
+
+  @Effect()
+  loadAll: Observable<any> = this.actions$.pipe(
+    ofType('[Teams] Load all teams'),
+    switchMap(() => {
+      return this.teamsService.getAllTeams().pipe(
         map((teams) => {
           return loadSuccess(teams as TeamsList);
         }),
@@ -79,6 +93,7 @@ export class TeamsEffects {
         Authorization: this.token
       }).pipe(
         map((teams) => {
+          this.snackBar.open('Úseky uložené.', 'OK', {duration: 2000});
           return upsertTeamModel({teamModel: (teams as TeamModel)});
         }));
     }));
@@ -96,6 +111,7 @@ export class TeamsEffects {
   constructor(
     private actions$: Actions,
     private teamsService: TeamsService,
+    private snackBar: MatSnackBar,
     store: Store<DigitalRelayState>,
     private router: Router
   ) {

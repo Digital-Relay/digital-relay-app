@@ -1,11 +1,15 @@
-<div class="d-flex m-2 mr-0 flex-row-reverse">
+<div class="d-flex m-2 mr-0 flex-row-reverse justify-content-between">
   <button (click)="submit()"
           color="primary" mat-raised-button>Uložiť
   </button>
+  <h2>Štart: {{getStartTimeString(team.start)}}</h2>
 </div>
-<div *ngFor="let s of stages; let i=index" class="mt-2">
-  <app-stage (stageChange)="updateStage($event, i)" [index]="i" [team]="team"></app-stage>
-</div>
+<mat-accordion>
+  <div *ngFor="let s of updatedStages; let i=index; trackBy: trackById" class="mt-2">
+    <app-stage (stageChange)="updateStage($event, i)" [estimatedStart]="startTimes[i]" [index]="i" [stage]="s"
+               [team]="team"></app-stage>
+  </div>
+</mat-accordion>
 <div class="d-flex m-2 mr-0 flex-row-reverse">
   <button (click)="submit()"
           color="primary" mat-raised-button>Uložiť

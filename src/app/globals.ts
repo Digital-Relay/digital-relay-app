@@ -11,6 +11,27 @@ export const passwordMinLength = 8;
 export const nrOfStages = 20;
 export const refreshTokenLocalStorage = 'refreshToken';
 
+export function tempoString(tempo: number) {
+  const seconds: string = `${tempo % 60}`.padStart(2, '0');
+  return `${Math.floor(tempo / 60)}:${seconds}/km`;
+}
+
+export function hoursMinutesString(secondsSinceMidnight: number) {
+  const hours = Math.floor(secondsSinceMidnight / (60 * 60));
+  const minutes = Math.floor((secondsSinceMidnight % (60 * 60)) / 60);
+  return `${hours}:${minutes.toString().padStart(2, '0')}`;
+}
+
+export function hoursMinutesSecondsString(duration: number) {
+  const hours = Math.floor(duration / (60 * 60));
+  const minutes = Math.floor((duration % (60 * 60)) / 60);
+  const seconds = duration % 60;
+  if (!hours) {
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+  return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
 export function errorMessages(field: AbstractControl): string {
   if (field.hasError('email')) {
     return 'Neplatný e-mail.';
