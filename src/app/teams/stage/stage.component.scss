@@ -16,5 +16,17 @@
     table {
       width: 100%;
     }
+
+    mat-expansion-panel {
+      width: 100%;
+    }
+
+    .mat-expansion-panel-header {
+      padding-left: 0;
+    }
+
+    div.mat-expansion-panel-body {
+      padding: 0 0 10px;
+    }
   }
 }

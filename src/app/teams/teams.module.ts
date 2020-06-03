@@ -28,6 +28,7 @@ import {EditTeamComponent} from './edit-team/edit-team.component';
 import {MatTableModule} from '@angular/material/table';
 import {TempoDialogComponent} from './tempo-dialog/tempo-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatProgressSpinnerModule,
     MatRippleModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule
   ]
 })
 export class TeamsModule {
