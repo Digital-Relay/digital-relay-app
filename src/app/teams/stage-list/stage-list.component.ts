@@ -49,6 +49,8 @@ export class StageListComponent implements OnInit {
     this.store.dispatch(updateStages({teamId: this.team.id, stages: this.updatedStages}));
   }
 
+  trackById = (index, stage) => stage.id;
+
   getStartTimeString(start: number): string {
     return hoursMinutesString(start);
   }

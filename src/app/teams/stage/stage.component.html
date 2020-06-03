@@ -1,9 +1,13 @@
 <!--<div class="row d-sm-none">-->
-<mat-expansion-panel class="d-sm-none">
+<mat-expansion-panel class="d-sm-none px-0">
   <mat-expansion-panel-header>
     <ng-container *ngTemplateOutlet="header"></ng-container>
   </mat-expansion-panel-header>
-  <ng-container *ngTemplateOutlet="content"></ng-container>
+  <div class="col">
+    <div class="row">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+  </div>
 </mat-expansion-panel>
 <!--</div>-->
 
