@@ -13,6 +13,7 @@ import {TeamModel} from '../store/team-model/team-model.model';
 import {Team} from '../api/models/team';
 import {Router} from '@angular/router';
 import {Stage} from '../api/models';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import PostTeamsParams = TeamsService.PostTeamsParams;
 
 @Injectable()
@@ -92,6 +93,7 @@ export class TeamsEffects {
         Authorization: this.token
       }).pipe(
         map((teams) => {
+          this.snackBar.open('Úseky uložené.', 'OK', {duration: 2000});
           return upsertTeamModel({teamModel: (teams as TeamModel)});
         }));
     }));
@@ -109,6 +111,7 @@ export class TeamsEffects {
   constructor(
     private actions$: Actions,
     private teamsService: TeamsService,
+    private snackBar: MatSnackBar,
     store: Store<DigitalRelayState>,
     private router: Router
   ) {
