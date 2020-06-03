@@ -2,7 +2,7 @@ import {createReducer, on} from '@ngrx/store';
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {TeamModel} from './team-model.model';
 import * as TeamModelActions from './team-model.actions';
-import {loadAll, loadFailure, loadSuccess} from '../actions/teams.actions';
+import {loadAll, loadFailure, loadMy, loadSuccess} from '../actions/teams.actions';
 
 export const teamModelsFeatureKey = 'teamModels';
 
@@ -52,6 +52,7 @@ export const reducer = createReducer(
     state => adapter.removeAll(state)
   ),
   on(loadAll, ((state) => ({...state, loading: true, errorMessage: ''}))),
+  on(loadMy, ((state) => ({...state, loading: true, errorMessage: ''}))),
   on(loadSuccess, ((state) => ({...state, loading: false, errorMessage: ''}))),
   on(loadFailure, ((state, action) => ({...state, loading: false, errorMessage: action.msg}))),
 );

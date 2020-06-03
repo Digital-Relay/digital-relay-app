@@ -19,7 +19,7 @@ export const reducers: ActionReducerMap<DigitalRelayState> = {
   router: routerReducer,
   auth: fromAuth.reducer,
   teamModel: fromTeamModel.reducer,
-  users: fromUserModel.reducer
+  users: fromUserModel.reducer,
 };
 
 export const metaReducers: MetaReducer<DigitalRelayState>[] = !environment.production ? [] : [];

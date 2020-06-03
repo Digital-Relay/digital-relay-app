@@ -9,7 +9,7 @@ export { RegistrationResponseBody } from './models/registration-response-body';
 export { RegistrationErrorKeys } from './models/registration-error-keys';
 export { TeamsList } from './models/teams-list';
 export { Team } from './models/team';
+export { Stage } from './models/stage';
 export { AddMembersRequest } from './models/add-members-request';
 export { UserList } from './models/user-list';
 export { EditStagesRequest } from './models/edit-stages-request';
-export { Stage } from './models/stage';

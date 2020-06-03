@@ -61,6 +61,6 @@ export class MemberComponent implements OnInit {
   }
 
   getTempoString() {
-    return tempoString(this.user.tempo);
+    return 'Tempo: ' + tempoString(this.user.tempo);
   }
 }
