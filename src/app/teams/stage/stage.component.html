@@ -12,7 +12,7 @@
 <!--</div>-->
 
 <mat-card class="mb-1 d-none d-sm-flex">
-  <div class="row">
+  <div class="row w-100">
     <ng-container *ngTemplateOutlet="header"></ng-container>
     <ng-container *ngTemplateOutlet="content"></ng-container>
   </div>
@@ -37,7 +37,7 @@
 <ng-template #content>
   <mat-divider vertical></mat-divider>
   <div class="col-sm order-2">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="d-sm-block">
       <mat-label>Bežec</mat-label>
       <mat-select (valueChange)="onUserChange($event)" [(value)]="selectedUserValue">
         <mat-option *ngFor="let u of users" [value]="u.email">{{u.name ? u.name : u.email}}</mat-option>
@@ -47,7 +47,7 @@
     <button (click)="tempoDialog()" class="ml-2 ml-sm-0" mat-stroked-button>Tempo...</button>
   </div>
   <mat-divider vertical></mat-divider>
-  <div class="col-sm my-2 my-sm-0 order-1 order-sm-3">
+  <div class="col-sm col-sm-3 my-2 my-sm-0 order-1 order-sm-3">
     <table>
       <tr>
         <th></th>
