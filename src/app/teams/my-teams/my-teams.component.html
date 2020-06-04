@@ -1,5 +1,5 @@
 <div class="mt-4 team-container">
-  <h1>Moje tímy</h1>
+  <h1>Môj tím</h1>
   <ng-container *ngIf="(teams | async).length > 0; else empty">
     <div *ngFor="let team of (teams | async)" class="mb-2">
       <app-team [team]="team"></app-team>

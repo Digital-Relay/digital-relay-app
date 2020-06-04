@@ -5,7 +5,7 @@
 <div mat-dialog-content>
   <p>{{message}}</p>
 </div>
-<form [formGroup]="form">
+<form (submit)="onConfirm()" [formGroup]="form">
   <div class="d-flex flex-row align-items-center tempo-container">
 
     <mat-form-field appearance="outline" class="tempo-field">
@@ -27,10 +27,11 @@
     <p>/km</p>
 
   </div>
-</form>
 
-<!--suppress HtmlDeprecatedAttribute -->
-<mat-dialog-actions align="end">
-  <button (click)="onDismiss()" mat-stroked-button>Zrušiť</button>
-  <button (click)="onConfirm()" [disabled]="form.invalid" color="primary" mat-raised-button>OK</button>
-</mat-dialog-actions>
+
+  <!--suppress HtmlDeprecatedAttribute -->
+  <mat-dialog-actions align="end">
+    <button (click)="onDismiss()" mat-stroked-button>Zrušiť</button>
+    <button [disabled]="form.invalid" color="primary" mat-raised-button type="submit">OK</button>
+  </mat-dialog-actions>
+</form>
