@@ -37,7 +37,6 @@ export class StageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('stage init');
     this.name = `Úsek ${this.index + 1}`;
     this.estimatedTempo = Math.floor(this.stage.estimated_time / this.stage.length);
     this.store.pipe(
