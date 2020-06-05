@@ -19,14 +19,12 @@ export class StageComponent implements OnInit {
   @Output()
   public stageChange = new EventEmitter<StageModel>();
 
-  @Input()
-  team: Team;
-  @Input()
-  index: number;
-  @Input()
-  stage: StageModel;
-  @Input()
-  estimatedStart: number;
+  @Input() team: Team;
+  @Input() index: number;
+  @Input() stage: StageModel;
+  @Input() estimatedStart: number;
+  @Input() realStart: number;
+  @Input() started: boolean;
   name: string;
   users: UserModel[];
   selectedUserValue: string;

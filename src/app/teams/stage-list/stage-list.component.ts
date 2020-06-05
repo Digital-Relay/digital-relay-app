@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {hoursMinutesString} from '../../globals';
 import {DigitalRelayState} from '../../store';
 import {Store} from '@ngrx/store';
@@ -12,11 +12,13 @@ import {StageModel} from '../../store/stage-model/stage-model.model';
   templateUrl: './stage-list.component.html',
   styleUrls: ['./stage-list.component.css']
 })
-export class StageListComponent implements OnInit {
+export class StageListComponent implements OnInit, AfterViewInit {
+
   @Input()
   team: TeamModel;
   public updatedStages: StageModel[] = [];
-  public startTimes: number[] = [];
+  public estimatedStartTimes: number[] = [];
+  public realStartTimes: number[] = [];
 
   constructor(private store: Store<DigitalRelayState>) {
   }
@@ -25,18 +27,28 @@ export class StageListComponent implements OnInit {
     this.updatedStages = cloneDeep(this.team.stages);
     this.updatedStages.forEach((value, index) => {
       if (index === 0) {
-        this.startTimes.push(this.team.start);
+        this.estimatedStartTimes.push(this.team.start);
+        this.realStartTimes.push(this.team.start);
       } else {
-        this.startTimes.push(this.startTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
+        this.estimatedStartTimes.push(this.estimatedStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
+        if (this.updatedStages[index - 1].real_time) {
+          this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].real_time);
+        } else {
+          this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
+        }
       }
     });
   }
 
   updateStartTimes(startIndex) {
     this.updatedStages.slice(startIndex).forEach((value, index) => {
-      this.startTimes[startIndex + index] =
+      this.estimatedStartTimes[startIndex + index] =
         ((startIndex + index) === 0 ? this.team.start :
-          this.updatedStages[startIndex + index - 1].estimated_time + this.startTimes[startIndex + index - 1]);
+          this.updatedStages[startIndex + index - 1].estimated_time + this.estimatedStartTimes[startIndex + index - 1]);
+      this.realStartTimes[startIndex + index] =
+        ((startIndex + index) === 0 ? this.team.start :
+          (this.updatedStages[startIndex + index - 1].real_time ? this.updatedStages[startIndex + index - 1].real_time :
+            this.updatedStages[startIndex + index - 1].estimated_time) + this.realStartTimes[startIndex + index - 1]);
     });
   }
 
@@ -53,5 +65,17 @@ export class StageListComponent implements OnInit {
 
   getStartTimeString(start: number): string {
     return hoursMinutesString(start);
+  }
+
+  ngAfterViewInit(): void {
+    this.scroll(document.getElementById('stage-0'));
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth', block: 'end'});
+  }
+
+  isStageStarted(i: number): boolean {
+    return (i > 0 ? !!(this.updatedStages[i - 1].real_time) : true);
   }
 }

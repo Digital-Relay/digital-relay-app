@@ -1,24 +1,24 @@
-<!--<div class="row d-sm-none">-->
-<mat-expansion-panel class="d-sm-none px-0">
-  <mat-expansion-panel-header>
-    <ng-container *ngTemplateOutlet="header"></ng-container>
-  </mat-expansion-panel-header>
-  <div class="col">
-    <div class="row">
+<div id="stage-{{stage.index}}">
+  <mat-expansion-panel class="d-sm-none px-0">
+    <mat-expansion-panel-header>
+      <ng-container *ngTemplateOutlet="header"></ng-container>
+    </mat-expansion-panel-header>
+    <div class="col">
+      <div class="row">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <!--</div>-->
+
+  <mat-card class="mb-1 d-none d-sm-flex">
+    <div class="row w-100">
+      <ng-container *ngTemplateOutlet="header"></ng-container>
       <ng-container *ngTemplateOutlet="content"></ng-container>
     </div>
-  </div>
-</mat-expansion-panel>
-<!--</div>-->
+  </mat-card>
 
-<mat-card class="mb-1 d-none d-sm-flex">
-  <div class="row w-100">
-    <ng-container *ngTemplateOutlet="header"></ng-container>
-    <ng-container *ngTemplateOutlet="content"></ng-container>
-  </div>
-</mat-card>
-
-
+</div>
 <ng-template #header>
   <div class="col-sm-2">
     <div class="row row-cols-2 row-cols-sm-1">
@@ -37,14 +37,17 @@
 <ng-template #content>
   <mat-divider vertical></mat-divider>
   <div class="col-sm order-2">
-    <mat-form-field appearance="outline" class="d-sm-block">
+    <mat-form-field appearance="outline" class="d-block">
       <mat-label>Bežec</mat-label>
       <mat-select (valueChange)="onUserChange($event)" [(value)]="selectedUserValue">
         <mat-option *ngFor="let u of users" [value]="u.email">{{u.name ? u.name : u.email}}</mat-option>
       </mat-select>
       <mat-hint>Priraďte bežca na tento úsek</mat-hint>
     </mat-form-field>
-    <button (click)="tempoDialog()" class="ml-2 ml-sm-0" mat-stroked-button>Tempo...</button>
+    <div class="d-flex justify-content-between mt-2">
+      <button (click)="tempoDialog()" mat-stroked-button>Upraviť tempo</button>
+      <button *ngIf="!stage.real_time && started" color="primary" mat-raised-button>Ukončiť úsek</button>
+    </div>
   </div>
   <mat-divider vertical></mat-divider>
   <div class="col-sm col-sm-3 my-2 my-sm-0 order-1 order-sm-3">
@@ -57,22 +60,23 @@
       <tr>
         <td>Štart</td>
         <td>{{getTimeString(estimatedStart, 'hm')}}</td>
-        <td></td>
+        <td [ngClass]="{estimate: !started, final: started}" class="real">{{getTimeString(realStart, 'hm')}}</td>
       </tr>
       <tr>
         <td>Tempo</td>
-        <td>{{getTimeString(estimatedTempo, 'tempo')}}</td>
-        <td></td>
+        <td>{{getTimeString(estimatedTempo, 'hms')}}</td>
+        <td>{{stage.real_time ? getTimeString(stage.real_time / stage.length, 'hms') : ''}}</td>
       </tr>
       <tr>
         <td>Trvanie</td>
         <td>{{getTimeString(stage.estimated_time, 'hms')}}</td>
-        <td></td>
+        <td>{{stage.real_time ? getTimeString(stage.real_time, 'hms') : ''}}</td>
       </tr>
       <tr>
         <td>Cieľ</td>
         <td>{{getTimeString(estimatedStart + stage.estimated_time, 'hm')}}</td>
-        <td></td>
+        <td
+          [ngClass]="{estimate: !stage.real_time, final: stage.real_time}">{{getTimeString(realStart + (stage.real_time ? stage.real_time : stage.estimated_time), 'hm')}}</td>
       </tr>
     </table>
   </div>

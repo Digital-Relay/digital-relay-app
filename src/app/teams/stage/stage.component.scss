@@ -2,7 +2,18 @@
 
   $primary: map-get($theme, primary);
 
+  @keyframes blinker {
+    0% {
+      opacity: 100%
+    }
+    100% {
+      opacity: 50%
+    }
+  }
+
   app-stage {
+
+
     .stage-length {
       color: mat-color($primary, A700);
       font-style: italic;
@@ -15,6 +26,19 @@
 
     table {
       width: 100%;
+    }
+
+    td.estimate {
+      color: mat-color($primary, A700);
+      font-style: italic;
+      animation-name: blinker;
+      animation-duration: 0.5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+    }
+
+    td.final {
+      color: mat-color($primary);
     }
 
     mat-expansion-panel {
