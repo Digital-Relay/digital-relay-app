@@ -1,6 +1,6 @@
 <div id="stage-{{stage.index}}">
-  <mat-expansion-panel class="d-sm-none px-0">
-    <mat-expansion-panel-header>
+  <mat-expansion-panel [expanded]="stageInProgress()" class="d-sm-none px-0">
+    <mat-expansion-panel-header [ngClass]="{'in-progress': stageInProgress()}">
       <ng-container *ngTemplateOutlet="header"></ng-container>
     </mat-expansion-panel-header>
     <div class="col">
@@ -11,7 +11,7 @@
   </mat-expansion-panel>
   <!--</div>-->
 
-  <mat-card class="mb-1 d-none d-sm-flex">
+  <mat-card [ngClass]="{'in-progress': stageInProgress()}" class="mb-1 d-none d-sm-flex">
     <div class="row w-100">
       <ng-container *ngTemplateOutlet="header"></ng-container>
       <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -21,9 +21,13 @@
 </div>
 <ng-template #header>
   <div class="col-sm-2">
-    <div class="row row-cols-2 row-cols-sm-1">
-      <div class="col-8">
-        <h2 class="m-0 m-sm-2">{{name}} - {{getTimeString(estimatedStart, 'hm')}}</h2>
+    <div class="row row-cols-3 row-cols-sm-1">
+      <div [ngClass]="{'col-8': !stage.real_time, 'col-7': stage.real_time}">
+        <h2 class="m-0 m-sm-2">{{name}} - <span
+          [ngClass]="{estimate: !started}">{{getTimeString(realStart, 'hm')}}</span></h2>
+      </div>
+      <div *ngIf="stage.real_time" class="col-1 p-0 px-sm-3">
+        <mat-icon color="accent">done_outline</mat-icon>
       </div>
       <div class="col-4 d-flex align-items-center justify-content-end justify-content-sm-start stage-length">
         <mat-icon>outlined_flag</mat-icon>
@@ -46,7 +50,7 @@
     </mat-form-field>
     <div class="d-flex justify-content-between mt-2">
       <button (click)="tempoDialog()" mat-stroked-button>Upraviť tempo</button>
-      <button *ngIf="!stage.real_time && started" color="primary" mat-raised-button>Ukončiť úsek</button>
+      <button *ngIf="stageInProgress()" color="primary" mat-raised-button>Ukončiť úsek</button>
     </div>
   </div>
   <mat-divider vertical></mat-divider>
@@ -60,23 +64,25 @@
       <tr>
         <td>Štart</td>
         <td>{{getTimeString(estimatedStart, 'hm')}}</td>
-        <td [ngClass]="{estimate: !started, final: started}" class="real">{{getTimeString(realStart, 'hm')}}</td>
+        <td [ngClass]="getChangeClasses('start')" class="real">{{getTimeString(realStart, 'hm')}}</td>
       </tr>
       <tr>
         <td>Tempo</td>
         <td>{{getTimeString(estimatedTempo, 'hms')}}</td>
-        <td>{{stage.real_time ? getTimeString(stage.real_time / stage.length, 'hms') : ''}}</td>
+        <td
+          [ngClass]="getChangeClasses('tempo')">{{stage.real_time ? getTimeString(stage.real_time / stage.length, 'hms') : ''}}</td>
       </tr>
       <tr>
         <td>Trvanie</td>
         <td>{{getTimeString(stage.estimated_time, 'hms')}}</td>
-        <td>{{stage.real_time ? getTimeString(stage.real_time, 'hms') : ''}}</td>
+        <td
+          [ngClass]="getChangeClasses('duration')">{{stage.real_time ? getTimeString(stage.real_time, 'hms') : ''}}</td>
       </tr>
       <tr>
         <td>Cieľ</td>
         <td>{{getTimeString(estimatedStart + stage.estimated_time, 'hm')}}</td>
         <td
-          [ngClass]="{estimate: !stage.real_time, final: stage.real_time}">{{getTimeString(realStart + (stage.real_time ? stage.real_time : stage.estimated_time), 'hm')}}</td>
+          [ngClass]="getChangeClasses('end')">{{getTimeString(realStart + (stage.real_time ? stage.real_time : stage.estimated_time), 'hm')}}</td>
       </tr>
     </table>
   </div>

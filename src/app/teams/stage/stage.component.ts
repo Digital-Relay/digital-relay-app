@@ -90,4 +90,43 @@ export class StageComponent implements OnInit {
     }
     return tempoString(time);
   }
+
+  stageInProgress() {
+    return (!this.stage.real_time && this.started);
+  }
+
+  improvement(information: 'start' | 'end' | 'duration' | 'tempo'): number {
+    switch (information) {
+      case 'start':
+        return (this.estimatedStart) - (this.realStart);
+      case 'end':
+        return (this.estimatedStart + this.stage.estimated_time) - (this.realStart + this.stage.real_time);
+      case 'duration':
+        return (this.stage.estimated_time) - (this.stage.real_time);
+      case 'tempo':
+        return (this.estimatedTempo) - (this.stage.real_time / this.stage.length);
+    }
+  }
+
+  getChangeClasses(information: 'start' | 'end' | 'duration' | 'tempo'): string[] {
+    const result: string[] = [];
+    switch (information) {
+      case 'start':
+        result.push(this.started ? 'final' : 'estimate');
+        break;
+      case 'end':
+        result.push(this.stage.real_time ? 'final' : 'estimate');
+        break;
+      default:
+        result.push('final');
+        break;
+    }
+    const improvement = this.improvement(information);
+    if (improvement > 0) {
+      result.push('ahead');
+    } else if (improvement < 0) {
+      result.push('behind');
+    }
+    return result;
+  }
 }
