@@ -9,6 +9,7 @@ import {StageModel} from '../../store/stage-model/stage-model.model';
 import {hoursMinutesSecondsString, hoursMinutesString, tempoString} from '../../globals';
 import {MatDialog} from '@angular/material/dialog';
 import {TempoDialogComponent, TempoDialogModel} from '../tempo-dialog/tempo-dialog.component';
+import {TimeDialogComponent, TimeDialogModel} from '../time-dialog/time-dialog.component';
 
 @Component({
   selector: 'app-stage',
@@ -74,9 +75,31 @@ export class StageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
       if (dialogResult) {
         this.estimatedTempo = dialogResult.tempo;
         this.stageChange.emit({...this.stage, estimated_time: this.estimatedTempo * this.stage.length});
+      }
+    });
+  }
+
+  timeDialog(): void {
+    const message = `Tu môžete upraviť čas príchodu do cieľa pre ${this.name}.`;
+
+    const dialogData = new TimeDialogModel('Úprava času cieľa',
+      message,
+      Math.floor((this.realStart + this.stage.real_time) / (60 * 60)),
+      (Math.floor((this.realStart + this.stage.real_time) / 60) % 60));
+
+    const dialogRef = this.dialog.open(TimeDialogComponent, {
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (dialogResult) {
+        this.stage.real_time = dialogResult.hours * 60 * 60 + dialogResult.minutes * 60 - this.realStart;
+        this.stageChange.emit(this.stage);
       }
     });
   }
@@ -115,7 +138,7 @@ export class StageComponent implements OnInit {
         result.push(this.started ? 'final' : 'estimate');
         break;
       case 'end':
-        result.push(this.stage.real_time ? 'final' : 'estimate');
+        result.push(this.stageFinished() ? 'final' : 'estimate');
         break;
       default:
         result.push('final');
@@ -128,5 +151,9 @@ export class StageComponent implements OnInit {
       result.push('behind');
     }
     return result;
+  }
+
+  stageFinished() {
+    return !!this.stage.real_time;
   }
 }

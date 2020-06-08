@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>
+  {{title}}
+</h1>
+
+<div mat-dialog-content>
+  <p>{{message}}</p>
+</div>
+<form (submit)="onConfirm()" [formGroup]="form">
+  <div class="d-flex flex-row align-items-center tempo-container">
+
+    <mat-form-field appearance="outline" class="tempo-field">
+      <mat-label><label for="hrs">Hod</label></mat-label>
+      <input formControlName="hours" id="hrs" matInput max="23" min="0" placeholder="5" required step="1"
+             type="number"
+             value="5">
+      <mat-error
+        *ngIf="form.get('hours').invalid">{{getErrorMessage('hours')}}</mat-error>
+    </mat-form-field>
+    <p>:</p>
+    <mat-form-field appearance="outline" class="tempo-field">
+      <mat-label><label for="min">Min</label></mat-label>
+      <input formControlName="minutes" id="min" matInput max="59" min="0" placeholder="5" required step="1"
+             type="number">
+      <mat-error
+        *ngIf="form.get('minutes').invalid">{{getErrorMessage('minutes')}}</mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <!--suppress HtmlDeprecatedAttribute -->
+  <mat-dialog-actions align="end">
+    <button (click)="onDismiss()" mat-stroked-button type="button">Zrušiť</button>
+    <button [disabled]="form.invalid" color="primary" mat-raised-button type="submit">OK</button>
+  </mat-dialog-actions>
+</form>
