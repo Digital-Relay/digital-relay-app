@@ -18,7 +18,7 @@ import {TimeDialogComponent, TimeDialogModel} from '../time-dialog/time-dialog.c
 })
 export class StageComponent implements OnInit {
   @Output()
-  public stageChange = new EventEmitter<StageModel>();
+  public stageChange = new EventEmitter<{ stage: StageModel, forceSave: boolean | null }>();
 
   @Input() team: Team;
   @Input() index: number;
@@ -62,7 +62,10 @@ export class StageComponent implements OnInit {
   onUserChange($value) {
     this.selectedUser = this.users.find((user) => user.email === $value);
     this.estimatedTempo = this.selectedUser.tempo;
-    this.stageChange.emit({...this.stage, email: $value, estimated_time: this.estimatedTempo * this.stage.length});
+    this.stageChange.emit({
+      stage: {...this.stage, email: $value, estimated_time: this.estimatedTempo * this.stage.length},
+      forceSave: false
+    });
   }
 
   tempoDialog(): void {
@@ -75,10 +78,9 @@ export class StageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
       if (dialogResult) {
         this.estimatedTempo = dialogResult.tempo;
-        this.stageChange.emit({...this.stage, estimated_time: this.estimatedTempo * this.stage.length});
+        this.stageChange.emit({stage: {...this.stage, estimated_time: this.estimatedTempo * this.stage.length}, forceSave: false});
       }
     });
   }
@@ -96,10 +98,9 @@ export class StageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
       if (dialogResult) {
         this.stage.real_time = dialogResult.hours * 60 * 60 + dialogResult.minutes * 60 - this.realStart;
-        this.stageChange.emit(this.stage);
+        this.stageChange.emit({stage: this.stage, forceSave: false});
       }
     });
   }
@@ -155,5 +156,11 @@ export class StageComponent implements OnInit {
 
   stageFinished() {
     return !!this.stage.real_time;
+  }
+
+  finishStage() {
+    const finishTime = new Date();
+    const realDuration = (finishTime.getHours() * 60 * 60 + finishTime.getMinutes() * 60 + finishTime.getSeconds()) - this.realStart;
+    this.stageChange.emit({stage: {...this.stage, real_time: realDuration}, forceSave: true});
   }
 }

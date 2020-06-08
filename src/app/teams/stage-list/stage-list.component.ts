@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {hoursMinutesString} from '../../globals';
-import {DigitalRelayState} from '../../store';
-import {Store} from '@ngrx/store';
+import {DigitalRelayState, selectTeamsList} from '../../store';
+import {select, Store} from '@ngrx/store';
 import {updateStages} from '../../store/actions/teams.actions';
 import {cloneDeep} from 'lodash';
 import {TeamModel} from '../../store/team-model/team-model.model';
 import {StageModel} from '../../store/stage-model/stage-model.model';
+import {adapter} from '../../store/team-model/team-model.reducer';
 
 @Component({
   selector: 'app-stage-list',
@@ -24,6 +25,12 @@ export class StageListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.store.pipe(
+      select(selectTeamsList),
+      select(adapter.getSelectors().selectEntities)
+    ).subscribe(value => {
+      this.updatedStages = cloneDeep(value[this.team.id].stages);
+    });
     this.updatedStages = cloneDeep(this.team.stages);
     this.updatedStages.forEach((value, index) => {
       if (index === 0) {
@@ -52,9 +59,12 @@ export class StageListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  updateStage($event: StageModel, i: number) {
-    this.updatedStages[i] = $event;
+  updateStage($event: { stage: StageModel; forceSave: boolean }, i: number) {
+    this.updatedStages[i] = cloneDeep($event.stage);
     this.updateStartTimes(i);
+    if ($event.forceSave) {
+      this.submit();
+    }
   }
 
   submit() {

@@ -51,7 +51,7 @@
       </mat-hint>
     </mat-form-field>
     <div class="d-flex flex-row-reverse justify-content-between mt-2">
-      <button *ngIf="stageInProgress()" color="primary" mat-raised-button>Ukončiť úsek</button>
+      <button (click)="finishStage()" *ngIf="stageInProgress()" color="primary" mat-raised-button>Ukončiť úsek</button>
       <button (click)="tempoDialog()" *ngIf="!(stageInProgress() || stageFinished())" mat-stroked-button>Upraviť tempo
       </button>
       <button (click)="timeDialog()" *ngIf="stageFinished()" mat-stroked-button>Upraviť čas cieľa</button>
