@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {UserModel} from '../../store/user-model/user-model.model';
 import {Team} from '../../api/models/team';
 import {StageModel} from '../../store/stage-model/stage-model.model';
-import {hoursMinutesSecondsString, hoursMinutesString, tempoString} from '../../globals';
+import {hoursMinutesSecondsString, hoursMinutesString, raceDayDifference, tempoString} from '../../globals';
 import {MatDialog} from '@angular/material/dialog';
 import {TempoDialogComponent, TempoDialogModel} from '../tempo-dialog/tempo-dialog.component';
 import {TimeDialogComponent, TimeDialogModel} from '../time-dialog/time-dialog.component';
@@ -116,7 +116,7 @@ export class StageComponent implements OnInit {
   }
 
   stageInProgress() {
-    return (!this.stage.real_time && this.started);
+    return (!this.stage.real_time && this.started && raceDayDifference() === 0);
   }
 
   improvement(information: 'start' | 'end' | 'duration' | 'tempo'): number {
