@@ -20,6 +20,7 @@ export class StageListComponent implements OnInit, AfterViewInit {
   public updatedStages: StageModel[] = [];
   public estimatedStartTimes: number[] = [];
   public realStartTimes: number[] = [];
+  scrollIndex = 0;
 
   constructor(private store: Store<DigitalRelayState>) {
   }
@@ -41,6 +42,9 @@ export class StageListComponent implements OnInit, AfterViewInit {
         if (this.updatedStages[index - 1].real_time) {
           this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].real_time);
         } else {
+          if (!this.scrollIndex) {
+            this.scrollIndex = index - 1;
+          }
           this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
         }
       }
@@ -78,11 +82,11 @@ export class StageListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.scroll(document.getElementById('stage-0'));
+    setTimeout(() => this.scroll(document.getElementById(`stage-${this.scrollIndex}`)), 0);
   }
 
   scroll(el: HTMLElement) {
-    el.scrollIntoView({behavior: 'smooth', block: 'end'});
+    el.scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 
   isStageStarted(i: number): boolean {

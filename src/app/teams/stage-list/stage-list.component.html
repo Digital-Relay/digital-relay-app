@@ -5,7 +5,7 @@
   <h2>Štart: {{getStartTimeString(team.start)}}</h2>
 </div>
 <mat-accordion>
-  <div *ngFor="let s of updatedStages; let i=index; trackBy: trackById" class="mt-2">
+  <div *ngFor="let s of updatedStages; let i=index; trackBy: trackById" class="mt-2" id="stage-{{i}}">
     <app-stage (stageChange)="updateStage($event, i)" [estimatedStart]="estimatedStartTimes[i]" [index]="i"
                [realStart]="realStartTimes[i]"
                [stage]="s" [started]="isStageStarted(i)" [team]="team"></app-stage>
