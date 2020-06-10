@@ -45,6 +45,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       if (params.emailConfirmed) {
         this.snackBar.open('E-mailová adresa úspešne overená.', 'OK', {duration: 5000});
       }
+      if (params.passwordChanged) {
+        this.snackBar.open('Heslo bolo úspešne zmenené.', 'OK', {duration: 5000});
+      }
     });
   }
 

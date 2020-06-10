@@ -15,10 +15,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {MatDividerModule} from '@angular/material/divider';
+import {PasswordResetComponent} from './password-reset/password-reset.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, RegisterFormComponent, LoginFormComponent, RegisterFormComponent, EditProfileComponent],
+  declarations: [LoginComponent, RegisterComponent, RegisterFormComponent, LoginFormComponent, RegisterFormComponent, EditProfileComponent, PasswordResetComponent],
   exports: [
     LoginFormComponent,
     RegisterFormComponent
