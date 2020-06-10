@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {hoursMinutesString} from '../../globals';
+import {hoursMinutesString, raceDayDifference} from '../../globals';
 import {DigitalRelayState, selectTeamsList} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {updateStages} from '../../store/actions/teams.actions';
@@ -23,6 +23,7 @@ export class StageListComponent implements OnInit, AfterViewInit {
   scrollIndex = 0;
 
   constructor(private store: Store<DigitalRelayState>) {
+    raceDayDifference();
   }
 
   ngOnInit(): void {
@@ -82,7 +83,9 @@ export class StageListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.scroll(document.getElementById(`stage-${this.scrollIndex}`)), 0);
+    if (raceDayDifference() == 0) {
+      setTimeout(() => this.scroll(document.getElementById(`stage-${this.scrollIndex}`)), 0);
+    }
   }
 
   scroll(el: HTMLElement) {
