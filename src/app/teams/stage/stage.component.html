@@ -1,29 +1,33 @@
-<!--<div class="row d-sm-none">-->
-<mat-expansion-panel class="d-sm-none px-0">
-  <mat-expansion-panel-header>
-    <ng-container *ngTemplateOutlet="header"></ng-container>
-  </mat-expansion-panel-header>
-  <div class="col">
-    <div class="row">
+<div>
+  <mat-expansion-panel [expanded]="stageInProgress()" class="d-sm-none px-0">
+    <mat-expansion-panel-header [ngClass]="{'in-progress': stageInProgress()}">
+      <ng-container *ngTemplateOutlet="header"></ng-container>
+    </mat-expansion-panel-header>
+    <div class="col">
+      <div class="row">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <!--</div>-->
+
+  <mat-card [ngClass]="{'in-progress': stageInProgress()}" class="mb-1 d-none d-sm-flex">
+    <div class="row w-100">
+      <ng-container *ngTemplateOutlet="header"></ng-container>
       <ng-container *ngTemplateOutlet="content"></ng-container>
     </div>
-  </div>
-</mat-expansion-panel>
-<!--</div>-->
+  </mat-card>
 
-<mat-card class="mb-1 d-none d-sm-flex">
-  <div class="row w-100">
-    <ng-container *ngTemplateOutlet="header"></ng-container>
-    <ng-container *ngTemplateOutlet="content"></ng-container>
-  </div>
-</mat-card>
-
-
+</div>
 <ng-template #header>
   <div class="col-sm-2">
-    <div class="row row-cols-2 row-cols-sm-1">
-      <div class="col-8">
-        <h2 class="m-0 m-sm-2">{{name}} - {{getTimeString(estimatedStart, 'hm')}}</h2>
+    <div class="row row-cols-3 row-cols-sm-1">
+      <div [ngClass]="{'col-8': ! stageFinished(), 'col-7':  stageFinished()}">
+        <h2 class="m-0 m-sm-2">{{name}} - <span
+          [ngClass]="{estimate: !started}">{{getTimeString(realStart, 'hm')}}</span></h2>
+      </div>
+      <div *ngIf=" stageFinished()" class="col-1 p-0 px-sm-3">
+        <mat-icon color="accent">done_outline</mat-icon>
       </div>
       <div class="col-4 d-flex align-items-center justify-content-end justify-content-sm-start stage-length">
         <mat-icon>outlined_flag</mat-icon>
@@ -37,14 +41,21 @@
 <ng-template #content>
   <mat-divider vertical></mat-divider>
   <div class="col-sm order-2">
-    <mat-form-field appearance="outline" class="d-sm-block">
+    <mat-form-field appearance="outline" class="d-block">
       <mat-label>Bežec</mat-label>
-      <mat-select (valueChange)="onUserChange($event)" [(value)]="selectedUserValue">
+      <mat-select (valueChange)="onUserChange($event)" [(value)]="selectedUserValue"
+                  [disabled]="stageInProgress() || stageFinished()" disableOptionCentering>
         <mat-option *ngFor="let u of users" [value]="u.email">{{u.name ? u.name : u.email}}</mat-option>
       </mat-select>
-      <mat-hint>Priraďte bežca na tento úsek</mat-hint>
+      <mat-hint *ngIf="!(stageInProgress() || stageFinished()); else hintAfterStart">Priraďte bežca na tento úsek
+      </mat-hint>
     </mat-form-field>
-    <button (click)="tempoDialog()" class="ml-2 ml-sm-0" mat-stroked-button>Tempo...</button>
+    <div class="d-flex flex-row-reverse justify-content-between mt-2">
+      <button (click)="finishStage()" *ngIf="stageInProgress()" color="primary" mat-raised-button>Ukončiť úsek</button>
+      <button (click)="tempoDialog()" *ngIf="!(stageInProgress() || stageFinished())" mat-stroked-button>Upraviť tempo
+      </button>
+      <button (click)="timeDialog()" *ngIf="stageFinished()" mat-stroked-button>Upraviť čas cieľa</button>
+    </div>
   </div>
   <mat-divider vertical></mat-divider>
   <div class="col-sm col-sm-3 my-2 my-sm-0 order-1 order-sm-3">
@@ -57,23 +68,30 @@
       <tr>
         <td>Štart</td>
         <td>{{getTimeString(estimatedStart, 'hm')}}</td>
-        <td></td>
+        <td [ngClass]="getChangeClasses('start')" class="real">{{getTimeString(realStart, 'hm')}}</td>
       </tr>
       <tr>
         <td>Tempo</td>
-        <td>{{getTimeString(estimatedTempo, 'tempo')}}</td>
-        <td></td>
+        <td>{{getTimeString(estimatedTempo, 'hms')}}</td>
+        <td
+          [ngClass]="getChangeClasses('tempo')">{{ stageFinished() ? getTimeString(stage.real_time / stage.length, 'hms') : ''}}</td>
       </tr>
       <tr>
         <td>Trvanie</td>
         <td>{{getTimeString(stage.estimated_time, 'hms')}}</td>
-        <td></td>
+        <td
+          [ngClass]="getChangeClasses('duration')">{{ stageFinished() ? getTimeString(stage.real_time, 'hms') : ''}}</td>
       </tr>
       <tr>
         <td>Cieľ</td>
         <td>{{getTimeString(estimatedStart + stage.estimated_time, 'hm')}}</td>
-        <td></td>
+        <td
+          [ngClass]="getChangeClasses('end')">{{getTimeString(realStart + (stageFinished() ? stage.real_time : stage.estimated_time), 'hm')}}</td>
       </tr>
     </table>
   </div>
+</ng-template>
+
+<ng-template #hintAfterStart>
+  <mat-hint>Po začatí úseku nemôžete zmeniť bežca</mat-hint>
 </ng-template>
