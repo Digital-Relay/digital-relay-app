@@ -5,9 +5,10 @@
   <h2>Štart: {{getStartTimeString(team.start)}}</h2>
 </div>
 <mat-accordion>
-  <div *ngFor="let s of updatedStages; let i=index; trackBy: trackById" class="mt-2">
-    <app-stage (stageChange)="updateStage($event, i)" [estimatedStart]="startTimes[i]" [index]="i" [stage]="s"
-               [team]="team"></app-stage>
+  <div *ngFor="let s of updatedStages; let i=index; trackBy: trackById" class="mt-2" id="stage-{{i}}">
+    <app-stage (stageChange)="updateStage($event, i)" [estimatedStart]="estimatedStartTimes[i]" [index]="i"
+               [realStart]="realStartTimes[i]"
+               [stage]="s" [started]="isStageStarted(i)" [team]="team"></app-stage>
   </div>
 </mat-accordion>
 <div class="d-flex m-2 mr-0 flex-row-reverse">

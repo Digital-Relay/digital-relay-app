@@ -1,0 +1,16 @@
+mat-form-field {
+  /*display: block;*/
+  margin: 20px 0;
+}
+
+.tempo-field {
+  max-width: 10ch;
+}
+
+.tempo-container mat-form-field {
+  margin: 15px 0 0 0;
+}
+
+.tempo-container p {
+  margin: 0 5px;
+}

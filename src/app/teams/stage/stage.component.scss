@@ -1,6 +1,22 @@
 @mixin stage-component-theme($theme) {
 
   $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  @keyframes color-blinker {
+    0% {
+      background-color: mat-color($accent);
+    }
+    100% {
+      background-color: mat-color($accent, 100);
+    }
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
 
   app-stage {
     .stage-length {
@@ -15,6 +31,31 @@
 
     table {
       width: 100%;
+    }
+
+    .in-progress {
+      animation-name: color-blinker;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+    }
+
+    td.final {
+      font-weight: bold;
+    }
+
+    td.final.ahead {
+      color: rgb(100, 255, 0);
+    }
+
+    td.final.behind {
+      color: red;
+    }
+
+    .estimate {
+      color: mat-color($primary, A700);
+      font-style: italic;
+      animation: blinker 1s linear infinite;
     }
 
     mat-expansion-panel {

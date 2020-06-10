@@ -29,12 +29,13 @@ import {MatTableModule} from '@angular/material/table';
 import {TempoDialogComponent} from './tempo-dialog/tempo-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {TimeDialogComponent} from './time-dialog/time-dialog.component';
 
 
 @NgModule({
   declarations: [CreateTeamComponent, TeamPageComponent, MemberComponent,
     MyTeamsComponent, TeamComponent, MemberListComponent, StageListComponent,
-    StageComponent, MapToArray, EditTeamComponent, TempoDialogComponent],
+    StageComponent, MapToArray, EditTeamComponent, TempoDialogComponent, TimeDialogComponent],
   imports: [
     CommonModule,
     TeamsRoutingModule,
