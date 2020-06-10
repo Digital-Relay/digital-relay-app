@@ -1,16 +1,17 @@
 /* tslint:disable */
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { BaseService as __BaseService } from '../base-service';
-import { ApiConfiguration as __Configuration } from '../api-configuration';
-import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-response';
-import { Observable as __Observable } from 'rxjs';
-import { map as __map, filter as __filter } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {BaseService as __BaseService} from '../base-service';
+import {ApiConfiguration as __Configuration} from '../api-configuration';
+import {StrictHttpResponse as __StrictHttpResponse} from '../strict-http-response';
+import {Observable as __Observable} from 'rxjs';
+import {filter as __filter, map as __map} from 'rxjs/operators';
 
-import { JWTResponse } from '../models/jwtresponse';
-import { LoginRequest } from '../models/login-request';
-import { RegistrationResponse } from '../models/registration-response';
-import { RegisterRequest } from '../models/register-request';
+import {JWTResponse} from '../models/jwtresponse';
+import {LoginRequest} from '../models/login-request';
+import {RegistrationResponse} from '../models/registration-response';
+import {RegisterRequest} from '../models/register-request';
+import {PasswordResetRequest} from '../models/password-reset-request';
 
 /**
  * Security endpoints
@@ -23,6 +24,7 @@ class AuthService extends __BaseService {
   static readonly getHelloWorldPath = '/auth/hello';
   static readonly getTokenRefreshPath = '/auth/refresh_token';
   static readonly postRegisterPath = '/auth/register';
+  static readonly postResetPath = '/auth/reset';
 
   constructor(
     config: __Configuration,
@@ -168,6 +170,7 @@ class AuthService extends __BaseService {
       })
     );
   }
+
   /**
    * Register a new user
    * @param payload undefined
@@ -175,6 +178,45 @@ class AuthService extends __BaseService {
    */
   postRegister(payload: RegisterRequest): __Observable<RegistrationResponse> {
     return this.postRegisterResponse(payload).pipe(
+      __map(_r => _r.body as RegistrationResponse)
+    );
+  }
+
+  /**
+   * Request user password reset
+   * @param payload undefined
+   * @return Registration successful
+   */
+  postResetResponse(payload: PasswordResetRequest): __Observable<__StrictHttpResponse<RegistrationResponse>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = payload;
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/auth/reset`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<RegistrationResponse>;
+      })
+    );
+  }
+
+  /**
+   * Request user password reset
+   * @param payload undefined
+   * @return Registration successful
+   */
+  postReset(payload: PasswordResetRequest): __Observable<RegistrationResponse> {
+    return this.postResetResponse(payload).pipe(
       __map(_r => _r.body as RegistrationResponse)
     );
   }

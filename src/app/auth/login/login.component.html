@@ -8,6 +8,7 @@
         <p *ngIf="invalidCredentials" class="error">Nesprávne údaje</p>
         <mat-card-actions align="end">
           <a mat-raised-button routerLink="/register">Registrácia</a>
+          <a mat-raised-button routerLink="/password-reset">Obnovenie hesla</a>
           <button [disabled]="loginForm.invalid" color="primary"
                   mat-raised-button type="submit">Prihlásiť sa
           </button>
