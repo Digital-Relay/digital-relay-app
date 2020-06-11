@@ -1,5 +1,5 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<div class="my-4">
+<div *ngIf="team; else loading" class="my-4">
   <h1>{{team.name}}</h1>
   <mat-divider></mat-divider>
 
@@ -23,3 +23,8 @@
   </mat-tab-group>
 </div>
 
+<ng-template #loading>
+  <div class="centered">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

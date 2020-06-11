@@ -15,6 +15,7 @@ import {clearTeamModels} from '../store/team-model/team-model.actions';
 import {UsersService} from '../api/services/users.service';
 import {State} from '../store/reducers/auth.reducer';
 import {UserModel} from '../store/user-model/user-model.model';
+import {loadMy} from '../store/actions/teams.actions';
 
 
 @Injectable()
@@ -67,8 +68,9 @@ export class AuthEffects {
       setInterval(() => {
         this.store.dispatch(renewLogin({}));
       }, action.expires_at * 1000 - Date.now());
+      return loadMy({});
     })
-  ), {dispatch: false});
+  ));
 
   loginFailure$ = createEffect(() => this.actions$.pipe(
     ofType('[Login] Login failure')
