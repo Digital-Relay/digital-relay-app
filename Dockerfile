@@ -9,7 +9,8 @@ RUN npm run build-prod
 ### STAGE 2: Run ###
 FROM nginx:alpine
 ENV API_URL http://dxcrun-dev-api.azurewebsites.net/api
-ENV RACE_DATE "2020-06-22"
+ENV RACE_DATE "2020-06-20"
+ENV PUSH_PUBLIC_KEY ""
 ENV DEBUG true
 COPY --from=build /digital-relay/dist/digital-relay /usr/share/nginx/html
 COPY --from=build /digital-relay/default.conf /etc/nginx/conf.d/default.conf

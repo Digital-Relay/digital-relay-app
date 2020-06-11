@@ -5,4 +5,5 @@
   window["env"]["apiUrl"] = "${API_URL}";
   window["env"]["debug"] = ${DEBUG};
   window["env"]["raceDate"] = "${RACE_DATE}";
+  window["env"]["pushPublicKey"] = "${PUSH_PUBLIC_KEY}";
 })(this);
