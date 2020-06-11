@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:8000/api',
-  raceDate: Date.parse('2020-04-09')
+  raceDate: Date.parse('2020-04-09'),
+  pushPublicKey: ""
 };
 
 /*
