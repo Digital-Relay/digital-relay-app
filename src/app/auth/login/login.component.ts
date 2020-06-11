@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   state: Observable<State>;
   inProgress: boolean;
   loginSub: Subscription;
+  private returnUrl: string;
 
   constructor(
     private fb: FormBuilder,
@@ -30,12 +31,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       login: []
     });
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     this.state = store.select(selectUser);
     this.loginSub = this.state.subscribe((state) => {
       this.errorMessage = state.errorMessage;
       this.inProgress = false;
       if (state.isLoggedIn) {
-        this.router.navigate(['teams', 'my']);
+        console.log(this.returnUrl);
+        this.router.navigate([this.returnUrl]);
       }
     });
   }
@@ -44,6 +47,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       if (params.emailConfirmed) {
         this.snackBar.open('E-mailová adresa úspešne overená.', 'OK', {duration: 5000});
+      }
+      if (params.passwordChanged) {
+        this.snackBar.open('Heslo bolo úspešne zmenené.', 'OK', {duration: 5000});
       }
     });
   }

@@ -17,6 +17,7 @@ import {TeamModel} from '../../store/team-model/team-model.model';
 export class TeamPageComponent implements OnInit {
 
   team: Team = null;
+  loading = true;
 
   constructor(private store: Store<DigitalRelayState>, private readonly route: ActivatedRoute, private router: Router
   ) {
@@ -34,10 +35,12 @@ export class TeamPageComponent implements OnInit {
         );
       })).subscribe(team => {
       if (!team) {
-        this.router.navigate(['teams', 'my']);
+        this.loading = true;
+      } else {
+        this.team = team;
+        this.store.dispatch(load({teamId: team.id}));
+        this.loading = false;
       }
-      this.team = team;
-      this.store.dispatch(load({teamId: team.id}));
     });
   }
 

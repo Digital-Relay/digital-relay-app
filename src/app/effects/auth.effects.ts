@@ -15,6 +15,10 @@ import {clearTeamModels} from '../store/team-model/team-model.actions';
 import {UsersService} from '../api/services/users.service';
 import {State} from '../store/reducers/auth.reducer';
 import {UserModel} from '../store/user-model/user-model.model';
+import {loadMy} from '../store/actions/teams.actions';
+import {SwPush} from '@angular/service-worker';
+import {environment} from '../../environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Injectable()
@@ -67,8 +71,13 @@ export class AuthEffects {
       setInterval(() => {
         this.store.dispatch(renewLogin({}));
       }, action.expires_at * 1000 - Date.now());
+      this.swPush.requestSubscription({serverPublicKey: environment.pushPublicKey})
+        .then(value => this.authApi.postPushResource({Authorization: this.token, payload: value})
+          .subscribe(() => this.snackBar.open('Notifikácie boli aktivované.')))
+        .catch(reason => this.snackBar.open('Nepodarilo sa zapnúť notifikácie: ' + reason, 'OK', {duration: 2000}));
+      return loadMy({});
     })
-  ), {dispatch: false});
+  ));
 
   loginFailure$ = createEffect(() => this.actions$.pipe(
     ofType('[Login] Login failure')
@@ -105,7 +114,9 @@ export class AuthEffects {
     private authApi: AuthService,
     private store: Store<DigitalRelayState>,
     private router: Router,
-    private usersApi: UsersService
+    private usersApi: UsersService,
+    private swPush: SwPush,
+    private snackBar: MatSnackBar
   ) {
     this.state = store.select(selectUser);
     this.state.subscribe(state => this.token = state.token);
