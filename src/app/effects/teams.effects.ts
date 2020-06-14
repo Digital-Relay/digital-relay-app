@@ -98,6 +98,14 @@ export class TeamsEffects {
         }));
     }));
 
+  loadOne$ = createEffect(() => this.actions$.pipe(
+    ofType('[Teams] Load one team'),
+    mergeMap((action: any) => {
+      return this.teamsService.getTeamResource(action.id);
+    }),
+    map(team => upsertTeamModel({teamModel: team as TeamModel}))
+  ));
+
   uploadTeamModel$ = createEffect(() => this.actions$.pipe(
     ofType('[TeamModel] Upload TeamModel'),
     mergeMap((action: any) => this.teamsService.postTeamResource({

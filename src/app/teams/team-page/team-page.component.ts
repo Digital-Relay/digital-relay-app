@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DigitalRelayState, selectTeamsList} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,33 +8,41 @@ import {Team} from '../../api/models/team';
 import {load} from '../../store/actions/users.actions';
 import {uploadTeamModel} from '../../store/team-model/team-model.actions';
 import {TeamModel} from '../../store/team-model/team-model.model';
+import {loadOne} from '../../store/actions/teams.actions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-team-page',
   templateUrl: './team-page.component.html',
   styleUrls: ['./team-page.component.css']
 })
-export class TeamPageComponent implements OnInit {
+export class TeamPageComponent implements OnInit, OnDestroy {
 
   team: Team = null;
   loading = true;
+  private sub: Subscription;
 
   constructor(private store: Store<DigitalRelayState>, private readonly route: ActivatedRoute, private router: Router
   ) {
+    this.loading = true;
+  }
+
+  public ngOnDestroy(): void {
   }
 
   public ngOnInit() {
-
-    this.route.paramMap.pipe(
+    this.loading = true;
+    this.sub = this.route.paramMap.pipe(
       map(_ => _.get('id')),
       switchMap((id) => {
+        this.store.dispatch(loadOne({id}));
         return this.store.pipe(
           select(selectTeamsList),
           select(adapter.getSelectors().selectEntities),
           select(entities => entities[id])
         );
       })).subscribe(team => {
-      if (!team) {
+      if (!team || !team.stages) {
         this.loading = true;
       } else {
         this.team = team;
