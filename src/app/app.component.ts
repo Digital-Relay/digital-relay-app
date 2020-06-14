@@ -3,7 +3,8 @@ import {Router} from '@angular/router';
 import {SwPush} from '@angular/service-worker';
 import {Store} from '@ngrx/store';
 import {DigitalRelayState} from './store';
-import {loadOne} from './store/actions/teams.actions';
+import {acceptRelay, loadOne} from './store/actions/teams.actions';
+import {raceDayDifference} from './globals';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +14,16 @@ import {loadOne} from './store/actions/teams.actions';
 export class AppComponent {
   title = 'DXC RUN 4U';
 
-  constructor(public router: Router, private swPush: SwPush, private state: Store<DigitalRelayState>) {
+  constructor(public router: Router, private swPush: SwPush, private store: Store<DigitalRelayState>) {
+    if (raceDayDifference() < 0) {
+      localStorage.removeItem('lastAcceptedStage');
+    }
     this.swPush.notificationClicks.subscribe(click => {
-      console.log(click);
       if (click.notification.data.teamId) {
-        this.state.dispatch(loadOne({id: click.notification.data.teamId}));
+        this.store.dispatch(loadOne({id: click.notification.data.teamId}));
         if (click.action === 'relay') {
-          console.log('Accept relay');
+          this.store.dispatch(acceptRelay({teamId: click.notification.data.teamId, stageIndex: click.notification.data.stage}));
         }
-
         this.router.navigate(['teams', click.notification.data.teamId]);
         return;
       }

@@ -106,6 +106,20 @@ export class TeamsEffects {
     map(team => upsertTeamModel({teamModel: team as TeamModel}))
   ));
 
+  acceptRelay$ = createEffect(() => this.actions$.pipe(
+    ofType('[Teams] Accept relay'),
+    map((action: any) => {
+      if ((localStorage.getItem('lastAcceptedStage') as unknown as number) < action.stageIndex) {
+        localStorage.setItem('lastAcceptedStage', action.stageIndex);
+        return this.teamsService.postAcceptRelay({teamId: action.teamId, Authorization: this.token});
+      }
+    }),
+    mergeMap(r => {
+      this.snackBar.open('Štafeta prebratá', 'OK', {duration: 2000});
+      return of(r);
+    })
+  ), {dispatch: false});
+
   uploadTeamModel$ = createEffect(() => this.actions$.pipe(
     ofType('[TeamModel] Upload TeamModel'),
     mergeMap((action: any) => this.teamsService.postTeamResource({

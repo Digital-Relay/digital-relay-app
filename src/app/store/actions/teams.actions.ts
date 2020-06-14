@@ -37,3 +37,8 @@ export const updateStages = createAction(
   '[Teams] Update team stages',
   props<{ teamId: string, stages: Stage[] }>()
 );
+
+export const acceptRelay = createAction(
+  '[Teams] Accept relay',
+  props<{ teamId: string, stageIndex: number }>()
+);
