@@ -8,6 +8,11 @@ export const loadAll = createAction(
   props<any>()
 );
 
+export const loadOne = createAction(
+  '[Teams] Load one team',
+  props<{ id: string }>()
+);
+
 export const loadMy = createAction(
   '[Teams] Load my teams',
   props<any>()

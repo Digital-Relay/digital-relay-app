@@ -38,6 +38,11 @@ export function getToday(): number {
   return today - (today % (24 * 60 * 60 * 1000));
 }
 
+export function getSecondsSinceMidnight(): number {
+  const today = new Date();
+  return today.getHours() * 60 * 60 + today.getMinutes() * 60 + today.getSeconds();
+}
+
 export function raceDayDifference(): number {
   return (getToday() - environment.raceDate);
 }

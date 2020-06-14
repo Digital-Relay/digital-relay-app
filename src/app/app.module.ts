@@ -31,7 +31,7 @@ import {UsersEffects} from './effects/users.effects';
 import {LeaderboardComponent} from './leaderboard/leaderboard.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     EffectsModule.forRoot([AppEffects, AuthEffects, TeamsEffects, UsersEffects]),
     MatTableModule,
     MatSortModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('custom-service-worker.js', {enabled: environment.production})
   ],
   providers: [{provide: ApiConfiguration, useValue: {rootUrl: environment.apiBaseUrl}}],
   bootstrap: [AppComponent]
