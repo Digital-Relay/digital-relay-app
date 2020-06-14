@@ -1,4 +1,4 @@
-<div class="d-flex m-2 mr-0 flex-row-reverse justify-content-between">
+<div *ngIf="team.start; else loadingTemplate" class="d-flex m-2 mr-0 flex-row-reverse justify-content-between">
   <button (click)="submit()"
           color="primary" mat-raised-button>Uložiť
   </button>
@@ -16,4 +16,10 @@
           color="primary" mat-raised-button>Uložiť
   </button>
 </div>
+
+<ng-template #loadingTemplate>
+  <div class="centered">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
 

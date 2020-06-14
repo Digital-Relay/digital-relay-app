@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {hoursMinutesString, raceDayDifference} from '../../globals';
 import {DigitalRelayState, selectTeamsList} from '../../store';
 import {select, Store} from '@ngrx/store';
@@ -7,13 +7,16 @@ import {cloneDeep} from 'lodash';
 import {TeamModel} from '../../store/team-model/team-model.model';
 import {StageModel} from '../../store/stage-model/stage-model.model';
 import {adapter} from '../../store/team-model/team-model.reducer';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-stage-list',
   templateUrl: './stage-list.component.html',
   styleUrls: ['./stage-list.component.css']
 })
-export class StageListComponent implements OnInit, AfterViewInit {
+export class StageListComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  private sub: Subscription;
 
   @Input()
   team: TeamModel;
@@ -26,29 +29,33 @@ export class StageListComponent implements OnInit, AfterViewInit {
     raceDayDifference();
   }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.store.pipe(
+    this.sub = this.store.pipe(
       select(selectTeamsList),
       select(adapter.getSelectors().selectEntities)
-    ).subscribe(value => {
-      this.updatedStages = cloneDeep(value[this.team.id].stages);
-    });
-    this.updatedStages = cloneDeep(this.team.stages);
-    this.updatedStages.forEach((value, index) => {
-      if (index === 0) {
-        this.estimatedStartTimes.push(this.team.start);
-        this.realStartTimes.push(this.team.start);
-      } else {
-        this.estimatedStartTimes.push(this.estimatedStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
-        if (this.updatedStages[index - 1].real_time) {
-          this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].real_time);
+    ).subscribe(entities => {
+      this.updatedStages = cloneDeep(entities[this.team.id].stages);
+      this.team = cloneDeep(entities[this.team.id]);
+      this.updatedStages.forEach((value, index) => {
+        if (index === 0) {
+          this.estimatedStartTimes.push(this.team.start);
+          this.realStartTimes.push(this.team.start);
         } else {
-          if (!this.scrollIndex) {
-            this.scrollIndex = index - 1;
+          this.estimatedStartTimes.push(this.estimatedStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
+          if (this.updatedStages[index - 1].real_time) {
+            this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].real_time);
+          } else {
+            if (!this.scrollIndex) {
+              this.scrollIndex = index - 1;
+            }
+            this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
           }
-          this.realStartTimes.push(this.realStartTimes[index - 1] + this.updatedStages[index - 1].estimated_time);
         }
-      }
+      });
     });
   }
 
