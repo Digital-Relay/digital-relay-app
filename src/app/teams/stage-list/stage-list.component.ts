@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {hoursMinutesString, raceDayDifference} from '../../globals';
+import {getSecondsSinceMidnight, hoursMinutesString, raceDayDifference} from '../../globals';
 import {DigitalRelayState, selectTeamsList} from '../../store';
 import {select, Store} from '@ngrx/store';
 import {updateStages} from '../../store/actions/teams.actions';
@@ -100,6 +100,7 @@ export class StageListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isStageStarted(i: number): boolean {
-    return (i > 0 ? !!(this.updatedStages[i - 1].real_time) : true);
+    const time = getSecondsSinceMidnight();
+    return (i > 0 ? !!(this.updatedStages[i - 1].real_time) : (time >= this.team.start));
   }
 }

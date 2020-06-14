@@ -41,7 +41,8 @@ export class StageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.accepted = ((localStorage.getItem('lastAcceptedStage') as unknown as number) >= this.index);
+    const lastAccepted = localStorage.getItem('lastAcceptedStage');
+    this.accepted = ((lastAccepted ? (lastAccepted as unknown as number) : -1) >= this.index);
     this.name = `Úsek ${this.index + 1}`;
     this.estimatedTempo = Math.floor(this.stage.estimated_time / this.stage.length);
     this.store.pipe(
