@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {DigitalRelayState, selectUsersList} from '../../store';
 import {adapter} from '../../store/user-model/user-model.reducer';
@@ -10,13 +10,16 @@ import {hoursMinutesSecondsString, hoursMinutesString, raceDayDifference, tempoS
 import {MatDialog} from '@angular/material/dialog';
 import {TempoDialogComponent, TempoDialogModel} from '../tempo-dialog/tempo-dialog.component';
 import {TimeDialogComponent, TimeDialogModel} from '../time-dialog/time-dialog.component';
+import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {acceptRelay} from '../../store/actions/teams.actions';
 
 @Component({
   selector: 'app-stage',
   templateUrl: './stage.component.html',
   styleUrls: ['./stage.component.scss']
 })
-export class StageComponent implements OnInit {
+export class StageComponent implements OnInit, OnDestroy {
   @Output()
   public stageChange = new EventEmitter<{ stage: StageModel, forceSave: boolean | null }>();
 
@@ -31,11 +34,15 @@ export class StageComponent implements OnInit {
   selectedUserValue: string;
   selectedUser: UserModel;
   estimatedTempo: number;
+  sub: Subscription;
+  accepted = false;
 
-  constructor(private store: Store<DigitalRelayState>, private dialog: MatDialog) {
+  constructor(private store: Store<DigitalRelayState>, private dialog: MatDialog, private readonly route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
+    const lastAccepted = localStorage.getItem('lastAcceptedStage');
+    this.accepted = ((lastAccepted ? (lastAccepted as unknown as number) : -1) >= this.index);
     this.name = `Úsek ${this.index + 1}`;
     this.estimatedTempo = Math.floor(this.stage.estimated_time / this.stage.length);
     this.store.pipe(
@@ -56,7 +63,15 @@ export class StageComponent implements OnInit {
     ).subscribe(users => {
       this.users = users;
     });
+    this.sub = this.route.queryParams.subscribe(params => {
+      if (params.acceptRelay && this.stageInProgress()) {
+        this.acceptRelay();
+      }
+    });
+  }
 
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   onUserChange($value) {
@@ -162,5 +177,10 @@ export class StageComponent implements OnInit {
     const finishTime = new Date();
     const realDuration = (finishTime.getHours() * 60 * 60 + finishTime.getMinutes() * 60 + finishTime.getSeconds()) - this.realStart;
     this.stageChange.emit({stage: {...this.stage, real_time: realDuration}, forceSave: true});
+  }
+
+  acceptRelay() {
+    this.accepted = true;
+    this.store.dispatch(acceptRelay({teamId: this.team.id, stageIndex: this.index}));
   }
 }

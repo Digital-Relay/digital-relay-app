@@ -4,6 +4,8 @@ import {StageComponent} from './stage.component';
 import {provideMockStore} from '@ngrx/store/testing';
 import {initialTestState} from '../../store';
 import {MatDialogModule} from '@angular/material/dialog';
+import {ActivatedRoute, Params} from '@angular/router';
+import {of} from 'rxjs';
 
 describe('StageComponent', () => {
   let component: StageComponent;
@@ -14,7 +16,13 @@ describe('StageComponent', () => {
       imports: [MatDialogModule],
       declarations: [StageComponent],
       providers: [
-        provideMockStore({initialState: initialTestState})
+        provideMockStore({initialState: initialTestState}),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: of({} as Params)
+          }
+        }
       ]
     })
       .compileComponents();

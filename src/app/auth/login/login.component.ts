@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.errorMessage = state.errorMessage;
       this.inProgress = false;
       if (state.isLoggedIn) {
-        this.router.navigate([this.returnUrl]);
+        this.router.navigateByUrl(this.returnUrl);
       }
     });
   }

@@ -100,7 +100,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * @param Authorization JWT auth token, format: JWT <access_token>
    */
@@ -141,7 +140,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * Add new push subscription to current user
    * @param params The `AuthService.PostPushResourceParams` containing the following parameters:
@@ -181,7 +179,6 @@ class AuthService extends __BaseService {
       })
     );
   }
-
   /**
    * Get VAPID public key
    * @return OK
