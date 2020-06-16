@@ -7,6 +7,7 @@ import {TeamModel} from '../store/team-model/team-model.model';
 import {loadAll} from '../store/actions/teams.actions';
 import {MatSort, Sort} from '@angular/material/sort';
 import {map} from 'rxjs/operators';
+import {hoursMinutesSecondsString} from '../globals';
 
 @Component({
   selector: 'app-leaderboard',
@@ -15,7 +16,7 @@ import {map} from 'rxjs/operators';
 })
 export class LeaderboardComponent implements OnInit {
   teams$: Observable<TeamModel[]>;
-  displayedColumns: string[] = ['name', 'members', 'donation'];
+  displayedColumns: string[] = ['name', 'stages_completed', 'average_tempo', 'donation'];
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private store: Store<DigitalRelayState>) {
@@ -47,5 +48,12 @@ export class LeaderboardComponent implements OnInit {
         return 0;
       });
     }));
+  }
+
+  tempoString(tempo: number) {
+    if (tempo === 0) {
+      return '-';
+    }
+    return hoursMinutesSecondsString(tempo);
   }
 }

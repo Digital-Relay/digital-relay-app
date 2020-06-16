@@ -284,7 +284,6 @@ class TeamsService extends __BaseService {
       })
     );
   }
-
   /**
    * Send push notifications about starting a stage to other team members
    * @param params The `TeamsService.PostAcceptRelayParams` containing the following parameters:

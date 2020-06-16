@@ -5,6 +5,8 @@ export interface TeamModel {
   members: Array<string>;
   name: string;
   donation: number;
+  stages_completed: number;
+  average_tempo: number;
   start: number;
   stages: StageModel[];
 }
