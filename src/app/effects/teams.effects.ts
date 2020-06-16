@@ -8,7 +8,7 @@ import {Store} from '@ngrx/store';
 import {DigitalRelayState, selectUser} from '../store';
 import {TeamsList} from '../api/models/teams-list';
 import {loadFailure, loadSuccess} from '../store/actions/teams.actions';
-import {loadTeamModels, upsertTeamModel} from '../store/team-model/team-model.actions';
+import {upsertTeamModel, upsertTeamModels} from '../store/team-model/team-model.actions';
 import {TeamModel} from '../store/team-model/team-model.model';
 import {Team} from '../api/models/team';
 import {Router} from '@angular/router';
@@ -24,7 +24,7 @@ export class TeamsEffects {
   loadSuccess$ = createEffect(() => this.actions$.pipe(
     ofType('[Teams] Load success'),
     map((teams: TeamsList) => {
-      return loadTeamModels({teamModels: teams.teams as TeamModel[]});
+      return upsertTeamModels({teamModels: teams.teams as TeamModel[]});
     })
   ));
 
@@ -36,7 +36,7 @@ export class TeamsEffects {
   @Effect()
   loadMy: Observable<any> = this.actions$.pipe(
     ofType('[Teams] Load my teams'),
-    switchMap(() => {
+    mergeMap(() => {
       return this.teamsService.getTeams(this.token).pipe(
         map((teams) => {
           return loadSuccess(teams as TeamsList);
@@ -49,7 +49,7 @@ export class TeamsEffects {
   @Effect()
   loadAll: Observable<any> = this.actions$.pipe(
     ofType('[Teams] Load all teams'),
-    switchMap(() => {
+    mergeMap(() => {
       return this.teamsService.getAllTeams().pipe(
         map((teams) => {
           return loadSuccess(teams as TeamsList);
