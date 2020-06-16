@@ -8,12 +8,15 @@
     <td *matCellDef="let team" mat-cell> {{team.name}} </td>
   </ng-container>
 
-  <!-- Members Column -->
-  <ng-container matColumnDef="members">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header>Bežci</th>
-    <td *matCellDef="let team" mat-cell> {{team.members.length}} </td>
+  <ng-container matColumnDef="stages_completed">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header>Prebehnuté úseky</th>
+    <td *matCellDef="let team" mat-cell> {{team.stages_completed}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="average_tempo">
+    <th *matHeaderCellDef mat-header-cell mat-sort-header>Priemerné tempo</th>
+    <td *matCellDef="let team" mat-cell> {{tempoString(team.average_tempo)}} </td>
+  </ng-container>
 
   <ng-container matColumnDef="donation">
     <th *matHeaderCellDef mat-header-cell mat-sort-header>Príspevok</th>

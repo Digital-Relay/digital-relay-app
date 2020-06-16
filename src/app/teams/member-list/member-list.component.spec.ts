@@ -27,6 +27,7 @@ describe('MemberListComponent', () => {
     fixture = TestBed.createComponent(MemberListComponent);
     component = fixture.componentInstance;
     component.team = {
+      average_tempo: 0, stages_completed: 0,
       id: '5ec45033adc29e0dc932218e',
       name: 'Test team',
       donation: 70,
