@@ -10,11 +10,6 @@ th {
   font-weight: bold;
 }
 
-td.mat-column-average_tempo,
-td.mat-column-stages_completed,
-td.mat-column-donation {
-  text-align: center;
-}
 
 .mat-column-donation,
 .mat-column-members {
