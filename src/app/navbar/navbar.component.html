@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <a class="toolbar-button" mat-button routerLink="/">
     <mat-icon class="home-icon" svgIcon="relay"></mat-icon>
-    <span class="mat-h2">DXC RUN 4U</span>
+    <span *ngIf="!dryRun(); else dryRunHeading" class="mat-h2">DXC RUN 4U</span>
   </a>
   <!--  <mat-divider [vertical]="true"></mat-divider>-->
   <!--  <a mat-button routerLink="/">Link</a>-->
@@ -25,3 +25,7 @@
     <mat-icon>more_vert</mat-icon>
   </button>
 </mat-toolbar>
+
+<ng-template #dryRunHeading>
+  <span class="mat-h2"><span class="dry">DRY</span> RUN 4U</span>
+</ng-template>

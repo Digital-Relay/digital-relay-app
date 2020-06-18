@@ -264,9 +264,7 @@ class TeamsService extends __BaseService {
     let __headers = new HttpHeaders();
     let __body: any = null;
 
-    if (params.Authorization != null) {
-      __headers = __headers.set('Authorization', params.Authorization.toString());
-    }
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/teams/${encodeURIComponent(params.teamId)}/accept_relay`,

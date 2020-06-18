@@ -24,8 +24,10 @@ import {PasswordResetRequest} from '../models/password-reset-request';
 class AuthService extends __BaseService {
   static readonly postLoginPath = '/auth';
   static readonly getHelloWorldPath = '/auth/hello';
-  static readonly postPushResourcePath = '/auth/push';
-  static readonly getPushResourcePath = '/auth/push';
+  static readonly disableEmailNotificationsPath = '/auth/notifications/email';
+  static readonly enableEmailNotificationsPath = '/auth/notifications/email';
+  static readonly createPushSubscriptionPath = '/auth/notifications/push';
+  static readonly getPublicPushKeyPath = '/auth/notifications/push';
   static readonly getTokenRefreshPath = '/auth/refresh_token';
   static readonly postRegisterPath = '/auth/register';
   static readonly postResetPath = '/auth/reset';
@@ -100,6 +102,7 @@ class AuthService extends __BaseService {
       })
     );
   }
+
   /**
    * @param Authorization JWT auth token, format: JWT <access_token>
    */
@@ -110,22 +113,17 @@ class AuthService extends __BaseService {
   }
 
   /**
-   * Add new push subscription to current user
-   * @param params The `AuthService.PostPushResourceParams` containing the following parameters:
-   *
-   * - `payload`:
-   *
-   * - `Authorization`: JWT auth token, format: JWT <access_token>
+   * Disable email notifications for user
+   * @param Authorization JWT auth token, format: JWT <access_token>
    */
-  postPushResourceResponse(params: AuthService.PostPushResourceParams): __Observable<__StrictHttpResponse<null>> {
+  disableEmailNotificationsResponse(Authorization: string): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
-    __body = params.payload;
-    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
     let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/auth/push`,
+      'DELETE',
+      this.rootUrl + `/auth/notifications/email`,
       __body,
       {
         headers: __headers,
@@ -140,16 +138,96 @@ class AuthService extends __BaseService {
       })
     );
   }
+
+  /**
+   * Disable email notifications for user
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   */
+  disableEmailNotifications(Authorization: string): __Observable<null> {
+    return this.disableEmailNotificationsResponse(Authorization).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
+  /**
+   * Enable email notifications for user
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   */
+  enableEmailNotificationsResponse(Authorization: string): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    if (Authorization != null) __headers = __headers.set('Authorization', Authorization.toString());
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/auth/notifications/email`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+
+  /**
+   * Enable email notifications for user
+   * @param Authorization JWT auth token, format: JWT <access_token>
+   */
+  enableEmailNotifications(Authorization: string): __Observable<null> {
+    return this.enableEmailNotificationsResponse(Authorization).pipe(
+      __map(_r => _r.body as null)
+    );
+  }
+
   /**
    * Add new push subscription to current user
-   * @param params The `AuthService.PostPushResourceParams` containing the following parameters:
+   * @param params The `AuthService.CreatePushSubscriptionParams` containing the following parameters:
    *
    * - `payload`:
    *
    * - `Authorization`: JWT auth token, format: JWT <access_token>
    */
-  postPushResource(params: AuthService.PostPushResourceParams): __Observable<null> {
-    return this.postPushResourceResponse(params).pipe(
+  createPushSubscriptionResponse(params: AuthService.CreatePushSubscriptionParams): __Observable<__StrictHttpResponse<null>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    __body = params.payload;
+    if (params.Authorization != null) __headers = __headers.set('Authorization', params.Authorization.toString());
+    let req = new HttpRequest<any>(
+      'POST',
+      this.rootUrl + `/auth/notifications/push`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<null>;
+      })
+    );
+  }
+
+  /**
+   * Add new push subscription to current user
+   * @param params The `AuthService.CreatePushSubscriptionParams` containing the following parameters:
+   *
+   * - `payload`:
+   *
+   * - `Authorization`: JWT auth token, format: JWT <access_token>
+   */
+  createPushSubscription(params: AuthService.CreatePushSubscriptionParams): __Observable<null> {
+    return this.createPushSubscriptionResponse(params).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -158,13 +236,13 @@ class AuthService extends __BaseService {
    * Get VAPID public key
    * @return OK
    */
-  getPushResourceResponse(): __Observable<__StrictHttpResponse<VAPIDKey>> {
+  getPublicPushKeyResponse(): __Observable<__StrictHttpResponse<VAPIDKey>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/auth/push`,
+      this.rootUrl + `/auth/notifications/push`,
       __body,
       {
         headers: __headers,
@@ -179,12 +257,13 @@ class AuthService extends __BaseService {
       })
     );
   }
+
   /**
    * Get VAPID public key
    * @return OK
    */
-  getPushResource(): __Observable<VAPIDKey> {
-    return this.getPushResourceResponse().pipe(
+  getPublicPushKey(): __Observable<VAPIDKey> {
+    return this.getPublicPushKeyResponse().pipe(
       __map(_r => _r.body as VAPIDKey)
     );
   }
@@ -307,9 +386,9 @@ class AuthService extends __BaseService {
 module AuthService {
 
   /**
-   * Parameters for postPushResource
+   * Parameters for createPushSubscription
    */
-  export interface PostPushResourceParams {
+  export interface CreatePushSubscriptionParams {
     payload: PushSubscription;
 
     /**

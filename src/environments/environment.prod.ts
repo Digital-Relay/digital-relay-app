@@ -4,5 +4,6 @@ export const environment = {
   apiBaseUrl: window['env']['apiUrl'] || 'default',
   debug: window['env']['debug'] || false,
   raceDate: Date.parse(window['env']['raceDate']) || Date.parse('2020-06-20'),
-  pushPublicKey: window['env']['pushPublicKey']
+  pushPublicKey: window['env']['pushPublicKey'],
+  dryRun: window['env']['dryRun']
 };

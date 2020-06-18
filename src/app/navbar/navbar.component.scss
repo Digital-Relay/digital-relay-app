@@ -1,8 +1,16 @@
 @mixin navbar-component-theme($theme) {
 
   $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
 
   app-navbar {
+    span.dry {
+      color: mat-color($primary);
+      background-color: mat-color($accent);
+      border-radius: 5px;
+      padding: 0 2px;
+    }
+
     a:hover {
       background-color: mat-color($primary, A700);
       color: unset;
