@@ -4,6 +4,7 @@ import {Store} from '@ngrx/store';
 import {DigitalRelayState, selectUser} from '../store';
 import {State} from '../store/reducers/auth.reducer';
 import {UserModel} from '../store/user-model/user-model.model';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -29,5 +30,9 @@ export class HomeComponent implements OnInit {
 
   scroll(el: HTMLElement) {
     el.scrollIntoView({behavior: 'smooth'});
+  }
+
+  dryRun() {
+    return environment.dryRun;
   }
 }

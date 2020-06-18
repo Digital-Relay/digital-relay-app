@@ -6,7 +6,8 @@ import {Store} from '@ngrx/store';
 import {DigitalRelayState, selectUser} from '../store';
 import {State} from '../store/reducers/auth.reducer';
 import {UserModel} from '../store/user-model/user-model.model';
-import {logout} from "../store/actions/auth.actions";
+import {logout} from '../store/actions/auth.actions';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -33,6 +34,10 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.store.dispatch(logout({}))
+    this.store.dispatch(logout({}));
+  }
+
+  dryRun() {
+    return environment.dryRun;
   }
 }

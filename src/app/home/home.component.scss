@@ -1,8 +1,16 @@
 @mixin home-component-theme($theme) {
 
   $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
 
   app-home {
+    span.dry {
+      color: mat-color($primary);
+      background-color: mat-color($accent);
+      border-radius: 5px;
+      padding: 0 2px;
+    }
+
     header {
       background: mat-color($primary);
       display: block;

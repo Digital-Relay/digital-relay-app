@@ -44,6 +44,9 @@ export function getSecondsSinceMidnight(): number {
 }
 
 export function raceDayDifference(): number {
+  if (environment.dryRun === true) {
+    return 0;
+  }
   return (getToday() - environment.raceDate);
 }
 

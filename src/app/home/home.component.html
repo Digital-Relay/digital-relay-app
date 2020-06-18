@@ -9,7 +9,7 @@
     </div>
     <div class="col-sm d-flex flex-column justify-content-center align-items-center align-items-sm-start">
       <div class="row">
-        <h1 class="mat-display-2 my-4">DXC RUN 4U</h1>
+        <h1 *ngIf="!dryRun(); else dryRunHeading" class="mat-display-2 my-4">DXC RUN 4U</h1>
       </div>
       <div class="row">
         <h2 class="mat-subheading-2 mb-3">Beháme štafetu pre charitu</h2>
@@ -47,3 +47,8 @@
   <h1 id="leaderboard">Prehľad tímov</h1>
   <app-leaderboard></app-leaderboard>
 </div>
+
+
+<ng-template #dryRunHeading>
+  <h1 class="mat-display-2 my-4"><span class="dry">DRY</span> RUN 4U</h1>
+</ng-template>
