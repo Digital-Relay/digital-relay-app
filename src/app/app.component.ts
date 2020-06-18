@@ -15,8 +15,8 @@ export class AppComponent {
   title = 'DXC RUN 4U';
 
   constructor(public router: Router, private swPush: SwPush, private store: Store<DigitalRelayState>) {
-    if (localStorage.getItem('lastRaceDate') !== environment.raceDate.toString()) {
-      localStorage.setItem('lastRaceDate', environment.raceDate.toString());
+    if (localStorage.getItem('lastRaceDate') !== environment.raceDate.toString() || environment.dryRun) {
+      localStorage.setItem('lastRaceDate', environment.dryRun ? 'dryrun' : environment.raceDate.toString());
       localStorage.removeItem('lastAcceptedStage');
     }
     this.swPush.notificationClicks.subscribe(click => {
