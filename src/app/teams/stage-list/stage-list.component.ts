@@ -26,7 +26,6 @@ export class StageListComponent implements OnInit, AfterViewInit, OnDestroy {
   scrollIndex = 0;
 
   constructor(private store: Store<DigitalRelayState>) {
-    raceDayDifference();
   }
 
   ngOnDestroy(): void {

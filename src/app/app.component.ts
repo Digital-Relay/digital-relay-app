@@ -4,7 +4,7 @@ import {SwPush} from '@angular/service-worker';
 import {Store} from '@ngrx/store';
 import {DigitalRelayState} from './store';
 import {acceptRelay, loadOne} from './store/actions/teams.actions';
-import {raceDayDifference} from './globals';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,8 @@ export class AppComponent {
   title = 'DXC RUN 4U';
 
   constructor(public router: Router, private swPush: SwPush, private store: Store<DigitalRelayState>) {
-    if (raceDayDifference() < 0) {
+    if (localStorage.getItem('lastRaceDate') !== environment.raceDate.toString()) {
+      localStorage.setItem('lastRaceDate', environment.raceDate.toString());
       localStorage.removeItem('lastAcceptedStage');
     }
     this.swPush.notificationClicks.subscribe(click => {
