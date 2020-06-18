@@ -73,14 +73,22 @@ export class AuthEffects {
       }, action.expires_at * 1000 - Date.now());
       this.swPush.requestSubscription({serverPublicKey: environment.pushPublicKey})
         .then(value => {
-          return this.authApi.postPushResourceResponse({Authorization: this.token, payload: value})
+          return this.authApi.createPushSubscriptionResponse({Authorization: this.token, payload: value})
             .subscribe((response) => {
               if (response.status === 200) {
                 this.snackBar.open('Notifikácie boli aktivované.', 'OK', {duration: 2000});
               }
             });
         })
-        .catch(reason => this.snackBar.open('Nepodarilo sa zapnúť notifikácie: ' + reason, 'OK', {duration: 5000}));
+        .catch(reason => {
+          this.authApi.enableEmailNotifications(this.token).pipe(
+            catchError((error) => {
+              this.snackBar.open('Nepodarilo sa zapnúť notifikácie: ' + reason + ' ' + error, 'OK', {duration: 5000});
+              return of();
+            })
+          ).subscribe(() =>
+            this.snackBar.open('Nepodarilo sa zapnúť PUSH notifikácie, budeme posielať notifikácie e-mailom.', 'OK', {duration: 5000}));
+        });
       return loadMy({});
     })
   ));
