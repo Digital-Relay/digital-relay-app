@@ -6,5 +6,6 @@
   window["env"]["debug"] = ${DEBUG};
   window["env"]["raceDate"] = "${RACE_DATE}";
   window["env"]["pushPublicKey"] = "${PUSH_PUBLIC_KEY}";
-  window["env"]["dryRun"] = ("true" === "$DRY_RUN")
+  window["env"]["dryRun"] = ("true" === "$DRY_RUN");
+  window['env']['version'] = "${VERSION}";
 })(this);

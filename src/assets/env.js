@@ -7,4 +7,5 @@
   window["env"]["raceDate"] = Date.parse("2020-06-20")
   window["env"]["pushPublicKey"] = ''
   window["env"]["dryRun"] = false
+  window['env']['version'] = 'Unknown version'
 })(this);
