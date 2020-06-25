@@ -95,6 +95,9 @@ export class TeamsEffects {
         map((teams) => {
           this.snackBar.open('Úseky uložené.', 'OK', {duration: 2000});
           return upsertTeamModel({teamModel: (teams as TeamModel)});
+        }), catchError((err, caught) => {
+          this.snackBar.open('Úseky sa nepodarilo uložiť.', 'OK', {duration: 2000});
+          return of();
         }));
     }));
 

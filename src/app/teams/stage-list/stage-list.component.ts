@@ -79,7 +79,7 @@ export class StageListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   submit() {
-    this.store.dispatch(updateStages({teamId: this.team.id, stages: this.updatedStages}));
+    this.store.dispatch(updateStages({teamId: this.team.id, stages: cloneDeep(this.updatedStages)}));
   }
 
   trackById = (index, stage) => stage.id;
